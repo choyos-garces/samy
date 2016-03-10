@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" >
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css" >
+    <link rel="stylesheet" href="styles/default.css">
+
+    <script src="lib/es6-shim/es6-shim.min.js"></script>
+    <script src="lib/angular2/shims_for_IE.js"></script>
+    <script src="lib/system/system-polyfills.js"></script>
+    <script src="lib/angular2/angular2-polyfills.js"></script>
+
+    <script src="lib/system/system.js"></script>
+    <script src="lib/rxjs/Rx.min.js"></script>
+    <script src="lib/angular2/angular2.dev.js"></script>
+
+    <script src="lib/angular2/http.js"></script>
+    <script src="lib/angular2/router.js"></script>
+    <script>
+        System.config({
+            packages: {
+                'app': { defaultExtension: 'js' }
+            }
+        });
+        System.import('app/boot')
+                .then(null, console.error.bind(console));
+    </script>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/bootstrap/bootstrap.min.js"></script>
+    <title>HoyosGarces</title>
+</head>
+<body>
+    <script>
+        $("#modal-attention").modal("toggle")
+    </script>
+    <navigation></navigation>
+    <index></index>
+</body>
+</html>
