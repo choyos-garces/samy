@@ -34,6 +34,7 @@
     "bootstrap": "*",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.33.3",
+    "font-awesome": "^4.5.0",
     "jquery": "*",
     "lodash": "^4.3.0",
     "reflect-metadata": "0.1.2",

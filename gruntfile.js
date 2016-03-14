@@ -36,12 +36,14 @@ module.exports = function(grunt) {
         copy: {
             libs : {
                 files : [
-                    { expand:true, flatten: true, src: [ "node_modules/bootstrap/dist/css/bootstrap.min.css", "node_modules/bootstrap/dist/css/bootstrap.min.css.map", "node_modules/bootstrap/dist/js/bootstrap.min.js"], dest: "src/lib/bootstrap" },
-                    { expand:true, flatten: true, src: ["node_modules/jquery/dist/jquery.min.js", "node_modules/jquery/dist/jquery.min.map"], dest: "src/lib/jquery" },
-                    { expand:true, flatten: true, src: ["node_modules/angular2/bundles/angular2.dev.js", "node_modules/angular2/bundles/http.js", "node_modules/angular2/bundles/angular2-polyfills.js", "node_modules/angular2/es6/prod/src/testing/shims_for_IE.js", "node_modules/angular2/bundles/router.js"], dest: "src/lib/angular2" },
-                    { expand:true, flatten: true, src: ["node_modules/systemjs/dist/system.js", "node_modules/systemjs/dist/system.js.map", "node_modules/systemjs/dist/system-polyfills.js", "node_modules/systemjs/dist/system-polyfills.js.map"], dest: "src/lib/system" },
-                    { expand:true, flatten: true, src: ["node_modules/rxjs/bundles/Rx.min.js", "node_modules/rxjs/bundles/Rx.min.js.map"], dest: "src/lib/rxjs" },
-                    { expand: true, flatten: true, src: ["node_modules/es6-shim/es6-shim.min.js", "node_modules/es6-shim/es6-shim.map"], dest: "src/lib/es6-shim" }
+                    { expand: true, flatten: true, src: [ "node_modules/bootstrap/dist/css/bootstrap.min.css", "node_modules/bootstrap/dist/css/bootstrap.min.css.map", "node_modules/bootstrap/dist/js/bootstrap.min.js"], dest: "src/lib/bootstrap" },
+                    { expand: true, flatten: true, src: ["node_modules/jquery/dist/jquery.min.js", "node_modules/jquery/dist/jquery.min.map"], dest: "src/lib/jquery" },
+                    { expand: true, flatten: true, src: ["node_modules/angular2/bundles/angular2.dev.js", "node_modules/angular2/bundles/http.js", "node_modules/angular2/bundles/angular2-polyfills.js", "node_modules/angular2/es6/prod/src/testing/shims_for_IE.js", "node_modules/angular2/bundles/router.js"], dest: "src/lib/angular2" },
+                    { expand: true, flatten: true, src: ["node_modules/systemjs/dist/system.js", "node_modules/systemjs/dist/system.js.map", "node_modules/systemjs/dist/system-polyfills.js", "node_modules/systemjs/dist/system-polyfills.js.map"], dest: "src/lib/system" },
+                    { expand: true, flatten: true, src: ["node_modules/rxjs/bundles/Rx.min.js", "node_modules/rxjs/bundles/Rx.min.js.map"], dest: "src/lib/rxjs" },
+                    { expand: true, flatten: true, src: ["node_modules/es6-shim/es6-shim.min.js", "node_modules/es6-shim/es6-shim.map"], dest: "src/lib/es6-shim" },
+                    { expand: true, flatten: true, src: ["node_modules/font-awesome/css/font-awesome.min.css"], dest: "src/lib/font-awesome/css" },
+                    { expand: true, flatten: true, src: ["node_modules/font-awesome/fonts/*"], dest: "src/lib/font-awesome/fonts" }
                 ]
 
             },
@@ -101,7 +103,7 @@ module.exports = function(grunt) {
                 },
                 options: {
                     watchTask: true,
-                    proxy: 'http://localhost/ui'
+                    proxy: 'http://localhost/samy'
                 }
             }
         },

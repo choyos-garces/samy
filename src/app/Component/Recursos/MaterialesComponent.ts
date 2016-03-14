@@ -6,7 +6,7 @@ import {Component} from 'angular2/core';
     <h3>Materiales</h3>
     `
 })
-export class Materiales {
+export class MaterialesComponent {
 
     constructor() {
     }
