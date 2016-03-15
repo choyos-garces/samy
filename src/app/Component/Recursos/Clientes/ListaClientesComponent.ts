@@ -17,7 +17,7 @@ import {ClienteModel} from "../../../Model/Recursos/ClienteModel";
                         <th>Nombre</th>
                         <th>Numero Tel.</th>
                         <th>Tipo Id.</th>
-                        <th>Identificacion</th>
+                        <th>Identificacicon</th>
                         <th>Correro Contacto</th>
                         <th>Ingreso</th>
                         <th></th>
@@ -46,7 +46,8 @@ export class ListaClientesComponent {
     tiposIdentificaciones : Array<string>;
 
     constructor(public _clientesService : ClienteService) {
-        this.clientes = this._clientesService.getClientes()
+        this.clientes = this._clientesService.getClientes();
+        console.log(this.clientes);
         this.tiposIdentificaciones = this._clientesService.getTiposIdentificaciones();
     }
 }

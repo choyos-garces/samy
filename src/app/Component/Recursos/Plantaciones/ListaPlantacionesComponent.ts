@@ -25,12 +25,12 @@ import {PlantacionesService} from "../../../Service/Recursos/PlantacionesService
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="#plantacion of plantaciones" [routerLink]="['VerPlantacion', { id : bodega.id }]" class="router">
-                        <td>{{ plantacion.id }}</td>
+                    <tr *ngFor="#plantacion of plantaciones" [routerLink]="['VerPlantacion', { id : plantacion.id }]" class="router">
                         <td>{{ plantacion.nombre }}</td>
-                        <td>Tipo</td>
-                        <td>Propietario</td>
-                        <td>Tamana&ntilde;o</td>
+                        <td>{{ productos[plantacion.producto] }}</td>
+                        <td>{{ tipos[plantacion.tipo] }}</td>
+                        <td>{{ plantacion.propietario.nombre }}</td>
+                        <td>{{ plantacion.tamano }} {{ unidades[plantacion.unidad] }}.</td>
                         <td><i class="fa fa-pencil"></i></td>
                         <td><i class="fa fa-trash"></i></td>
                     </tr>
@@ -41,8 +41,15 @@ import {PlantacionesService} from "../../../Service/Recursos/PlantacionesService
 })
 export class ListaPlantacionesComponent {
     plantaciones : Array<PlantacionModel>;
+    tipos : Array<string>;
+    productos : Array<string>;
+    unidades : Array<string>;
 
     constructor(public _router : Router, public _plantacionesService : PlantacionesService) {
-        this.plantaciones  = this._plantacionesService.getPlantciones();
+        this.plantaciones  = this._plantacionesService.getPlantaciones();
+        this.tipos = this._plantacionesService.getTipos();
+        this.productos = this._plantacionesService.getProductos();
+        this.unidades = this._plantacionesService.getUnidades();
+
     }
 }

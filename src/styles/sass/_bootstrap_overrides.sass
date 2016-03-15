@@ -31,7 +31,16 @@ label
 .has-error .control-label
   color: $color-alert-base
 
-.input-group-btn select.form-control
+.input-group-btn:first-child select.form-control
   width: auto
-  border-radius: $border-radius-simple !important
+  border-radius: $border-radius-simple
+  border-bottom-right-radius: 0
+  border-top-right-radius: 0
   border-right: 0
+
+.input-group-btn:last-child select.form-control
+  width: auto
+  border-radius: $border-radius-simple
+  border-bottom-left-radius: 0
+  border-top-left-radius: 0
+  border-left: 0
