@@ -1,7 +1,8 @@
 import {Component} from 'angular2/core';
+import {ROUTER_DIRECTIVES} from "angular2/router";
+
 import {ClienteService} from "../../../Service/Recursos/ClientesService";
 import {ClienteModel} from "../../../Model/Recursos/ClienteModel";
-import {ROUTER_DIRECTIVES} from "angular2/router";
 
 @Component({
     selector : 'ingresar-clientes',
@@ -48,6 +49,4 @@ export class ListaClientesComponent {
         this.clientes = this._clientesService.getClientes()
         this.tiposIdentificaciones = this._clientesService.getTiposIdentificaciones();
     }
-
-    ngOnInit() {}
 }

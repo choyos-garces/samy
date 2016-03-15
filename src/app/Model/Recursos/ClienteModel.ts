@@ -1,4 +1,4 @@
-import {ClientePlantacionModel} from "./ClientePlantacionModel";
+import {PlantacionModel} from "./PlantacionModel";
 
 export class ClienteModel {
     id : number;
@@ -11,7 +11,7 @@ export class ClienteModel {
     correoNotificaciones : string;
     fechaIngreso : Date;
 
-    plantaciones : Array<ClientePlantacionModel>;
+    plantaciones : Array<PlantacionModel>;
 
     constructor(cliente : any, flagRazon : boolean = false, flagCorreo : boolean = false) {
         this.id = cliente.id;
@@ -27,15 +27,15 @@ export class ClienteModel {
         this.plantaciones = [];
     }
 
-    addPlantaciones(plantaciones : Array<ClientePlantacionModel>) : void {
+    addPlantaciones(plantaciones : Array<PlantacionModel>) : void {
         this.plantaciones = plantaciones;
     }
 
-    addPlantacion(plantacion : ClientePlantacionModel) : void {
+    addPlantacion(plantacion : PlantacionModel) : void {
         this.plantaciones.push(plantacion);
     }
 
-    getPlantacion(index : number) : ClientePlantacionModel {
+    getPlantacion(index : number) : PlantacionModel {
         return this.plantaciones[0]
     }
 

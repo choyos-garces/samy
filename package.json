@@ -4,6 +4,7 @@
   "description": "Pagina de Hoyos Garces SA",
   "main": "index.html",
   "scripts": {
+    "typings" : "typings install --ambient",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

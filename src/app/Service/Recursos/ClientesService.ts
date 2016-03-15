@@ -24,7 +24,7 @@ export class ClienteService {
             new ClienteModel({id :i++, nombre : `G ${i-1} Christopher Hoyos`, numeroTelefono : '042554433', tipoIdentificacion : 1, identificacion : '0924323843', correoContacto : 'choyos@asd.com', fechaIngreso : new Date() }, true, true),
             new ClienteModel({id :i++, nombre : `H ${i-1} Christopher Hoyos`, numeroTelefono : '042554433', tipoIdentificacion : 0, identificacion : '0924323843', correoContacto : 'choyos@asd.com', fechaIngreso : new Date() }, true, true),
             new ClienteModel({id :i++, nombre : `I ${i-1} Christopher Hoyos`, numeroTelefono : '042554433', tipoIdentificacion : 1, identificacion : '0924323843', correoContacto : 'choyos@asd.com', fechaIngreso : new Date() }, true, true),
-            new ClienteModel({id :i, nombre : `J ${i-1} Christopher Hoyos`, numeroTelefono : '042554433', tipoIdentificacion : 0, identificacion : '0924323843', correoContacto : 'choyos@asd.com', fechaIngreso : new Date() }, true, true)
+            new ClienteModel({id :i++, nombre : `J ${i-1} Christopher Hoyos`, numeroTelefono : '042554433', tipoIdentificacion : 0, identificacion : '0924323843', correoContacto : 'choyos@asd.com', fechaIngreso : new Date() }, true, true)
         );
     }
 
@@ -34,8 +34,6 @@ export class ClienteService {
 
     push(cliente : ClienteModel) : ClienteModel {
         cliente.id = this.clientes[this.clientes.length - 1].id + 1;
-
-        console.log(this.clientes[this.clientes.length - 1]);
         this.clientes.push(cliente);
 
         return cliente;
@@ -44,7 +42,7 @@ export class ClienteService {
         return this.clientes;
     }
 
-    getCliente( id : number ) : ClienteModel {
+    getById(id : number ) : ClienteModel {
         this.getClientes();
         let resultado = this.clientes.filter((cliente : ClienteModel) => {
             return cliente.id == id;

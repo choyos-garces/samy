@@ -7,6 +7,7 @@ import {ClienteService} from "../../../Service/Recursos/ClientesService";
 
 @Component({
     selector : 'ingresar-clientes',
+    directives: [FORM_DIRECTIVES],
     template : `<div class="container-fluid">
         <h4>Crear Ficha de Cliente</h4>
         <form [ngFormModel]="ingresoCliente" class="form-horizontal" (ngSubmit)="submit()" autocomplete="off" spellcheck="false">
@@ -21,7 +22,7 @@ import {ClienteService} from "../../../Service/Recursos/ClientesService";
                     </div>
                 </div>
                 <div class="col-sm-3 col-md-5">
-                    <div class="form-control-static control-error" [hidden]="toggleValidationFeedback('nombre')">
+                    <div class="form-control-static control-error">
                         <i class="fa fa-exclamation-circle"></i>
                         <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
                     </div>
@@ -33,7 +34,7 @@ import {ClienteService} from "../../../Service/Recursos/ClientesService";
                     <input type="text" class="form-control" ame="razon" placeholder="Nombre de la Empresa" [(ngFormControl)]="ingresoCliente.controls['razon']" id="clienteRazon"/>
                 </div>
                 <div class="col-sm-3 col-md-5">
-                    <div class="form-control-static control-error" [hidden]="toggleValidationFeedback('razon')">
+                    <div class="form-control-static control-error">
                         <i class="fa fa-exclamation-circle"></i>
                         <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
                     </div>
@@ -45,7 +46,7 @@ import {ClienteService} from "../../../Service/Recursos/ClientesService";
                     <input type="text" class="form-control" name="razon" placeholder="Convencional o Celular" [(ngFormControl)]="ingresoCliente.controls['numeroTelefono']" id="clienteNumeroTelefono"/>
                 </div>
                 <div class="col-sm-3 col-md-5">
-                    <div class="form-control-static control-error" [hidden]="toggleValidationFeedback('numeroTelefono')">
+                    <div class="form-control-static control-error">
                         <i class="fa fa-exclamation-circle"></i>
                         <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
                     </div>
@@ -64,24 +65,24 @@ import {ClienteService} from "../../../Service/Recursos/ClientesService";
                     </div>
                 </div>
                 <div class="col-sm-3 col-md-5">
-                    <div class="form-control-static control-error" [hidden]="toggleValidationFeedback('identificacion')">
+                    <div class="form-control-static control-error">
                         <i class="fa fa-exclamation-circle"></i>
                         <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
                     </div>
                 </div>
             </div>
             <div class="form-group" [ngClass]=" !toggleValidationFeedback('correoContacto') ? 'has-error' : ''">
-                <label class="control-label col-sm-4 col-md-3" for="correoContacto">Correro Contacto</label>
+                <label class="control-label col-sm-4 col-md-3" for="clienteCorreoContacto">Correro Contacto</label>
                 <div class="col-sm-5 col-md-4">
                     <input type="email" class="form-control" name="correoContacto" placeholder="Correo Personal" [ngFormControl]="ingresoCliente.controls['correoContacto']" id="clienteCorreoContacto" />
                     <div class="checkbox form-group-sm">
                         <label class="text-muted">
-                            <input type="checkbox" (change)="toggleInput(ingresoCliente.controls['flagCorreo'], 'clienteCorreoNorificaciones')" [(ngFormControl)]="ingresoCliente.controls['flagCorreo']"> Usar Para Notificaciones
+                            <input type="checkbox" (change)="toggleInput(ingresoCliente.controls['flagCorreo'], 'clienteCorreoNotificaciones')" [(ngFormControl)]="ingresoCliente.controls['flagCorreo']"> Usar Para Notificaciones
                         </label>
                     </div>
                 </div>
                 <div class="col-sm-3 col-md-5">
-                    <div class="form-control-static control-error" [hidden]="toggleValidationFeedback('correoContacto')">
+                    <div class="form-control-static control-error">
                         <i class="fa fa-exclamation-circle"></i>
                         <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
                     </div>
@@ -90,10 +91,10 @@ import {ClienteService} from "../../../Service/Recursos/ClientesService";
             <div class="form-group" [ngClass]=" !toggleValidationFeedback('correoNotificaciones') ? 'has-error' : ''">
                 <label class="control-label col-sm-4 col-md-3" for="clienteCorreoNotificaciones">Correo Notificaciones</label>
                 <div class="col-sm-5 col-md-4">
-                    <input type="email" class="form-control" name="correoNotificaciones" placeholder="Notificaciones Automaticas" [ngFormControl]="ingresoCliente.controls['correoNotificaciones']" id="clienteCorreoNorificaciones" />
+                    <input type="email" class="form-control" name="correoNotificaciones" placeholder="Notificaciones Automaticas" [ngFormControl]="ingresoCliente.controls['correoNotificaciones']" id="clienteCorreoNotificaciones" />
                 </div>
                 <div class="col-sm-3 col-md-5">
-                    <div class="form-control-static control-error" [hidden]="toggleValidationFeedback('correoNotificaciones')">
+                    <div class="form-control-static control-error">
                         <i class="fa fa-exclamation-circle"></i>
                         <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
                     </div>
@@ -105,8 +106,7 @@ import {ClienteService} from "../../../Service/Recursos/ClientesService";
                 </div>
             </div>
         </form>
-    </div>`,
-    directives: [FORM_DIRECTIVES]
+    </div>`
 })
 export class IngresarClientesComponent {
     public tiposIdentificaciones : Array<string>;
