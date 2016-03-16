@@ -2,7 +2,7 @@ import {Injectable} from "angular2/core";
 import {ProveedorModel} from "../../Model/Recursos/ProveedorModel";
 
 @Injectable()
-export class ProveedoresServiceService {
+export class ProveedoresService {
     proveedores : Array<ProveedorModel> = [];
     private tiposIdentificaciones : Array<string>;
 
@@ -23,7 +23,7 @@ export class ProveedoresServiceService {
     }
 
     push(productor : ProveedorModel) : ProveedorModel {
-        productor.id = this.proveedores[this.proveedores.length - 1].id + 1;
+        productor.id = (this.proveedores.length != 0) ? this.proveedores[this.proveedores.length - 1].id + 1 : 1;
         this.proveedores.push(productor);
 
         return productor;

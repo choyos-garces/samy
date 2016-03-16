@@ -9,7 +9,7 @@ import {ProductorModel} from "../../../Model/Recursos/ProductorModel";
     directives: [ROUTER_DIRECTIVES],
     template : `
     <div class="container-fluid">
-        <h4>Lista de Clientes</h4>
+        <h4>Lista de Productores</h4>
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -47,6 +47,6 @@ export class ListaProductoresComponent {
 
     constructor(public _productoresService : ProductoresService) {
         this.productores = this._productoresService.getProductores();
-        this.tiposIdentificaciones = this._productoresService.getTiposIdentificaciones();
+        this.tiposIdentificaciones = this._productoresService.getTiposIdentificacion();
     }
 }

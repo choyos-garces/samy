@@ -25,7 +25,7 @@ import {VerPlantacionComponent} from "../Plantaciones/VerPlantacionComponent";
                             <dd>{{ productor.id }}</dd>
                             <dt>Numero Tel&eacute;fono</dt>
                             <dd>{{ productor.numeroTelefono }}</dd>
-                            <dt>{{ tipoIdentificacion }}</dt>
+                            <dt>{{ tiposIdentificacion[productor.tipoIdentificacion] }}</dt>
                             <dd>{{ productor.identificacion }}</dd>
                             <dt>Correo Contacto</dt>
                             <dd>{{ productor.correoContacto }}</dd>
@@ -67,7 +67,7 @@ import {VerPlantacionComponent} from "../Plantaciones/VerPlantacionComponent";
 export class VerProductorComponent {
     id : number;
     productor : ProductorModel;
-    tipoIdentificacion : string;
+    tiposIdentificacion : Array<string>;
     plantaciones : Array<PlantacionModel>;
     tipos : Array<string>;
     productos : Array<string>;
@@ -90,7 +90,7 @@ export class VerProductorComponent {
             this.productos = this._plantacionesService.getProductos();
             this.unidades = this._plantacionesService.getUnidades();
 
-            this.tipoIdentificacion = this._productoresService.getTipoIdentificacion(this.productor.tipoIdentificacion);
+            this.tiposIdentificacion = this._productoresService.getTiposIdentificacion();
         }
 
     }

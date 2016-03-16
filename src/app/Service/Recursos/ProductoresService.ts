@@ -4,11 +4,11 @@ import {ProductorModel} from "../../Model/Recursos/ProductorModel";
 @Injectable()
 export class ProductoresService {
     productores : Array<ProductorModel> = [];
-    private tiposIdentificaciones : Array<string>;
+    private tiposIdentificacion : Array<string>;
     
     constructor() {
         
-        this.tiposIdentificaciones = [
+        this.tiposIdentificacion = [
             "Cédula",
             "R.U.C."
         ];
@@ -26,10 +26,6 @@ export class ProductoresService {
             new ProductorModel({id :i++, nombre : `I ${i-1} Christopher Hoyos`, numeroTelefono : '042554433', tipoIdentificacion : 1, identificacion : '0924323843', correoContacto : 'choyos@asd.com', fechaIngreso : new Date() }, true, true),
             new ProductorModel({id :i++, nombre : `J ${i-1} Christopher Hoyos`, numeroTelefono : '042554433', tipoIdentificacion : 0, identificacion : '0924323843', correoContacto : 'choyos@asd.com', fechaIngreso : new Date() }, true, true)
         );
-    }
-
-    getTipoIdentificacion(index : number) : string {
-        return this.tiposIdentificaciones[index];
     }
 
     push(productor : ProductorModel) : ProductorModel {
@@ -51,7 +47,7 @@ export class ProductoresService {
         return (resultado.length == 1) ? resultado[0] : null;
     }
 
-    getTiposIdentificaciones():Array<string> {
-        return this.tiposIdentificaciones;
+    getTiposIdentificacion():Array<string> {
+        return this.tiposIdentificacion;
     }
 }

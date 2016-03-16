@@ -10,7 +10,7 @@ import {ProductoresService} from "./Service/Recursos/ProductoresService";
 import {BodegasService} from "./Service/Recursos/BodegasService";
 import {MaterialesService} from "./Service/Recursos/MaterialesService";
 import {PlantacionesService} from "./Service/Recursos/PlantacionesService";
-import {ProveedoresServiceService} from "./Service/Recursos/ProveedoresService";
+import {ProveedoresService} from "./Service/Recursos/ProveedoresService";
 import {ContactosService} from "./Service/Recursos/ContactosService";
 
 bootstrap(Index, [
@@ -18,5 +18,5 @@ bootstrap(Index, [
     ROUTER_PROVIDERS,
     //provide(APP_BASE_HREF, {useValue: '/samy'}),
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
-    ProductoresService, BodegasService, MaterialesService, PlantacionesService, ProveedoresServiceService, ContactosService
+    ProductoresService, BodegasService, MaterialesService, PlantacionesService, ProveedoresService, ContactosService
 ]);
