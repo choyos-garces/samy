@@ -1,11 +1,11 @@
 import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from "angular2/router";
 
-import {ClienteService} from "../../../Service/Recursos/ClientesService";
-import {ClienteModel} from "../../../Model/Recursos/ClienteModel";
+import {ProductoresService} from "../../../Service/Recursos/ProductoresService";
+import {ProductorModel} from "../../../Model/Recursos/ProductorModel";
 
 @Component({
-    selector : 'ingresar-clientes',
+    selector : 'ingresar-productores',
     directives: [ROUTER_DIRECTIVES],
     template : `
     <div class="container-fluid">
@@ -25,13 +25,13 @@ import {ClienteModel} from "../../../Model/Recursos/ClienteModel";
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="#cliente of clientes" [routerLink]="['VerCliente', { id : cliente.id }]" class="router">
-                        <td>{{ cliente.nombre }}</td>
-                        <td>{{ cliente.numeroTelefono }}</td>
-                        <td>{{ tiposIdentificaciones[cliente.tipoIdentificacion] }}</td>
-                        <td>{{ cliente.identificacion}} </td>
-                        <td>{{ cliente.correoContacto }}</td>
-                        <td>{{ cliente.getFechaIngreso() }}</td>
+                    <tr *ngFor="#productor of productores" [routerLink]="['VerProductor', { id : productor.id }]" class="router">
+                        <td>{{ productor.nombre }}</td>
+                        <td>{{ productor.numeroTelefono }}</td>
+                        <td>{{ tiposIdentificaciones[productor.tipoIdentificacion] }}</td>
+                        <td>{{ productor.identificacion}} </td>
+                        <td>{{ productor.correoContacto }}</td>
+                        <td>{{ productor.getFechaIngreso() }}</td>
                         <td><i class="fa fa-pencil"></i></td>
                         <td><i class="fa fa-trash"></i></td>
                     </tr>
@@ -41,13 +41,12 @@ import {ClienteModel} from "../../../Model/Recursos/ClienteModel";
     </div>
     `
 })
-export class ListaClientesComponent {
-    clientes : Array<ClienteModel>;
+export class ListaProductoresComponent {
+    productores : Array<ProductorModel>;
     tiposIdentificaciones : Array<string>;
 
-    constructor(public _clientesService : ClienteService) {
-        this.clientes = this._clientesService.getClientes();
-        console.log(this.clientes);
-        this.tiposIdentificaciones = this._clientesService.getTiposIdentificaciones();
+    constructor(public _productoresService : ProductoresService) {
+        this.productores = this._productoresService.getProductores();
+        this.tiposIdentificaciones = this._productoresService.getTiposIdentificaciones();
     }
 }

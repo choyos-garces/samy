@@ -10,10 +10,9 @@ import {VerMaterialComponent} from "./Materiales/VerMaterialComponent";
     template : `
     <div class="shelf-drawer">
         <div class="container-fluid">
-            <h3>Materiales</h3>
-            <ul class="nav nav-tabs">
-                <li><a [routerLink]="['ListaMateriales']">Ver Materiales</a></li>
-                <li><a [routerLink]="['IngresarMaterial']">Ingresar Material</a></li>
+            <h1>Recursos / Materiales</h1>
+            <ul class="nav nav-pills">
+                <li><a [routerLink]="['IngresarMaterial']" class="action"><i class="fa fa-plus"></i> Ingresar Material</a></li>
             </ul>
         </div>
     </div>

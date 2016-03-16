@@ -1,15 +1,8 @@
 body
-  color: $color-dark-primary
+  color: $color-dark-secondary
 
 h1, h2, h3, h4, h5, h6
-  color: $color-dark-darkest
-
-a
-  color: inherit
-
-a:hover
-  cursor: pointer
-  color: $color-dark-secondary
+  font-weight: 300
 
 .form-control, .btn
   border-radius: $border-radius-simple
@@ -17,6 +10,9 @@ a:hover
 
 label
   cursor: pointer
+
+label.control-label
+  font-weight: 400
 
 .has-error .form-control
   border-color: $color-alert-base

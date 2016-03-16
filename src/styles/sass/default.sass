@@ -1,64 +1,37 @@
 @import "variables"
 @import "bootstrap_overrides"
 
-body
-  overflow: hidden
-
 .dashboard
-  background: $color-primary-base
-  color: #fff
-  line-height: 48px
-  height: 48px
-
-  a
-    color: inherit
-
-.shelf
-  position: absolute
-  top: 48px
-  left: 0
-  right: 0
-  bottom: 0
-  z-index: -1
-
-.sidebar
-  overflow: hidden
-  overflow-y: auto
-  background: $color-primary-dark
-  color: $color-light-primary
-  position: absolute
+  background-color: #fff
+  position: fixed
   top: 0
   left: 0
-  bottom: 0
-  width: 200px
-
-  h1, h2, h3, h4
-    color: $color-light-lightest
-
-  .nav-pills > li > a
-    border-radius: 0
-
-.main
-  overflow: hidden
-  overflow-y: scroll
-  position: absolute
-  top: 0
-  left: 200px
-  bottom: 0
   right: 0
+  line-height: $nav-bar-height
+  vertical-align: middle
+  height: $nav-bar-height
+  font-size: 18px
+  border-bottom: 1px solid $color-dark-lightest
+  text-align: right
+  z-index: 1
 
-  .router-link-active
-    color: #555
-    cursor: default
-    background-color: #fff
-    border: 1px solid #ddd
-    border-bottom-color: transparent
-
-.router
-  cursor: pointer
+@import "shelf/_shelf"
 
 .action
   float: right
   background: none
   border: 0
+
+.router
+  cursor: pointer
+
+@media screen and (max-width : 768px)
+  .sidebar
+    width: 0
+
+  .main
+    left: 0
+
+
+
 @import "color_tester"

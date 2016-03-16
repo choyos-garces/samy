@@ -1,35 +1,36 @@
 import {Component} from "angular2/core";
 import {Router, ROUTER_DIRECTIVES} from "angular2/router";
 
-import {ClienteService} from "../../../Service/Recursos/ClientesService";
-import {ClienteModel} from "../../../Model/Recursos/ClienteModel";
+import {ProductoresService} from "../../../Service/Recursos/ProductoresService";
+import {ProductorModel} from "../../../Model/Recursos/ProductorModel";
 import {RouteParams} from "angular2/router";
 import {PlantacionModel} from "../../../Model/Recursos/PlantacionModel";
 import {PlantacionesService} from "../../../Service/Recursos/PlantacionesService";
+import {VerPlantacionComponent} from "../Plantaciones/VerPlantacionComponent";
 
 @Component({
-    selector : 'ver-cliente',
+    selector : 'ver-productor',
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="container-fluid">
-        <h3>{{ cliente.razon }} <small>{{ cliente.cliente }}</small></h3>
+        <h3>{{ productor.razon }} <small>{{ productor.nombre }}</small></h3>
         <div class="row">
             <div class="col-sm-6">
-                <div class="panel panel-default">
+                <div class="panel">
                     <div class="panel-heading">
                         <strong>Datos de Cliente</strong>
                     </div>
                     <div class="panel-body">
                         <dl class="dl-horizontal">
                             <dt>Codigo</dt>
-                            <dd>{{ cliente.id }}</dd>
+                            <dd>{{ productor.id }}</dd>
                             <dt>Numero Tel&eacute;fono</dt>
-                            <dd>{{ cliente.numeroTelefono }}</dd>
+                            <dd>{{ productor.numeroTelefono }}</dd>
                             <dt>{{ tipoIdentificacion }}</dt>
-                            <dd>{{ cliente.identificacion }}</dd>
+                            <dd>{{ productor.identificacion }}</dd>
                             <dt>Correo Contacto</dt>
-                            <dd>{{ cliente.correoContacto }}</dd>
+                            <dd>{{ productor.correoContacto }}</dd>
                             <dt>Correo Notificaciones</dt>
-                            <dd>{{ cliente.correoNotificaciones }}</dd>
+                            <dd>{{ productor.correoNotificaciones }}</dd>
                         </dl>
                     </div>
                 </div>
@@ -40,7 +41,7 @@ import {PlantacionesService} from "../../../Service/Recursos/PlantacionesService
                         <strong>Plantaciones</strong>
                         <button type="button" class="action">Anadir <i class="fa fa-plus"></i></button>
                     </div>
-                    <table class="table table-striped">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>Nombre</th>
@@ -50,7 +51,7 @@ import {PlantacionesService} from "../../../Service/Recursos/PlantacionesService
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="#plantacion of plantaciones" [routerLink]="['VerPlantacion', { id : plantacion.id }]" class="router">
+                            <tr *ngFor="#plantacion of plantaciones" [routerLink]="['../../Plantacion/VerPlantacion', { id : plantacion.id}]" class="router">
                                 <td>{{ plantacion.nombre }}</td>
                                 <td>{{ productos[plantacion.producto] }}</td>
                                 <td>{{ tipos[plantacion.tipo] }}</td>
@@ -63,9 +64,9 @@ import {PlantacionesService} from "../../../Service/Recursos/PlantacionesService
         </div>
     </div>`
 })
-export class VerClienteComponent {
+export class VerProductorComponent {
     id : number;
-    cliente : ClienteModel;
+    productor : ProductorModel;
     tipoIdentificacion : string;
     plantaciones : Array<PlantacionModel>;
     tipos : Array<string>;
@@ -74,23 +75,23 @@ export class VerClienteComponent {
 
     constructor(public _router : Router,
                 public _routerParams : RouteParams,
-                public _clientesService : ClienteService,
+                public _productoresService : ProductoresService,
                 public _plantacionesService : PlantacionesService ){
-        this.id = parseInt(this._routerParams.get('id'));
-        this.cliente = this._clientesService.getById(this.id);
 
-        if(this.cliente == null) {
-            this._router.navigate(['ListaClientes', { redirect : 404 }])
+        this.id = parseInt(this._routerParams.get('id'));
+        this.productor = this._productoresService.getById(this.id);
+
+        if(this.productor == null) {
+            this._router.navigate(['/Error404', { redirect : "productor" }])
         }
         else {
-            this.plantaciones = this._plantacionesService.getByPropietario(this.cliente);
+            this.plantaciones = this._plantacionesService.getByPropietario(this.productor);
             this.tipos = this._plantacionesService.getTipos();
             this.productos = this._plantacionesService.getProductos();
             this.unidades = this._plantacionesService.getUnidades();
 
-            this.tipoIdentificacion = this._clientesService.getTipoIdentificacion(this.cliente.tipoIdentificacion);
+            this.tipoIdentificacion = this._productoresService.getTipoIdentificacion(this.productor.tipoIdentificacion);
         }
-
 
     }
 }

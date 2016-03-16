@@ -8,18 +8,15 @@ import {ListaBodegasComponent} from "./Bodegas/ListaBodegasComponent";
 @Component({
     selector : 'bodegas',
     directives : [ROUTER_DIRECTIVES],
-    template : `
-    <div class="shelf-drawer">
+    template : `<div class="shelf-drawer">
         <div class="container-fluid">
-            <h3>Bodegas</h3>
-            <ul class="nav nav-tabs">
-                <li><a [routerLink]="['ListaBodegas']">Ver Bodega</a></li>
-                <li><a [routerLink]="['IngresarBodega']">Ingresar Bodega</a></li>
+            <h1>Recursos / Bodegas</h1>
+            <ul class="nav nav-pills">
+                <li><a [routerLink]="['IngresarBodega']" class="action"><i class="fa fa-plus"></i> Ingresar Bodega</a></li>
             </ul>
         </div>
     </div>
-    <router-outlet></router-outlet>
-    `
+    <router-outlet></router-outlet>`
 })
 @RouteConfig([
     { path: "/", name: "ListaBodegas", component: ListaBodegasComponent, useAsDefault: true },

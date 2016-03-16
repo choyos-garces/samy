@@ -5,15 +5,18 @@ import {HTTP_PROVIDERS} from "angular2/http";
 import {ROUTER_PROVIDERS, APP_BASE_HREF, LocationStrategy, HashLocationStrategy} from "angular2/router";
 
 import {Index} from "./Component/index";
-import {ClienteService} from "./Service/Recursos/ClientesService";
+
+import {ProductoresService} from "./Service/Recursos/ProductoresService";
 import {BodegasService} from "./Service/Recursos/BodegasService";
 import {MaterialesService} from "./Service/Recursos/MaterialesService";
 import {PlantacionesService} from "./Service/Recursos/PlantacionesService";
+import {ProveedoresServiceService} from "./Service/Recursos/ProveedoresService";
+import {ContactosService} from "./Service/Recursos/ContactosService";
 
 bootstrap(Index, [
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
     //provide(APP_BASE_HREF, {useValue: '/samy'}),
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
-    ClienteService, BodegasService, MaterialesService, PlantacionesService
+    ProductoresService, BodegasService, MaterialesService, PlantacionesService, ProveedoresServiceService, ContactosService
 ]);

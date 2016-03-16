@@ -1,7 +1,7 @@
 import {Injectable} from "angular2/core";
 import {PlantacionModel} from "../../Model/Recursos/PlantacionModel";
-import {ClienteModel} from "../../Model/Recursos/ClienteModel";
-import {ClienteService} from "./ClientesService";
+import {ProductorModel} from "../../Model/Recursos/ProductorModel";
+import {ProductoresService} from "./ProductoresService";
 
 @Injectable()
 export class PlantacionesService {
@@ -10,9 +10,9 @@ export class PlantacionesService {
     private tipos : Array<string>;
     private unidades : Array<string>;
 
-    constructor(public _clientesService : ClienteService ) {
+    constructor(public _clientesService : ProductoresService ) {
         this.plantaciones = [];
-        let clientes = this._clientesService.getClientes();
+        let clientes = this._clientesService.getProductores();
 
         this.productos = ["Banano", "Verde"];
         this.tipos = ["Organico", "Convencional"];
@@ -37,7 +37,7 @@ export class PlantacionesService {
         return;
     }
 
-    getByPropietario(propietario : ClienteModel) : Array<PlantacionModel> {
+    getByPropietario(propietario : ProductorModel) : Array<PlantacionModel> {
         return this.getPlantaciones().filter(function (plantacion : PlantacionModel ) {
             return plantacion.propietario.id == propietario.id;
         });

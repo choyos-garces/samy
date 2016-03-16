@@ -1,0 +1,66 @@
+.shelf
+  position: relative
+  margin-top: $nav-bar-height
+  padding-top: 24px
+
+.sidebar
+  position: fixed
+  width: 200px
+  overflow-x: hidden
+  padding: 12px
+
+  ul.nav
+    font-size: 16px
+
+  a
+    color: inherit
+
+  a > i
+    margin-right: .6em
+
+  a.router-link-active
+    color: $color-accent-base
+    font-weight: bold
+
+.main
+  position: absolute
+  left: 200px
+  right: 0
+
+  .shelf-drawer
+    position: relative
+
+  .shelf-drawer ul
+    position: absolute
+    bottom: 0
+    right: 12px
+
+    li:not(:last-child)
+      padding-right: .6em
+
+  ul.nav
+    line-height: 1
+
+    a.action
+      color: #fff
+      background: $color-primary-base
+      border: 1px solid $color-primary-dark
+
+    a.action:hover
+      background: $color-primary-hover
+
+    a.action:active
+      background: $color-primary-active
+      border-color: $color-primary-hover
+
+    a.action.alert
+      margin: 0
+      background: $color-alert-base
+      border: 1px solid $color-alert-dark
+
+    a.action.alert:hover
+      background: $color-alert-hover
+
+    a.action.alert:active
+      background: $color-alert-active
+      border-color: $color-alert-hover

@@ -1,6 +1,6 @@
 import {PlantacionModel} from "./PlantacionModel";
 
-export class ClienteModel {
+export class ProductorModel {
     id : number;
     nombre : string;
     razon : string;
@@ -13,16 +13,16 @@ export class ClienteModel {
 
     plantaciones : Array<PlantacionModel>;
 
-    constructor(cliente : any, flagRazon : boolean = false, flagCorreo : boolean = false) {
-        this.id = cliente.id;
-        this.nombre = cliente.nombre;
-        this.razon = (flagRazon) ? cliente.nombre : cliente.razon;
-        this.numeroTelefono = cliente.numeroTelefono;
-        this.tipoIdentificacion = cliente.tipoIdentificacion;
-        this.identificacion = cliente.identificacion;
-        this.correoContacto = cliente.correoContacto;
-        this.correoNotificaciones = (flagCorreo) ? cliente.correoContacto : cliente.correoNotificaciones;
-        this.fechaIngreso  = cliente.fechaIngreso;
+    constructor(productor : any, flagRazon : boolean = false, flagCorreo : boolean = false) {
+        this.id = productor.id;
+        this.nombre = productor.nombre;
+        this.razon = (flagRazon) ? productor.nombre : productor.razon;
+        this.numeroTelefono = productor.numeroTelefono;
+        this.tipoIdentificacion = productor.tipoIdentificacion;
+        this.identificacion = productor.identificacion;
+        this.correoContacto = productor.correoContacto;
+        this.correoNotificaciones = (flagCorreo) ? productor.correoContacto : productor.correoNotificaciones;
+        this.fechaIngreso  = productor.fechaIngreso;
         
         this.plantaciones = [];
     }

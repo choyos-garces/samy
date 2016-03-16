@@ -11,10 +11,9 @@ import {ListaPlantacionesComponent} from "./Plantaciones/ListaPlantacionesCompon
     template : `
     <div class="shelf-drawer">
         <div class="container-fluid">
-            <h3>Plantaciones</h3>
-            <ul class="nav nav-tabs">
-                <li><a [routerLink]="['ListaPlantaciones']">Ver Plantaciones</a></li>
-                <li><a [routerLink]="['IngresarPlantacion']">Ingresar Plantacion</a></li>
+            <h1>Recursos / Plantaciones</h1>
+            <ul class="nav nav-pills">
+                <li><a [routerLink]="['IngresarPlantacion']" class="action"><i class="fa fa-plus"></i> Ingresar Plantaci&oacute;n</a></li>
             </ul>
         </div>
     </div>

@@ -4,8 +4,8 @@ import {Router} from "angular2/router";
 
 import {PlantacionesService} from "../../../Service/Recursos/PlantacionesService";
 import {PlantacionModel} from "../../../Model/Recursos/PlantacionModel";
-import {ClienteService} from "../../../Service/Recursos/ClientesService";
-import {ClienteModel} from "../../../Model/Recursos/ClienteModel";
+import {ProductoresService} from "../../../Service/Recursos/ProductoresService";
+import {ProductorModel} from "../../../Model/Recursos/ProductorModel";
 
 @Component({
     selector  : 'ingresar-plantacion',
@@ -99,9 +99,9 @@ export class IngresarPlantacionComponent {
     tipos : Array<string>;
     productos : Array<string>;
     unidades : Array<string>;
-    propietarios : Array<ClienteModel>;
+    propietarios : Array<ProductorModel>;
 
-    constructor(public _formBuilder : FormBuilder, public _router : Router, public _plantacionesService : PlantacionesService, public _clientesService : ClienteService ) {
+    constructor(public _formBuilder : FormBuilder, public _router : Router, public _plantacionesService : PlantacionesService, public _productoresService : ProductoresService ) {
         this.ingresoPlantacion = this._formBuilder.group({
             propietario : [null, Validators.required],
             nombre : [null, Validators.required],
@@ -114,13 +114,13 @@ export class IngresarPlantacionComponent {
         this.tipos = this._plantacionesService.getTipos();
         this.productos = this._plantacionesService.getProductos();
         this.unidades = this._plantacionesService.getUnidades();
-        this.propietarios = this._clientesService.getClientes();
+        this.propietarios = this._productoresService.getProductores();
     }
 
     submit() {
         if(this.ingresoPlantacion.valid) {
             const form = this.ingresoPlantacion.value;
-            let propietario = this._clientesService.getById(form.propietario);
+            let propietario = this._productoresService.getById(form.propietario);
             let plantacion = new PlantacionModel(null, propietario, form.nombre, form.producto, form.tipo, form.tamano, form.unidad);
 
             plantacion = this._plantacionesService.push(plantacion);
