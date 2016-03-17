@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core'
 import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
-import {RecursosComponent} from "./RecursosComponent";
+import {AdministracionComponent} from "./AdministracionComponent";
 import {InventarioComponent} from "./InventarioComponent";
 import {Error404Component} from "./Error404Component";
 
@@ -9,10 +9,13 @@ import {Error404Component} from "./Error404Component";
     template : `
     <div class="dashboard">
         <div class="container">
-            <ul class="list-inline">
-                <li><a [routerLink]="['Recursos']">Recursos</a></li>
-                <li><a [routerLink]="['Inventario']">Inventario</a></li>
-            </ul>
+            <div class="dash-wrap">
+                <a class="toggleSidebar" (click)="toggleSidebar()"><i class="fa fa-navicon"></i></a>
+                <ul class="list-inline">
+                    <li><a [routerLink]="['Administracion']">Administraci&oacute;n</a></li>
+                    <li><a [routerLink]="['Inventario']">Inventario</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="container shelf">
@@ -23,7 +26,7 @@ import {Error404Component} from "./Error404Component";
 })
 @RouteConfig([
     { path: '/404', name: 'Error404', component: Error404Component },
-    { path: '/recursos/...', name: 'Recursos', component: RecursosComponent, useAsDefault: true },
+    { path: '/administracion/...', name: 'Administracion', component: AdministracionComponent, useAsDefault: true },
     { path: '/inventario/...', name: 'Inventario', component: InventarioComponent }
 ])
 export class Index {
@@ -31,5 +34,10 @@ export class Index {
     constructor() {
     }
 
-    ngOnInit() {}
+    toggleSidebar() {
+        document.querySelector(".sidebar").classList.toggle("open")
+    }
+    ngOnInit() {
+
+    }
 }

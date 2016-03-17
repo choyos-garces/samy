@@ -10,7 +10,7 @@ import {IngresarInventarioComponent} from "./Ingresos/IngresarInventarioComponen
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="shelf-drawer">
         <div class="container-fluid">
-            <h1>Inventarios / Ingresos</h1>
+            <h1>Inventario / Ingresos</h1>
             <ul class="nav nav-pills">
                 <li><a [routerLink]="['IngresarInventario']" class="action"><i class="fa fa-arrow-circle-o-down"></i> Ingresar Material</a></li>
             </ul>

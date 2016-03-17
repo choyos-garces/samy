@@ -4,13 +4,17 @@
   padding-top: 24px
 
 .sidebar
+  padding-top: 24px
   position: fixed
-  width: 200px
+  top: $nav-bar-height
+  bottom: 0
   overflow-x: hidden
-  padding-right: 12px
+  background: #fff
 
   ul.nav
+    width: $nav-sidebar-width
     font-size: 16px
+    padding-right: .8em
 
   a
     color: inherit
@@ -19,12 +23,12 @@
     margin-right: .6em
 
   a.router-link-active
-    color: $color-accent-base
+    color: $color-accent-light
     font-weight: bold
 
 .main
   position: absolute
-  left: 200px
+  left: $nav-sidebar-width
   right: 0
 
   .shelf-drawer
@@ -64,3 +68,28 @@
     a.action.alert:active
       background: $color-alert-active
       border-color: $color-alert-hover
+
+
+@media screen and (max-width : 768px)
+  .toggleSidebar
+    display: block
+
+  .sidebar
+    width: 0
+    left: 0
+
+    ul.nav
+      padding: 0 .8em
+
+  .sidebar.open
+    border-right: 1px solid $color-dark-lightest
+    z-index: 1
+    width: auto
+
+  .main
+    left: 0
+
+@media screen and (max-width : 992px)
+  .main .shelf-drawer ul
+    position: relative
+    padding: .4em 1em

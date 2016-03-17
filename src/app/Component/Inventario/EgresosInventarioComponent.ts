@@ -9,7 +9,7 @@ import {VerEgresoInventarioComponent} from "./Egresos/VerEgresoInventarioCompone
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="shelf-drawer">
         <div class="container-fluid">
-            <h1>Inventarios / Egresos</h1>
+            <h1>Inventario / Egresos</h1>
             <ul class="nav nav-pills">
                 <li><a [routerLink]="['EgresarInventario']" class="action alert"><i class="fa fa-arrow-circle-o-up"></i> Egresar Material</a></li>
             </ul>
