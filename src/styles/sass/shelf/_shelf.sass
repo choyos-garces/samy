@@ -14,7 +14,7 @@
   ul.nav
     width: $nav-sidebar-width
     font-size: 16px
-    padding-right: .8em
+    padding-right: 1.6em
 
   a
     color: inherit
@@ -40,7 +40,7 @@
     right: 12px
 
     li:not(:last-child)
-      padding-right: .6em
+      padding-right: .4em
 
   ul.nav
     line-height: 1
@@ -75,16 +75,19 @@
     display: block
 
   .sidebar
+    z-index: 1
+    border-right: 1px solid $color-dark-lightest
+    transition: width 300ms ease-in-out
     width: 0
     left: 0
 
     ul.nav
-      padding: 0 .8em
+      width: auto
+      min-width: 230px
+      padding: 0 1.4em
 
   .sidebar.open
-    border-right: 1px solid $color-dark-lightest
-    z-index: 1
-    width: auto
+    width: 40%
 
   .main
     left: 0

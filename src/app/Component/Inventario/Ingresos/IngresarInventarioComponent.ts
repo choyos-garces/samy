@@ -11,6 +11,8 @@ import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInv
 import {MovimientosInventarioService} from "../../../Service/Inventario/MovimientosInventarioService";
 import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
 import {MaterialesService} from "../../../Service/Administracion/MaterialesService";
+import {BodegasService} from "../../../Service/Administracion/BodegasService";
+import {BodegaModel} from "../../../Model/Administracion/BodegaModel";
 
 @Component({
     selector: 'ingresar-ingreso-inventario',
@@ -36,6 +38,20 @@ import {MaterialesService} from "../../../Service/Administracion/MaterialesServi
                 <label class="control-label col-sm-4 col-md-3" for="ingresarInventarioCantidad">Cantidad</label>
                 <div class="col-sm-5 col-md-4">
                     <input type="number" step="0.01" min="0" class="form-control" id="ingresarInventarioCantidad" [(ngFormControl)]="ingresarIngresoInventario.controls['cantidad']" />
+                </div>
+                <div class="col-sm-3 col-md-5">
+                    <div class="form-control-static control-error">
+                        <i class="fa fa-exclamation-circle"></i>
+                        <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" [ngClass]=" !toggleValidationFeedback('bodega') ? 'has-error' : ''">
+                <label class="control-label col-sm-4 col-md-3" for="ingresarInventarioBodega">Bodega</label>
+                <div class="col-sm-5 col-md-4">
+                    <select class="form-control" id="ingresarInventarioBodega" [(ngFormControl)]="ingresarIngresoInventario.controls['bodega']" >
+                        <option *ngFor="#bodega of bodegas; #i = index" [value]="bodega.id">{{ bodega.nombre }}</option>
+                    </select>
                 </div>
                 <div class="col-sm-3 col-md-5">
                     <div class="form-control-static control-error">
@@ -80,20 +96,24 @@ export class IngresarInventarioComponent {
 
     materiales : Array<MaterialModel>;
     motivosMovimiento : Array<string>;
+    bodegas : Array<BodegaModel>;
 
     constructor(public _formBuilder : FormBuilder,
                 public _router : Router,
                 public _movimientosService : MovimientosInventarioService,
-                public _materailesService : MaterialesService) {
+                public _materailesService : MaterialesService, 
+                public _bodegasService : BodegasService) {
 
 
         this.motivosMovimiento = ["Ingreso por proveedor", "Transferencia desde otra Bodega", "Devolucion por Productor"];
         this.materiales = this._materailesService.getMateriales();
-
+        this.bodegas = this._bodegasService.getBodegas();
+        
         this.ingresarIngresoInventario = this._formBuilder.group({
             tipoMovimiento : [1, Validators.required],
             material : [1, Validators.required],
             cantidad : [null, Validators.required],
+            bodega : [1, Validators.required],
             motivoMovimiento : [null, Validators.required]
         });
 
@@ -101,7 +121,6 @@ export class IngresarInventarioComponent {
 
     addForms(form : ControlGroup) : void {
         const type = form.value.form;
-        console.log(type);
         if(type == "productor") this.ingresarDatosIngresarPorProductor = form;
         if(type == "proveedor") this.ingresarDatosIngresarPorProveedor = form;
         if(type == "transferencia") this.ingresarDatosIngresarPorTransferencia = form;
@@ -129,6 +148,7 @@ export class IngresarInventarioComponent {
     }
 
     submit() {
+
     }
 
     toggleValidationFeedback(control) : boolean {

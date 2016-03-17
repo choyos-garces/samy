@@ -35,4 +35,13 @@ import {ProveedoresComponent} from "./Administracion/ProveedoresComponent";
 export class AdministracionComponent {
 
     constructor() {}
+
+    ngOnInit() {
+        var links = document.querySelectorAll(".sidebar a");
+        for(var i = 0; i < links.length; i++) {
+            links[i].addEventListener("click", function() {
+                document.querySelector(".sidebar").classList.remove("open");
+            })
+        }
+    }
 }
