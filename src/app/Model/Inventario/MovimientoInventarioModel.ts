@@ -1,35 +1,41 @@
-import {MaterialModel} from "../Administracion/MaterialModel";
 import {BodegaModel} from "../Administracion/BodegaModel";
+import {MovimientoMaterialModel} from "./MovimientoMaterialModel";
 
 export class MovimientoInventarioModel {
     id : number;
     bodega : BodegaModel;
     tipoMovimiento : boolean;
-    material : MaterialModel;
-    cantidad : number;
     motivoMovimiento : number;
-    fecha : Date;
+    private _fecha : Date;
+    private _movimientoMateriales : Array<MovimientoMaterialModel>;
 
-    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : boolean, material : MaterialModel, cantidad : number, motivoMovimiento : number, fecha : Date = new Date) {
+    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : boolean, motivoMovimiento : number, fecha : Date = new Date) {
         this.id = id;
         this.bodega = bodega;
         this.tipoMovimiento = tipoMoviemiento;
-        this.material = material;
-        this.cantidad = cantidad;
         this.motivoMovimiento = motivoMovimiento;
-        this.fecha = fecha;
+        this._fecha = fecha;
+        this._movimientoMateriales = [];
     }
 
-    getFecha() : string {
-        var hours = this.fecha.getHours();
-        var minutes = this.fecha.getMinutes();
+    get movimientoMateriales() : Array<MovimientoMaterialModel> {
+        return this._movimientoMateriales;
+    }
+
+    set movimientoMateriales( value:Array<MovimientoMaterialModel> ) {
+        this._movimientoMateriales = value;
+    }
+
+    get fecha(): string {
+        var hours = this._fecha.getHours();
+        var minutes = this._fecha.getMinutes();
         var ampm = hours >= 12 ? 'pm' : 'am';
         hours = hours % 12;
         hours = hours ? hours : 12; // the hour '0' should be '12'
         var min = minutes < 10 ? '0'+minutes : minutes;
 
         var time = hours + ":" + min + ampm;
-        var date = this.fecha.getDate() + "/" + this.fecha.getMonth() + "/" + this.fecha.getFullYear();
+        var date = this._fecha.getDate() + "/" + this._fecha.getMonth() + "/" + this._fecha.getFullYear();
 
         return date + " " + time;
     }

@@ -70,7 +70,7 @@ export class EgresarInventarioComponent {
     submit() {
         if(this.readyToSubmit()) {
             var mv = this.formularios["movimiento"].value;
-            var movimiento = new MovimientoInventarioModel(null, mv.bodega, mv.tipoMovimiento, mv.material, mv.cantidad, mv.motivoMovimiento)
+            var movimiento = new MovimientoInventarioModel(null, mv.bodega, mv.tipoMovimiento, mv.motivoMovimiento)
             this._movimientosInventarioService.push(movimiento);
 
             console.log(this.formularios[this.formularioActivo]);

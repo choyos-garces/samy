@@ -32,23 +32,6 @@ import {ProveedoresService} from "../../../../Service/Administracion/Proveedores
                 <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
             </div>
         </div>
-    </div>
-    <div class="form-group" [ngClass]=" !toggleValidationFeedback('precio') ? 'has-error' : ''">
-        <label class="control-label col-sm-3" for="motivoIngresoProveedorPrecio">Precio</label>
-        <div class="col-sm-7 col-md-5">
-            <input type="number" step="0.01" placeholder="Precio Unitario" class="form-control" id="motivoIngresoProveedorPrecio" [(ngFormControl)]="motivoIngresoProveedor.controls['precio']" />
-            <div class="checkbox form-group-sm">
-                <label class="text-muted">
-                    <input type="checkbox" [(ngFormControl)]="motivoIngresoProveedor.controls['iva']"> El producto tiene I.V.A.?
-                </label>
-            </div>
-        </div>
-        <div class="col-sm-2 col-md-4">
-            <div class="form-control-static control-error">
-                <i class="fa fa-exclamation-circle"></i>
-                <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
-            </div>
-        </div>
     </div>`
 })
 export class MotivoIngresoProveedorComponent {
@@ -61,9 +44,7 @@ export class MotivoIngresoProveedorComponent {
                 public _proveedoresService : ProveedoresService) {
         this.motivoIngresoProveedor = this._formBuilder.group({
             proveedor : [1 , Validators.required],
-            factura : [null, Validators.required],
-            precio : [null, Validators.required],
-            iva : [true, Validators.required]
+            factura : [null, Validators.required]
         });
 
         this.proveedores = this._proveedoresService.getProveedores();

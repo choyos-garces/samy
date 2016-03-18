@@ -17,12 +17,12 @@ export class MovimientosInventarioService {
         let i = 1;
         this.movimientosInventario = [];
         this.movimientosInventario.push(
-            new MovimientoInventarioModel(i, bodegas[Math.floor(Math.random()*bodegas.length)], true, materiales[Math.floor(Math.random()*materiales.length)], Math.floor(Math.random()*200), 2),
-            new MovimientoInventarioModel(i, bodegas[Math.floor(Math.random()*bodegas.length)], false, materiales[Math.floor(Math.random()*materiales.length)], Math.floor(Math.random()*200), 2),
-            new MovimientoInventarioModel(i, bodegas[Math.floor(Math.random()*bodegas.length)], true, materiales[Math.floor(Math.random()*materiales.length)], Math.floor(Math.random()*200), 2),
-            new MovimientoInventarioModel(i, bodegas[Math.floor(Math.random()*bodegas.length)], false, materiales[Math.floor(Math.random()*materiales.length)], Math.floor(Math.random()*200), 2),
-            new MovimientoInventarioModel(i, bodegas[Math.floor(Math.random()*bodegas.length)], true, materiales[Math.floor(Math.random()*materiales.length)], Math.floor(Math.random()*200), 2),
-            new MovimientoInventarioModel(i, bodegas[Math.floor(Math.random()*bodegas.length)], true, materiales[Math.floor(Math.random()*materiales.length)], Math.floor(Math.random()*200), 2)
+            new MovimientoInventarioModel(i++, bodegas[Math.floor(Math.random()*bodegas.length)], true,  2),
+            new MovimientoInventarioModel(i++, bodegas[Math.floor(Math.random()*bodegas.length)], true,  2),
+            new MovimientoInventarioModel(i++, bodegas[Math.floor(Math.random()*bodegas.length)], true,  2),
+            new MovimientoInventarioModel(i++, bodegas[Math.floor(Math.random()*bodegas.length)], true,  2),
+            new MovimientoInventarioModel(i++, bodegas[Math.floor(Math.random()*bodegas.length)], true,  2),
+            new MovimientoInventarioModel(i, bodegas[Math.floor(Math.random()*bodegas.length)], true,  2)
         );
 
     }

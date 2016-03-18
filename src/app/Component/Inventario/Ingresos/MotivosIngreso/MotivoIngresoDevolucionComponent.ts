@@ -67,7 +67,6 @@ export class MotivoIngresoDevolucionComponent {
         this.productores = this._productoresService.getProductores();
 
         this.motivoIngresoDevolucion.controls["productor"].valueChanges.subscribe((productor : ProductorModel) => {
-            console.log(productor);
             this.plantaciones = this._plantacionesService.getByPropietario(productor);
         });
 

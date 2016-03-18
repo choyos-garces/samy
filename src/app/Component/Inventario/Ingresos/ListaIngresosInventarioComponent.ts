@@ -13,8 +13,6 @@ import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInv
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th>Material</th>
-                    <th>Cantidad</th>
                     <th>Origen</th>
                     <th>Bodega</th>
                     <th></th>
@@ -23,9 +21,7 @@ import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInv
             </thead>
             <tbody>
                 <tr *ngFor="#ingreso of ingresos">
-                    <td>{{ ingreso.getFecha() }}</td>
-                    <td>{{ ingreso.material.nombre }}</td>
-                    <td>{{ ingreso.cantidad }}</td>
+                    <td>{{ ingreso.fecha }}</td>
                     <td>{{ ingreso.motivoMovimiento }}</td>
                     <td>{{ ingreso.bodega.nombre }}</td>
                     <td><i class="fa fa-pencil"></i></td>

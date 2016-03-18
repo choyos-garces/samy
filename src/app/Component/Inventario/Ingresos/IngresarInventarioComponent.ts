@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {FormBuilder,ControlGroup, Validators} from "angular2/common";
+import {ControlGroup} from "angular2/common";
 import {Router} from "angular2/router";
 
 
@@ -16,24 +16,24 @@ import {MovimientosInventarioService} from "../../../Service/Inventario/Movimien
     directives: [MovimientosInventarioComponent, MotivoIngresoTransferenciaComponent, MotivoIngresoDevolucionComponent, MotivoIngresoProveedorComponent],
     template: `<div class="container-fluid">
         <h4>Ingresar a Inventario</h4>
-        <form class="form-horizontal" (ngSubmit)="submit()" autocomplete="off" spellcheck="false">
-            <movimiento-inventario (valuesChange)="submitChanges($event, 'movimiento')" (cambioMotivoMovimiento)="activarFormulario($event)" [tipoMovimiento]="ingreso" [opcionesTiposMovimiento]="opciones"></movimiento-inventario>
+        <form class="form-horizontal" autocomplete="off" spellcheck="false">
+            <movimiento-inventario (valuesChange)="submitChanges($event, 'movimiento')" (cambioMotivoMovimiento)="activarFormulario($event)" [tipoMovimiento]="motivo" [opcionesTiposMovimiento]="opciones"></movimiento-inventario>
             <div class="form-group">
                 <div class="col-sm-10 col-md-8"><hr /></div>
             </div>
-            <motivo-ingreso-proveedor (valuesChange)="submitChanges($event, 'proveedor')" [hidden]="formularioActivo !== 'proveedor'"></motivo-ingreso-proveedor>
+            <motivo-ingreso-proveedor (valuesChange)="submitChanges($event,'proveedor')" [hidden]="formularioActivo !== 'proveedor'"></motivo-ingreso-proveedor>
             <motivo-ingreso-transferencia (valuesChange)="submitChanges($event, 'transferencia')" [hidden]="formularioActivo !== 'transferencia'"></motivo-ingreso-transferencia>
             <motivo-ingreso-devolucion (valuesChange)="submitChanges($event, 'devolucion')" [hidden]="formularioActivo !== 'devolucion'"></motivo-ingreso-devolucion>
             <div class="form-group">
                 <div class="col-sm-7 col-md-5 col-sm-push-3">
-                    <input type="submit" class="btn btn-primary" value="Generar Ingreso" [disabled]="!readyToSubmit()"/>
+                    <button class="btn btn-primary" [disabled]="!readyToSubmit()" (click)="submit()">Generar Ingreso</button>
                 </div>
             </div>
         </form>
-        </div>`
+    </div>`
 })
 export class IngresarInventarioComponent {
-    ingreso = true; //Ingreso Inventario
+    motivo = true; //Ingreso Inventario
 
     formularios : Array<ControlGroup>;
     formularioActivo : string;
@@ -70,7 +70,7 @@ export class IngresarInventarioComponent {
     submit() {
         if(this.readyToSubmit()) {
             var mv = this.formularios["movimiento"].value;
-            var movimiento = new MovimientoInventarioModel(null, mv.bodega, mv.tipoMovimiento, mv.material, mv.cantidad, mv.motivoMovimiento)
+            var movimiento = new MovimientoInventarioModel(null, mv.bodega, mv.tipoMovimiento, mv.motivoMovimiento);
             this._movimientosInventarioService.push(movimiento);
 
             console.log(this.formularios[this.formularioActivo]);

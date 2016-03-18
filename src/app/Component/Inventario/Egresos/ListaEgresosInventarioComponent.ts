@@ -13,8 +13,6 @@ import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInv
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th>Material</th>
-                    <th>Cantidad</th>
                     <th>Destino</th>
                     <th>Bodega</th>
                     <th></th>
@@ -23,9 +21,7 @@ import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInv
             </thead>
             <tbody>
                 <tr *ngFor="#egreso of egresos">
-                    <td>{{ egreso.getFecha() }}</td>
-                    <td>{{ egreso.material.nombre }}</td>
-                    <td>{{ egreso.cantidad }}</td>
+                    <td>{{ egreso.fecha }}</td>>
                     <td>{{ egreso.motivoMovimiento }}</td>
                     <td>{{ egreso.bodega.nombre }}</td>
                     <td><i class="fa fa-pencil"></i></td>

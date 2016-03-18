@@ -1,41 +1,18 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
-import {FormBuilder,ControlGroup, Validators} from "angular2/common";
+import {FormBuilder,ControlGroup, Validators, Control} from "angular2/common";
 
-import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
-import {MaterialesService} from "../../../Service/Administracion/MaterialesService";
-import {BodegasService} from "../../../Service/Administracion/BodegasService";
+import {MovimientoMaterialComponent} from "./MovimientoMaterialComponent";
 import {BodegaModel} from "../../../Model/Administracion/BodegaModel"
-import {Control} from "angular2/common";
+import {BodegasService} from "../../../Service/Administracion/BodegasService";
+import {MovimientoListaMaterialesComponent} from "./MovimientoListaMaterialesComponent";
+import {MovimientoMaterialModel} from "../../../Model/Inventario/MovimientoMaterialModel";
 
 @Component({
     selector : 'movimiento-inventario',
+    directives : [MovimientoMaterialComponent, MovimientoListaMaterialesComponent],
     template : `
-    <div class="form-group" [ngClass]="!toggleValidationFeedback('material') ? 'has-error' : ''">
-        <label class="control-label col-sm-3" for="movimientoInventarioMaterial">Materiales</label>
-        <div class="col-sm-7 col-md-5">
-            <select class="form-control" id="movimientoInventarioMaterial" [ngModel]="material" (ngModelChange)="assignarFormControl($event, 'materiales', 'material')">
-                <option *ngFor="#opcion of materiales; #i = index" [value]="i">{{ opcion.nombre }}</option>
-            </select>
-        </div>
-        <div class="col-sm-2 col-md-4">
-            <div class="form-control-static control-error">
-                <i class="fa fa-exclamation-circle"></i>
-                <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
-            </div>
-        </div>
-    </div>
-    <div class="form-group" [ngClass]="!toggleValidationFeedback('cantidad') ? 'has-error' : ''">
-        <label class="control-label col-sm-3" for="movimientoInventarioCantidad">Cantidad</label>
-        <div class="col-sm-7 col-md-5">
-            <input type="number" step="0.01" min="0" class="form-control" id="movimientoInventarioCantidad" [(ngFormControl)]="movimientoInventario.controls['cantidad']" />
-        </div>
-        <div class="col-sm-2 col-md-4">
-            <div class="form-control-static control-error">
-                <i class="fa fa-exclamation-circle"></i>
-                <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
-            </div>
-        </div>
-    </div>
+    <movimiento-material (agregarMaterial)="agregarMaterial($event)"></movimiento-material>
+    <movimiento-lista-materiales [materiales]="seleccionMateriales" (actualizarMateriales)="removerMaterial($event)"></movimiento-lista-materiales>
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('bodega') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="movimientoInventarioBodega">Bodega</label>
         <div class="col-sm-7 col-md-5">
@@ -72,20 +49,15 @@ export class MovimientosInventarioComponent {
     @Input() opcionesTiposMovimiento : Array<string>;
 
     movimientoInventario : ControlGroup;
-
-    materiales : Array<MaterialModel>;
     bodegas : Array<BodegaModel>;
+    seleccionMateriales : Array<MovimientoMaterialModel> = [];
 
-    constructor(public _formBuilder : FormBuilder,
-                public _materailesService : MaterialesService,
-                public _bodegasService : BodegasService) {
+    constructor(public _formBuilder : FormBuilder, public _bodegasService : BodegasService) {
 
-        this.materiales = this._materailesService.getMateriales();
         this.bodegas = this._bodegasService.getBodegas();
 
         this.movimientoInventario = this._formBuilder.group({
-            material : [null, Validators.required],
-            cantidad : [null, Validators.required],
+            movimientosMateriales : [null, Validators.required],
             bodega : [null, Validators.required],
             motivoMovimiento : [null, Validators.required]
         });
@@ -98,6 +70,31 @@ export class MovimientosInventarioComponent {
             this.cambioMotivoMovimiento.emit(value);
         });
 
+    }
+
+    agregarMaterial(movimientoMaterial : MovimientoMaterialModel) : void {
+        this.seleccionMateriales = [
+            ...this.seleccionMateriales,
+            movimientoMaterial
+        ];
+
+        this.movimientoInventario.controls["movimientosMateriales"].updateValue(this.seleccionMateriales, {});
+    }
+
+    removerMaterial(movimientoMaterial : MovimientoMaterialModel) : void {
+        const index = this.seleccionMateriales.indexOf(movimientoMaterial);
+        
+        this.seleccionMateriales = [
+            ...this.seleccionMateriales.slice(0, index),
+            ...this.seleccionMateriales.slice(index +1)
+        ];
+
+        if(this.seleccionMateriales.length == 0) {
+            this.movimientoInventario.controls["movimientosMateriales"].updateValue(null, {});
+        }
+        else {
+            this.movimientoInventario.controls["movimientosMateriales"].updateValue(this.seleccionMateriales, {});
+        }
     }
 
     toggleValidationFeedback(control) : boolean {
