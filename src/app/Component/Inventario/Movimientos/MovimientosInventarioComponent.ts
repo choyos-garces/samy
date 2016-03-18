@@ -1,7 +1,6 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {FormBuilder,ControlGroup, Validators} from "angular2/common";
 
-import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInventarioModel"
 import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
 import {MaterialesService} from "../../../Service/Administracion/MaterialesService";
 import {BodegasService} from "../../../Service/Administracion/BodegasService";
@@ -11,11 +10,11 @@ import {Control} from "angular2/common";
 @Component({
     selector : 'movimiento-inventario',
     template : `
-    <div class="form-group" [ngClass]=" !toggleValidationFeedback('material') ? 'has-error' : ''">
+    <div class="form-group" [ngClass]="!toggleValidationFeedback('material') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="movimientoInventarioMaterial">Materiales</label>
         <div class="col-sm-7 col-md-5">
-            <select class="form-control" id="movimientoInventarioMaterial" [(ngFormControl)]="movimientoInventario.controls['material']" >
-                <option *ngFor="#material of materiales; #i = index" [value]="material.id">{{ material.nombre }}</option>
+            <select class="form-control" id="movimientoInventarioMaterial" [ngModel]="material" (ngModelChange)="assignarFormControl($event, 'materiales', 'material')">
+                <option *ngFor="#opcion of materiales; #i = index" [value]="i">{{ opcion.nombre }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -25,7 +24,7 @@ import {Control} from "angular2/common";
             </div>
         </div>
     </div>
-    <div class="form-group" [ngClass]=" !toggleValidationFeedback('cantidad') ? 'has-error' : ''">
+    <div class="form-group" [ngClass]="!toggleValidationFeedback('cantidad') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="movimientoInventarioCantidad">Cantidad</label>
         <div class="col-sm-7 col-md-5">
             <input type="number" step="0.01" min="0" class="form-control" id="movimientoInventarioCantidad" [(ngFormControl)]="movimientoInventario.controls['cantidad']" />
@@ -40,8 +39,8 @@ import {Control} from "angular2/common";
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('bodega') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="movimientoInventarioBodega">Bodega</label>
         <div class="col-sm-7 col-md-5">
-            <select class="form-control" id="movimientoInventarioBodega" [(ngFormControl)]="movimientoInventario.controls['bodega']" >
-                <option *ngFor="#bodega of bodegas; #i = index" [value]="bodega.id">{{ bodega.nombre }}</option>
+            <select class="form-control" id="movimientoInventarioBodega" [ngModel]="bodega" (ngModelChange)="assignarFormControl($event, 'bodegas', 'bodega')">
+                <option *ngFor="#opcion of bodegas; #i = index" [value]="i">{{ opcion.nombre }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -51,7 +50,7 @@ import {Control} from "angular2/common";
             </div>
         </div>
     </div>
-    <div class="form-group" [ngClass]=" !toggleValidationFeedback('motivoMovimiento') ? 'has-error' : ''">
+    <div class="form-group" [ngClass]="!toggleValidationFeedback('motivoMovimiento') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="movimientoInventarioMotivo">Tipo</label>
         <div class="col-sm-7 col-md-5">
             <select class="form-control" id="movimientoInventarioMotivo" [(ngFormControl)]="movimientoInventario.controls['motivoMovimiento']" >
@@ -88,27 +87,11 @@ export class MovimientosInventarioComponent {
             material : [null, Validators.required],
             cantidad : [null, Validators.required],
             bodega : [null, Validators.required],
-            motivoMovimiento : [null, Validators.required],
-            materialObject : [null],
-            bodegaObject : [null]
+            motivoMovimiento : [null, Validators.required]
         });
 
         this.movimientoInventario.valueChanges.subscribe(() => {
             this.valuesChange.emit(this.movimientoInventario)
-        });
-
-        this.movimientoInventario.controls["material"].valueChanges.subscribe((value)=>{
-            var materialObject = this.materiales.filter((material : MaterialModel)=> {
-                return material.id == value;
-            });
-            this.movimientoInventario.controls["materialObject"].updateValue(materialObject[0], {});
-        });
-
-        this.movimientoInventario.controls["bodega"].valueChanges.subscribe((value)=>{
-            var bodegaObject = this.bodegas.filter((bodega : BodegaModel)=> {
-                return bodega.id == value;
-            });
-            this.movimientoInventario.controls["bodegaObject"].updateValue(bodegaObject[0], {});
         });
 
         this.movimientoInventario.controls["motivoMovimiento"].valueChanges.subscribe((value) => {
@@ -120,6 +103,10 @@ export class MovimientosInventarioComponent {
     toggleValidationFeedback(control) : boolean {
         control = this.movimientoInventario.controls[control];
         return !(!control.valid && control.touched);
+    }
+
+    assignarFormControl(index, collection, control) : void {
+        this.movimientoInventario.controls[control].updateValue(this[collection][index], {});
     }
 
     ngOnInit() {

@@ -8,6 +8,7 @@ import {MotivoEgresoTransferenciaComponent} from "./MotivosEgresos/MotivoEgresoT
 import {MotivoEgresoProveedorComponent} from "./MotivosEgresos/MotivoEgresoProveedorComponent";
 
 import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInventarioModel";
+import {MovimientosInventarioService} from "../../../Service/Inventario/MovimientosInventarioService";
 
 
 @Component({
@@ -37,7 +38,7 @@ export class EgresarInventarioComponent {
     formularioActivo : string;
     opciones : Array<string>; //Opciones de Tipos de Movimiento para MovimientoInventarioComponent
 
-    constructor(public _router : Router) {
+    constructor(public _router : Router, public _movimientosInventarioService : MovimientosInventarioService) {
         this.opciones = ["Devolver a Proveedor", "Transferencia a Bodega", "Envio a Productor"];
         this.formularios = [];
 
@@ -68,8 +69,11 @@ export class EgresarInventarioComponent {
 
     submit() {
         if(this.readyToSubmit()) {
-            console.log(this.formularios["movimiento"].value);
-            console.log(this.formularios[this.formularioActivo].value);
+            var mv = this.formularios["movimiento"].value;
+            var movimiento = new MovimientoInventarioModel(null, mv.bodega, mv.tipoMovimiento, mv.material, mv.cantidad, mv.motivoMovimiento)
+            this._movimientosInventarioService.push(movimiento);
+
+            console.log(this.formularios[this.formularioActivo]);
         }
     }
 }

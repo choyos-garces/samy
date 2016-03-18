@@ -9,8 +9,8 @@ import {ProveedoresService} from "../../../../Service/Administracion/Proveedores
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('proveedor') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="motivoEgresoProveedorProveedor">Proveedor</label>
         <div class="col-sm-7 col-md-5">
-            <select class="form-control" id="motivoEgresoProveedorProveedor" [(ngFormControl)]="motivoEgresoProveedor.controls['proveedor']" >
-                <option *ngFor="#proveedor of proveedores" [value]="proveedor.id">{{ proveedor.razonSocial }}</option>
+            <select class="form-control" id="motivoEgresoProveedorProveedor" [ngModel]="proveedor" (ngModelChange)="assignarFormControl($event, 'proveedores', 'proveedor')">
+                <option *ngFor="#proveedor of proveedores;#i = index" [value]="i">{{ proveedor.razonSocial }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -58,6 +58,10 @@ export class MotivoEgresoProveedorComponent {
         return !(!control.valid && control.touched);
     }
 
+    assignarFormControl(index, collection, control) : void {
+        this.motivoEgresoProveedor.controls[control].updateValue(this[collection][index], {});
+    }
+    
     ngOnInit() {
         this.valuesChange.emit(this.motivoEgresoProveedor);
     }

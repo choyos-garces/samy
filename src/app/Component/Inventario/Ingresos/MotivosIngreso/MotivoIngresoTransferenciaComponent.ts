@@ -1,5 +1,5 @@
 import {Component, Output, EventEmitter} from "angular2/core";
-import {ControlGroup, FormBuilder, Validators} from "angular2/common";
+import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
 
 import {BodegaModel} from "../../../../Model/Administracion/BodegaModel";
 import {BodegasService} from "../../../../Service/Administracion/BodegasService";
@@ -10,8 +10,8 @@ import {BodegasService} from "../../../../Service/Administracion/BodegasService"
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('bodega') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="motivoIngresoTransferenciaBodega">Bodega</label>
         <div class="col-sm-7 col-md-5">
-            <select class="form-control" id="motivoIngresoTransferenciaBodega" [(ngFormControl)]="motivoIngresoTransferencia.controls['bodega']" >
-                <option *ngFor="#bodega of bodegas" [value]="bodega.id">{{ bodega.nombre }}</option>
+            <select class="form-control" id="motivoIngresoTransferenciaBodega" [ngModel]="bodega" (ngModelChange)="assignarFormControl($event, 'bodegas', 'bodega')">
+                <option *ngFor="#bodega of bodegas;#i = index" [value]="i">{{ bodega.nombre }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -55,6 +55,10 @@ export class MotivoIngresoTransferenciaComponent {
     toggleValidationFeedback(control) {
         control = this.motivoIngresoTransferencia.controls[control];
         return !(!control.valid && control.touched);
+    }
+
+    assignarFormControl(index, collection, control) : void {
+        this.motivoIngresoTransferencia.controls[control].updateValue(this[collection][index], {});
     }
 
     ngOnInit() {

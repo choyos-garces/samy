@@ -1,5 +1,5 @@
 import {Component, Output, EventEmitter} from "angular2/core";
-import {ControlGroup, FormBuilder, Validators} from "angular2/common";
+import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
 
 import {ProductorModel} from "../../../../Model/Administracion/ProductorModel";
 import {ProductoresService} from "../../../../Service/Administracion/ProductoresService";
@@ -12,8 +12,8 @@ import {PlantacionModel} from "../../../../Model/Administracion/PlantacionModel"
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('productor') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="motivoIngresoDevolucionProductor">Productor</label>
         <div class="col-sm-7 col-md-5">
-            <select class="form-control" id="motivoIngresoDevolucionProductor" [(ngFormControl)]="motivoIngresoDevolucion.controls['productor']" >
-                <option *ngFor="#productor of productores" [value]="productor.id">{{ productor.nombre }}</option>
+            <select class="form-control" id="motivoIngresoDevolucionProductor" [ngModel]="productor" (ngModelChange)="assignarFormControl($event, 'productores', 'productor')">
+                <option *ngFor="#productor of productores;#i = index" [value]="i">{{ productor.nombre }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -26,8 +26,8 @@ import {PlantacionModel} from "../../../../Model/Administracion/PlantacionModel"
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('plantacion') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="motivoIngresoDevolucionPlantacion">Plantaci&oacute;n</label>
         <div class="col-sm-7 col-md-5">
-            <select class="form-control" id="motivoIngresoDevolucionPlantacion" [(ngFormControl)]="motivoIngresoDevolucion.controls['plantacion']" >
-                <option *ngFor="#plantacion of plantaciones" [value]="plantacion.id">{{ plantacion.nombre }}</option>
+            <select class="form-control" id="motivoIngresoDevolucionPlantacion" [ngModel]="plantacion" (ngModelChange)="assignarFormControl($event, 'plantaciones', 'plantacion')">
+                <option *ngFor="#plantacion of plantaciones;#i = index" [value]="i">{{ plantacion.nombre }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -66,8 +66,8 @@ export class MotivoIngresoDevolucionComponent {
 
         this.productores = this._productoresService.getProductores();
 
-        this.motivoIngresoDevolucion.controls["productor"].valueChanges.subscribe((id : number) => {
-            var productor = new ProductorModel({id : id});
+        this.motivoIngresoDevolucion.controls["productor"].valueChanges.subscribe((productor : ProductorModel) => {
+            console.log(productor);
             this.plantaciones = this._plantacionesService.getByPropietario(productor);
         });
 
@@ -79,6 +79,10 @@ export class MotivoIngresoDevolucionComponent {
     toggleValidationFeedback(control) {
         control = this.motivoIngresoDevolucion.controls[control];
         return !(!control.valid && control.touched);
+    }
+
+    assignarFormControl(index, collection, control) : void {
+        this.motivoIngresoDevolucion.controls[control].updateValue(this[collection][index], {});
     }
 
     ngOnInit() {
