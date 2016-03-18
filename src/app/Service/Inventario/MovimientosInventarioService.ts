@@ -27,6 +27,13 @@ export class MovimientosInventarioService {
 
     }
 
+    push(movimiento : MovimientoInventarioModel) : MovimientoInventarioModel {
+        movimiento.id = this.movimientosInventario[this.movimientosInventario.length-1].id + 1;
+        this.movimientosInventario.push(movimiento);
+
+        return movimiento;
+    }
+
     getIngresos() : Array<MovimientoInventarioModel> {
         return this.movimientosInventario.filter((movimiento : MovimientoInventarioModel) => {
             return movimiento.tipoMovimiento == true;

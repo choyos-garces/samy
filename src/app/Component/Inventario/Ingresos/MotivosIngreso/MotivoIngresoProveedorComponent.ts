@@ -5,16 +5,16 @@ import {ProveedorModel} from "../../../../Model/Administracion/ProveedorModel";
 import {ProveedoresService} from "../../../../Service/Administracion/ProveedoresService";
 
 @Component({
-    selector : 'ingreso-proveedor',
+    selector : 'motivo-ingreso-proveedor',
     template : `
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('proveedor') ? 'has-error' : ''">
-        <label class="control-label col-sm-4 col-md-3" for="IngresoInventaroProveedor">Proveedor</label>
-        <div class="col-sm-5 col-md-4">
-            <select class="form-control" id="IngresoInventaroProveedor" [(ngFormControl)]="ingresoInventarioProveedor.controls['proveedor']" >
+        <label class="control-label col-sm-3" for="motivoIngresoProveedorProveedor">Proveedor</label>
+        <div class="col-sm-7 col-md-5">
+            <select class="form-control" id="motivoIngresoProveedorProveedor" [(ngFormControl)]="motivoIngresoProveedor.controls['proveedor']" >
                 <option *ngFor="#proveedor of proveedores" [value]="proveedor.id">{{ proveedor.razonSocial }}</option>
             </select>
         </div>
-        <div class="col-sm-3 col-md-5">
+        <div class="col-sm-2 col-md-4">
             <div class="form-control-static control-error">
                 <i class="fa fa-exclamation-circle"></i>
                 <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
@@ -22,11 +22,11 @@ import {ProveedoresService} from "../../../../Service/Administracion/Proveedores
         </div>
     </div>
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('factura') ? 'has-error' : ''">
-        <label class="control-label col-sm-4 col-md-3" for="IngresoInventaroProveedorFactura">Factura</label>
-        <div class="col-sm-5 col-md-4">
-            <input type="text" class="form-control" id="IngresoInventaroProveedorFactura" [(ngFormControl)]="ingresoInventarioProveedor.controls['factura']" />
+        <label class="control-label col-sm-3" for="motivoIngresoProveedorFactura">Factura</label>
+        <div class="col-sm-7 col-md-5">
+            <input type="tel" class="form-control" id="motivoIngresoProveedorFactura" [(ngFormControl)]="motivoIngresoProveedor.controls['factura']" />
         </div>
-        <div class="col-sm-3 col-md-5">
+        <div class="col-sm-2 col-md-4">
             <div class="form-control-static control-error">
                 <i class="fa fa-exclamation-circle"></i>
                 <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
@@ -34,34 +34,32 @@ import {ProveedoresService} from "../../../../Service/Administracion/Proveedores
         </div>
     </div>
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('precio') ? 'has-error' : ''">
-        <label class="control-label col-sm-4 col-md-3" for="IngresoInventaroProveedorPrecio">Precio</label>
-        <div class="col-sm-5 col-md-4">
-            <input type="number" step="0.01" placeholder="Precio Unitario" class="form-control" id="IngresoInventaroProveedorPrecio" [(ngFormControl)]="ingresoInventarioProveedor.controls['precio']" />
+        <label class="control-label col-sm-3" for="motivoIngresoProveedorPrecio">Precio</label>
+        <div class="col-sm-7 col-md-5">
+            <input type="number" step="0.01" placeholder="Precio Unitario" class="form-control" id="motivoIngresoProveedorPrecio" [(ngFormControl)]="motivoIngresoProveedor.controls['precio']" />
             <div class="checkbox form-group-sm">
                 <label class="text-muted">
-                    <input type="checkbox" [(ngFormControl)]="ingresoInventarioProveedor.controls['iva']"> El producto tiene I.V.A.?
+                    <input type="checkbox" [(ngFormControl)]="motivoIngresoProveedor.controls['iva']"> El producto tiene I.V.A.?
                 </label>
             </div>
         </div>
-        <div class="col-sm-3 col-md-5">
+        <div class="col-sm-2 col-md-4">
             <div class="form-control-static control-error">
                 <i class="fa fa-exclamation-circle"></i>
                 <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
             </div>
         </div>
-    </div>
-    `
+    </div>`
 })
-export class IngresarInventarioProveedorComponent {
-    @Output() submitForm = new EventEmitter();
+export class MotivoIngresoProveedorComponent {
+    @Output() valuesChange = new EventEmitter();
 
-    ingresoInventarioProveedor : ControlGroup;
+    motivoIngresoProveedor : ControlGroup;
     proveedores : Array<ProveedorModel>;
 
     constructor(public _formBuilder : FormBuilder,
                 public _proveedoresService : ProveedoresService) {
-        this.ingresoInventarioProveedor = this._formBuilder.group({
-            form : ["proveedor"],
+        this.motivoIngresoProveedor = this._formBuilder.group({
             proveedor : [1 , Validators.required],
             factura : [null, Validators.required],
             precio : [null, Validators.required],
@@ -70,17 +68,17 @@ export class IngresarInventarioProveedorComponent {
 
         this.proveedores = this._proveedoresService.getProveedores();
 
-        this.ingresoInventarioProveedor.valueChanges.subscribe(() => {
-            this.submitForm.emit(this.ingresoInventarioProveedor);
+        this.motivoIngresoProveedor.valueChanges.subscribe(() => {
+            this.valuesChange.emit(this.motivoIngresoProveedor);
         })
     }
 
     toggleValidationFeedback(control) : boolean {
-        control = this.ingresoInventarioProveedor.controls[control];
+        control = this.motivoIngresoProveedor.controls[control];
         return !(!control.valid && control.touched);
     }
 
     ngOnInit() {
-        this.submitForm.emit(this.ingresoInventarioProveedor);
+        this.valuesChange.emit(this.motivoIngresoProveedor);
     }
 }

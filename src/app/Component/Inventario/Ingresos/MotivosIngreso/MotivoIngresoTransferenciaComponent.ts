@@ -5,16 +5,16 @@ import {BodegaModel} from "../../../../Model/Administracion/BodegaModel";
 import {BodegasService} from "../../../../Service/Administracion/BodegasService";
 
 @Component({
-    selector : 'ingreso-transferencia',
+    selector : 'motivo-ingreso-transferencia',
     template : `
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('bodega') ? 'has-error' : ''">
-        <label class="control-label col-sm-4 col-md-3" for="ingresoInventaroTransferenciaBodega">Bodega</label>
-        <div class="col-sm-5 col-md-4">
-            <select class="form-control" id="ingresoInventaroTransferenciaBodega" [(ngFormControl)]="ingresoInventarioTransferencia.controls['bodega']" >
+        <label class="control-label col-sm-3" for="motivoIngresoTransferenciaBodega">Bodega</label>
+        <div class="col-sm-7 col-md-5">
+            <select class="form-control" id="motivoIngresoTransferenciaBodega" [(ngFormControl)]="motivoIngresoTransferencia.controls['bodega']" >
                 <option *ngFor="#bodega of bodegas" [value]="bodega.id">{{ bodega.nombre }}</option>
             </select>
         </div>
-        <div class="col-sm-3 col-md-5">
+        <div class="col-sm-2 col-md-4">
             <div class="form-control-static control-error">
                 <i class="fa fa-exclamation-circle"></i>
                 <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
@@ -22,45 +22,42 @@ import {BodegasService} from "../../../../Service/Administracion/BodegasService"
         </div>
     </div>
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('notas') ? 'has-error' : ''">
-        <label class="control-label col-sm-4 col-md-3" for="ingresoInventaroTransferenciaNota">Notas</label>
-        <div class="col-sm-5 col-md-4">
-            <textarea class="form-control" placeholder="Notas y observaciones" id="ingresoInventaroTransferenciaNota" [(ngFormControl)]="ingresoInventarioTransferencia.controls['notas']" ></textarea>
+        <label class="control-label col-sm-3" for="motivoIngresoTransferenciaNota">Notas</label>
+        <div class="col-sm-7 col-md-5">
+            <textarea class="form-control" placeholder="Notas y observaciones" id="motivoIngresoTransferenciaNota" [(ngFormControl)]="motivoIngresoTransferencia.controls['notas']" ></textarea>
         </div>
-        <div class="col-sm-3 col-md-5">
+        <div class="col-sm-2 col-md-4">
             <div class="form-control-static control-error">
                 <i class="fa fa-exclamation-circle"></i>
                 <span class="visible-xs-inline">Datos incompletos o no permitidos</span>
             </div>
         </div>
-    </div>
-    `
+    </div>`
 })
-export class IngresarInventarioTransferenciaComponent {
-    @Output() submitForm = new EventEmitter();
-
-    ingresoInventarioTransferencia : ControlGroup;
+export class MotivoIngresoTransferenciaComponent {
+    @Output() valuesChange = new EventEmitter();
+    motivoIngresoTransferencia : ControlGroup;
     bodegas : Array<BodegaModel>;
 
     constructor(public _formBuilder : FormBuilder, public _bodegasService : BodegasService) {
-        this.ingresoInventarioTransferencia = this._formBuilder.group({
-            form : ["transferencia"],
+        this.motivoIngresoTransferencia = this._formBuilder.group({
             bodega : [1 , Validators.required],
             notas : [null, Validators.required]
         });
 
         this.bodegas = this._bodegasService.getBodegas();
 
-        this.ingresoInventarioTransferencia.valueChanges.subscribe(() => {
-            this.submitForm.emit(this.ingresoInventarioTransferencia);
+        this.motivoIngresoTransferencia.valueChanges.subscribe(() => {
+            this.valuesChange.emit(this.motivoIngresoTransferencia);
         })
     }
 
     toggleValidationFeedback(control) {
-        control = this.ingresoInventarioTransferencia.controls[control];
+        control = this.motivoIngresoTransferencia.controls[control];
         return !(!control.valid && control.touched);
     }
 
     ngOnInit() {
-        this.submitForm.emit(this.ingresoInventarioTransferencia);
+        this.valuesChange.emit(this.motivoIngresoTransferencia);
     }
 }
