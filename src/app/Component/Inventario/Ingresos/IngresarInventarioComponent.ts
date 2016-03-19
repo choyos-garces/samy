@@ -15,7 +15,7 @@ import {MovimientosInventarioService} from "../../../Service/Inventario/Movimien
     selector: 'ingresar-inventario',
     directives: [MovimientosInventarioComponent, MotivoIngresoTransferenciaComponent, MotivoIngresoDevolucionComponent, MotivoIngresoProveedorComponent],
     template: `<div class="container-fluid">
-        <h4>Ingresar a Inventario</h4>
+        <h4>Ingresar Inventario</h4>
         <form class="form-horizontal" autocomplete="off" spellcheck="false">
             <movimiento-inventario (valuesChange)="submitChanges($event, 'movimiento')" (cambioMotivoMovimiento)="activarFormulario($event)" [tipoMovimiento]="motivo" [opcionesTiposMovimiento]="opciones"></movimiento-inventario>
             <div class="form-group">

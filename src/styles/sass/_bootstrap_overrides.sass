@@ -31,15 +31,22 @@ textarea.form-control
 .has-error .control-label
   color: $color-alert-base
 
-.input-group-btn:first-child select.form-control
-  width: auto
+.input-group
+  table-layout: fixed
+
+.input-group-btn.select-group
+  min-width: 120px
+
+.input-group-btn:first-child .form-control
   border-radius: $border-radius-simple
   border-bottom-right-radius: 0
   border-top-right-radius: 0
   border-right: 0
 
-.input-group-btn:last-child select.form-control
-  width: auto
+.input-group-btn:not(:first-child) .form-control
+  border-right: 0
+
+.input-group-btn:last-child .form-control
   border-radius: $border-radius-simple
   border-bottom-left-radius: 0
   border-top-left-radius: 0
@@ -48,3 +55,7 @@ textarea.form-control
 .input-group-btn:last-child button.form-control
   border-bottom-right-radius: $border-radius-simple
   border-top-right-radius: $border-radius-simple
+
+@media screen and (max-width : 768px)
+  .input-group-btn.select-group
+    min-width: 80px
