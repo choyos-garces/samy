@@ -5,25 +5,25 @@ import {MovimientosInventarioService} from "../../../Service/Inventario/Movimien
 import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInventarioModel";
 
 @Component({
-    selector: 'lista-egresos-inventario',
-    directives: [],
+    selector: 'lista-movimientos',
+    directives: [ROUTER_DIRECTIVES],
     template: `<div class="container-fluid">
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th>Destino</th>
+                    <th>Origen</th>
                     <th>Bodega</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="#egreso of egresos">
-                    <td>{{ egreso.fecha }}</td>>
-                    <td>{{ egreso.motivoMovimiento }}</td>
-                    <td>{{ egreso.bodega.nombre }}</td>
+                <tr *ngFor="#ingreso of movimientos">
+                    <td>{{ ingreso.fecha }}</td>
+                    <td>{{ ingreso.motivoMovimiento }}</td>
+                    <td>{{ ingreso.bodega.nombre }}</td>
                     <td><i class="fa fa-pencil"></i></td>
                     <td><i class="fa fa-trash-o"></i></td>
                 </tr>
@@ -32,10 +32,10 @@ import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInv
     </div>
     </div>`
 })
-export class ListaEgresosInventarioComponent {
-    egresos : Array<MovimientoInventarioModel>;
+export class ListaMovimientosInventarioComponent {
+    movimientos : Array<MovimientoInventarioModel>;
 
     constructor(public _movimientosService : MovimientosInventarioService) {
-        this.egresos = this._movimientosService.getEgresos();
+        this.movimientos = this._movimientosService.movimientosInventario;
     }
 }

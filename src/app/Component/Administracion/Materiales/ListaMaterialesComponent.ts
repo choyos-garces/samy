@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES} from 'angular2/router'
+import {ROUTER_DIRECTIVES} from 'angular2/router'
 import {MaterialesService} from "../../../Service/Administracion/MaterialesService";
 import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
 
@@ -15,7 +15,7 @@ import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
                         <th>Codigo</th>
                         <th>Nombre</th>
                         <th>Tipo Material</th>
-                        <th>Ingreso</th>
+                        <th>Creado</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -24,8 +24,8 @@ import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
                     <tr *ngFor="#material of materiales" [routerLink]="['VerMaterial', { id : material.id }]" class="router">
                         <td>{{ material.codigo }}</td>
                         <td>{{ material.nombre }}</td>
-                        <td>{{ tiposMaterial[material.tipo] }}</td>
-                        <td>{{ material.getFechaIngreso() }}</td>
+                        <td>{{ material.tipo.label }}</td>
+                        <td>{{ material.fecha | date : "MM/dd/yy h:m" }}</td>
                         <td><i class="fa fa-pencil"></i></td>
                         <td><i class="fa fa-trash"></i></td>
                     </tr>
@@ -36,10 +36,8 @@ import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
 })
 export class ListaMaterialesComponent {
     materiales : Array<MaterialModel>;
-    tiposMaterial : Array<string>;
 
-    constructor(public _materialesService : MaterialesService, public _router : Router) {
-        this.materiales = this._materialesService.getMateriales();
-        this.tiposMaterial = this._materialesService.getTiposMaterial();
+    constructor(public _materialesService : MaterialesService) {
+        this.materiales = this._materialesService.materiales;
     }
 }

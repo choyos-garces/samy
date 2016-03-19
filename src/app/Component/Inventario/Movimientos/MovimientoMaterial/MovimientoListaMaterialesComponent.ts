@@ -1,5 +1,5 @@
 import {Input, Component, Output, EventEmitter} from "angular2/core";
-import {MovimientoMaterialModel} from "../../../Model/Inventario/MovimientoMaterialModel";
+import {MovimientoMaterialModel} from "../../../../Model/Inventario/MovimientoMaterialModel";
 
 @Component({
     selector : 'movimiento-lista-materiales',

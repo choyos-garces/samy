@@ -1,29 +1,30 @@
 import {BodegaModel} from "../Administracion/BodegaModel";
 import {MovimientoMaterialModel} from "./MovimientoMaterialModel";
+import {SimpleKey} from "../SimpleKey";
 
 export class MovimientoInventarioModel {
     id : number;
     bodega : BodegaModel;
     tipoMovimiento : boolean;
-    motivoMovimiento : number;
+    motivoMovimiento : SimpleKey;
     private _fecha : Date;
-    private _movimientoMateriales : Array<MovimientoMaterialModel>;
+    private _movimientosMateriales : Array<MovimientoMaterialModel>;
 
-    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : boolean, motivoMovimiento : number, fecha : Date = new Date) {
+    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : boolean, motivoMovimiento : SimpleKey, fecha : Date = new Date) {
         this.id = id;
         this.bodega = bodega;
         this.tipoMovimiento = tipoMoviemiento;
         this.motivoMovimiento = motivoMovimiento;
         this._fecha = fecha;
-        this._movimientoMateriales = [];
+        this._movimientosMateriales = [];
     }
 
-    get movimientoMateriales() : Array<MovimientoMaterialModel> {
-        return this._movimientoMateriales;
+    get movimientosMateriales() : Array<MovimientoMaterialModel> {
+        return this._movimientosMateriales;
     }
 
-    set movimientoMateriales( value:Array<MovimientoMaterialModel> ) {
-        this._movimientoMateriales = value;
+    set movimientosMateriales(value:Array<MovimientoMaterialModel> ) {
+        this._movimientosMateriales = value;
     }
 
     get fecha(): string {

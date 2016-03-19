@@ -128,6 +128,14 @@ module.exports = function(grunt) {
         clean: {
             build: ["build/**/*"],
             dist: ["dist/**/*"]
+        },
+
+        sloc : {
+            src : {
+                files: {
+                    'build/app' : ['*/**']
+                }
+            }
         }
     });
 
@@ -144,4 +152,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-browser-sync");
+    grunt.loadNpmTasks('grunt-sloc');
 };

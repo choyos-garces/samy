@@ -1,5 +1,6 @@
 import {MaterialModel} from "../Administracion/MaterialModel";
 import {MovimientoInventarioModel} from "./MovimientoInventarioModel";
+
 export class MovimientoMaterialModel {
     id : number;
     material : MaterialModel;

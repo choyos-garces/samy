@@ -1,14 +1,15 @@
 import {Component, EventEmitter, Output} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
 
-import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
-import {MaterialesService} from "../../../Service/Administracion/MaterialesService";
-import {MovimientoMaterialModel} from "../../../Model/Inventario/MovimientoMaterialModel";
-import {FilterPropertyPipe} from "../../../Pipe/FilterPropertyPipe";
+import {MaterialModel} from "../../../../Model/Administracion/MaterialModel";
+import {MaterialesService} from "../../../../Service/Administracion/MaterialesService";
+import {MovimientoMaterialModel} from "../../../../Model/Inventario/MovimientoMaterialModel";
+import {SimpleKey} from "../../../../Model/SimpleKey";
+import {FilterSimpleKey} from "../../../../Pipes/FilterSimpleKey";
 
 @Component({
     selector : "movimiento-material",
-    pipes : [FilterPropertyPipe],
+    pipes : [FilterSimpleKey],
     directives : [],
     template : `<div class="form-group">
         <label class="control-label col-sm-3" for="movimientoInventarioMaterial">Materiales</label>
@@ -16,12 +17,12 @@ import {FilterPropertyPipe} from "../../../Pipe/FilterPropertyPipe";
             <div class="input-group">
                 <div class="input-group-btn select-group">
                     <select class="form-control" id="movimientoInventarioMaterial" [(ngModel)]="tipoMaterial">
-                        <option *ngFor="#tipo of tiposMaterial;#i = index" [value]="i">{{ tipo }}</option>
+                        <option *ngFor="#opcion of tiposMaterial" [value]="opcion.id">{{ opcion.label }}</option>
                     </select>
                 </div>
                 <div class="input-group-btn select-group">
-                    <select class="form-control" id="movimientoInventarioMaterial" [(ngModel)]="material" (ngModelChange)="assignarFormControl($event, 'materiales', 'material')">
-                        <option *ngFor="#opcion of materiales | filterProperty : 'number' : 'tipo' : tipoMaterial;#i = index" [value]="i">{{ opcion.nombre }}</option>
+                    <select class="form-control" id="movimientoInventarioMaterial" [(ngModel)]="material" (ngModelChange)="objectToFormControl($event, 'materiales', 'material')">
+                        <option *ngFor="#opcion of materiales | filterSimpleKey : 'number' : 'tipo' : tipoMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
                     </select>
                 </div>
                 <input type="number" placeholder="Cantidad" step="0.01" min="0" class="form-control" id="movimientoInventarioCantidad" [(ngFormControl)]="movimietoMaterial.controls['cantidad']" />
@@ -35,14 +36,14 @@ import {FilterPropertyPipe} from "../../../Pipe/FilterPropertyPipe";
 export class MovimientoMaterialComponent {
     @Output() agregarMaterial = new EventEmitter();
     movimietoMaterial : ControlGroup;
-    materiales : Array<MaterialModel>;
-    tiposMaterial : Array<string>;
+    materiales :MaterialModel[];
+    tiposMaterial : SimpleKey[];
     tipoMaterial; //Temporary Model
     material; //Temporary Model
     
     constructor(public _formBuilder : FormBuilder, public _materailesService : MaterialesService) {
-        this.materiales = this._materailesService.getMateriales();
-        this.tiposMaterial = this._materailesService.getTiposMaterial();
+        this.materiales = this._materailesService.materiales;
+        this.tiposMaterial = this._materailesService.tiposMaterial;
 
         this.movimietoMaterial = this._formBuilder.group({
             material : [null, Validators.required],
@@ -64,8 +65,9 @@ export class MovimientoMaterialComponent {
         }
     }
 
-    assignarFormControl(index, collection, control) : void {
-        this.movimietoMaterial.controls[control].updateValue(this[collection][index], {});
-    }
+    objectToFormControl(id, collection, control) : void {
+        const result = this[collection].filter((item : any) => item.id == id );
 
+        this.movimietoMaterial.controls[control].updateValue((result.length == 1) ? result[0] : null);
+    }
 }

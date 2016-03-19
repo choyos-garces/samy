@@ -4,7 +4,7 @@
   "description": "Pagina de Hoyos Garces SA",
   "main": "index.html",
   "scripts": {
-    "typings" : "typings install --ambient",
+    "typings": "typings install --ambient",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -27,6 +27,7 @@
     "grunt-contrib-sass": "^0.9.2",
     "grunt-contrib-uglify": "^1.0.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-sloc": "^0.6.0",
     "grunt-typescript": "^0.8.0",
     "typings": "^0.6.8"
   },
