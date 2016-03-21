@@ -1,22 +1,42 @@
-import {BodegaModel} from "../Administracion/BodegaModel";
 import {MovimientoMaterialModel} from "./MovimientoMaterialModel";
 import {SimpleKey} from "../SimpleKey";
 
+import {BodegaModel} from "../Administracion/BodegaModel";
+import {ProveedorModel} from "../Administracion/ProveedorModel";
+import {PlantacionModel} from "../Administracion/PlantacionModel";
+
 export class MovimientoInventarioModel {
-    id : number;
-    bodega : BodegaModel;
-    tipoMovimiento : boolean;
-    motivoMovimiento : SimpleKey;
+    private _id : number;
+    private _bodega : BodegaModel;
+    private _tipoMovimiento : number;
+    private _motivoMovimiento : SimpleKey;
     private _fecha : Date;
     private _movimientosMateriales : Array<MovimientoMaterialModel>;
+    private _detalles : { proveedor?:ProveedorModel, bodega?:BodegaModel, plantacion?:PlantacionModel, factura?:string, notas?:string};
 
-    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : boolean, motivoMovimiento : SimpleKey, fecha : Date = new Date) {
-        this.id = id;
-        this.bodega = bodega;
-        this.tipoMovimiento = tipoMoviemiento;
-        this.motivoMovimiento = motivoMovimiento;
+    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : number, motivoMovimiento : SimpleKey, fecha : Date = new Date) {
+        this._id = id;
+        this._bodega = bodega;
+        this._tipoMovimiento = tipoMoviemiento;
+        this._motivoMovimiento = motivoMovimiento;
         this._fecha = fecha;
         this._movimientosMateriales = [];
+    }
+
+    get id():number {
+        return this._id;
+    }
+
+    get bodega():BodegaModel {
+        return this._bodega;
+    }
+
+    get tipoMovimiento():number {
+        return this._tipoMovimiento;
+    }
+
+    get motivoMovimiento():SimpleKey {
+        return this._motivoMovimiento;
     }
 
     get movimientosMateriales() : Array<MovimientoMaterialModel> {
@@ -27,17 +47,28 @@ export class MovimientoInventarioModel {
         this._movimientosMateriales = value;
     }
 
-    get fecha(): string {
-        var hours = this._fecha.getHours();
-        var minutes = this._fecha.getMinutes();
-        var ampm = hours >= 12 ? 'pm' : 'am';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        var min = minutes < 10 ? '0'+minutes : minutes;
+    get fecha(): Date {
+        return this._fecha;
+    }
 
-        var time = hours + ":" + min + ampm;
-        var date = this._fecha.getDate() + "/" + this._fecha.getMonth() + "/" + this._fecha.getFullYear();
 
-        return date + " " + time;
+    get detalles():{proveedor?:ProveedorModel; bodega?:BodegaModel; plantacion?:PlantacionModel; factura?:string; notas?:string} {
+        return this._detalles;
+    }
+
+    set detalles(value:{proveedor?:ProveedorModel; bodega?:BodegaModel; plantacion?:PlantacionModel; factura?:string; notas?:string}) {
+        this._detalles = value;
+    }
+
+    toJSON() {
+        return {
+            id : this.id,
+            bodega : this.bodega,
+            tipoMovimiento : this.tipoMovimiento,
+            motivoMovimiento : this.motivoMovimiento,
+            fecha : this.fecha,
+            movimientosMateriales : this.movimientosMateriales,
+            opciones : this.detalles
+        }
     }
 }

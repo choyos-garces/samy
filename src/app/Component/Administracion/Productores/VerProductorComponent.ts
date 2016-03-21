@@ -6,29 +6,34 @@ import {ProductorModel} from "../../../Model/Administracion/ProductorModel";
 import {RouteParams} from "angular2/router";
 import {PlantacionModel} from "../../../Model/Administracion/PlantacionModel";
 import {PlantacionesService} from "../../../Service/Administracion/PlantacionesService";
-import {VerPlantacionComponent} from "../Plantaciones/VerPlantacionComponent";
 
 @Component({
     selector : 'ver-productor',
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="container-fluid">
-        <h3>{{ productor.razon }} <small>{{ productor.nombre }}</small></h3>
+        <h3>Productor</h3>
         <div class="row">
             <div class="col-sm-6">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <strong>Datos de Cliente</strong>
-                    </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Datos de Cliente</div>
                     <div class="panel-body">
-                        <dl class="dl-horizontal">
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
                             <dt>Codigo</dt>
                             <dd>{{ productor.id }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
                             <dt>Numero Tel&eacute;fono</dt>
                             <dd>{{ productor.numeroTelefono }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
                             <dt>{{ tiposIdentificacion[productor.tipoIdentificacion] }}</dt>
                             <dd>{{ productor.identificacion }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
                             <dt>Correo Contacto</dt>
                             <dd>{{ productor.correoContacto }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
                             <dt>Correo Notificaciones</dt>
                             <dd>{{ productor.correoNotificaciones }}</dd>
                         </dl>
@@ -38,8 +43,8 @@ import {VerPlantacionComponent} from "../Plantaciones/VerPlantacionComponent";
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>Plantaciones</strong>
-                        <button type="button" class="action">Anadir <i class="fa fa-plus"></i></button>
+                        Plantaciones
+                        <a class="pull-right" [routerLink]="['../../Plantacion/IngresarPlantacion', { productor : productor.id }]"><i class="fa fa-plus fa-fw"></i> Anadir</a>
                     </div>
                     <table class="table table-hover">
                         <thead>
@@ -53,9 +58,9 @@ import {VerPlantacionComponent} from "../Plantaciones/VerPlantacionComponent";
                         <tbody>
                             <tr *ngFor="#plantacion of plantaciones" [routerLink]="['../../Plantacion/VerPlantacion', { id : plantacion.id}]" class="router">
                                 <td>{{ plantacion.nombre }}</td>
-                                <td>{{ productos[plantacion.producto] }}</td>
-                                <td>{{ tipos[plantacion.tipo] }}</td>
-                                <td>{{ plantacion.tamano }} {{ unidades[plantacion.unidad] }}</td>
+                                <td>{{ plantacion.producto.label }}</td>
+                                <td>{{ plantacion.tipo.label }}</td>
+                                <td>{{ plantacion.tamano }} {{ plantacion.unidad.label }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -65,33 +70,21 @@ import {VerPlantacionComponent} from "../Plantaciones/VerPlantacionComponent";
     </div>`
 })
 export class VerProductorComponent {
-    id : number;
     productor : ProductorModel;
     tiposIdentificacion : Array<string>;
     plantaciones : Array<PlantacionModel>;
-    tipos : Array<string>;
-    productos : Array<string>;
-    unidades : Array<string>;
 
     constructor(public _router : Router,
                 public _routerParams : RouteParams,
                 public _productoresService : ProductoresService,
-                public _plantacionesService : PlantacionesService ){
+                public _plantacionesService : PlantacionesService ) {}
 
-        this.id = parseInt(this._routerParams.get('id'));
-        this.productor = this._productoresService.getById(this.id);
+    ngOnInit() {
+        const id = parseInt(this._routerParams.get('id'));
+        this.productor = this._productoresService.getById(id);
+        if(this.productor == null) this._router.navigate(['/Error404']);
 
-        if(this.productor == null) {
-            this._router.navigate(['/Error404', { redirect : "productor" }])
-        }
-        else {
-            this.plantaciones = this._plantacionesService.getByPropietario(this.productor);
-            this.tipos = this._plantacionesService.getTipos();
-            this.productos = this._plantacionesService.getProductos();
-            this.unidades = this._plantacionesService.getUnidades();
-
-            this.tiposIdentificacion = this._productoresService.getTiposIdentificacion();
-        }
-
+        this.plantaciones = this._plantacionesService.getByPropietario(this.productor);
+        this.tiposIdentificacion = this._productoresService.getTiposIdentificacion();
     }
 }

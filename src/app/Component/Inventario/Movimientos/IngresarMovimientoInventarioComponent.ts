@@ -14,10 +14,9 @@ import {MotivoIngresoProveedorComponent} from "./MotivosIngreso/MotivoIngresoPro
 import {MotivoEgresoProductorComponent} from "./MotivosEgresos/MotivoEgresoProductorComponent";
 import {MotivoEgresoProveedorComponent} from "./MotivosEgresos/MotivoEgresoProveedorComponent";
 import {MotivoEgresoTransferenciaComponent} from "./MotivosEgresos/MotivoEgresoTransferenciaComponent";
-import {InventarioIngresoProductorModel} from "../../../Model/Inventario/Ingresos/InventarioIngresoProductorModel";
-import {stringify} from "angular2/src/upgrade/util";
-import {InventarioIngresoBodegaModel} from "../../../Model/Inventario/Ingresos/InventarioIngresoBodegaModel";
-import {InventarioIngresoProveedorModel} from "../../../Model/Inventario/Ingresos/InventarioIngresoProveedorModel";
+import {ProveedorModel} from "../../../Model/Administracion/ProveedorModel";
+import {BodegaModel} from "../../../Model/Administracion/BodegaModel";
+import {PlantacionModel} from "../../../Model/Administracion/PlantacionModel";
 
 @Component({
     selector: 'ingresar-inventario',
@@ -76,17 +75,15 @@ export class IngresarMovimientoInventarioComponent {
             var movimientoInventario = new MovimientoInventarioModel(null, formularioMovimiento.bodega, formularioMovimiento.tipoMovimiento, formularioMovimiento.motivoMovimiento);
             movimientoInventario.movimientosMateriales = formularioMovimiento.movimientosMateriales;
 
-            var fa = this.formularios[this.formularioActivo].value;
-            var data : Object;
-            if( movimientoInventario.motivoMovimiento.id == 1) data = new InventarioIngresoProveedorModel(null, movimientoInventario, fa.proveedor, fa.factura);
-            if( movimientoInventario.motivoMovimiento.id == 2) data = new InventarioIngresoBodegaModel(null, movimientoInventario, fa.bodega, fa.notas);
-            if( movimientoInventario.motivoMovimiento.id == 3) data = new InventarioIngresoProductorModel(null, movimientoInventario, fa.process, fa.plantacion);
-            //if( movimientoInventario.motivoMovimiento.id == 4);
-            //if( movimientoInventario.motivoMovimiento.id == 5);
-            //if( movimientoInventario.motivoMovimiento.id == 6);
+            const fa = this.formularios[this.formularioActivo].value;
+            if( movimientoInventario.motivoMovimiento.id == 1) movimientoInventario.detalles = { proveedor : <ProveedorModel> fa.proveedor, factura : <string> fa.factura };
+            if( movimientoInventario.motivoMovimiento.id == 2) movimientoInventario.detalles = { bodega : <BodegaModel> fa.bodega, notas :  <string> fa.notas };
+            if( movimientoInventario.motivoMovimiento.id == 3) movimientoInventario.detalles = { plantacion : <PlantacionModel> fa.plantacion };
+            if( movimientoInventario.motivoMovimiento.id == 4) movimientoInventario.detalles = { plantacion : <PlantacionModel> fa.plantacion };
+            if( movimientoInventario.motivoMovimiento.id == 5) movimientoInventario.detalles = { bodega : <BodegaModel> fa.bodega, notas :  <string> fa.notas };
+            if( movimientoInventario.motivoMovimiento.id == 6) movimientoInventario.detalles = { proveedor : <ProveedorModel> fa.proveedor, notas :  <string> fa.notas };
 
-            console.log(data);
-
+            window["test"] = movimientoInventario;
         }
     }
 

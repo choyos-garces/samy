@@ -4,8 +4,8 @@ import {SimpleKey} from "../../Model/SimpleKey";
 
 @Injectable()
 export class MaterialesService {
+    private _materiales : Array<MaterialModel> = [];
     private _tiposMaterial : Array<SimpleKey>;
-    private _materiales : Array<MaterialModel>;
 
     constructor() {
         this._tiposMaterial = [
@@ -17,7 +17,6 @@ export class MaterialesService {
             new SimpleKey(6, "Sticker de Corte")
         ];
 
-        this._materiales = [];
         this._materiales.push(
             new MaterialModel(1, "CA-001", "Cosa A", this._tiposMaterial[0]),
             new MaterialModel(2, "CA-002", "Cosa B", this._tiposMaterial[0]),
@@ -46,6 +45,10 @@ export class MaterialesService {
         this._tiposMaterial = value;
     }
 
+    getById(id : number) : MaterialModel{
+        const result = this.materiales.filter((material : MaterialModel) => material.id == id);
+        return result.length == 1 ? result[0] : null;
+    }
 
     push(material : MaterialModel) : MaterialModel {
         material.id = this._materiales[this._materiales.length-1].id + 1;
@@ -61,13 +64,5 @@ export class MaterialesService {
             ...this.materiales.slice(0, index),
             ...this.materiales.slice(index+1)
         ]
-    }
-
-    getById(id : number) : MaterialModel {
-        const results  = this._materiales.filter(function(material : MaterialModel) {
-           return material.id == id;
-        });
-
-        return (results.length == 1) ? results[0] : null;
     }
 }

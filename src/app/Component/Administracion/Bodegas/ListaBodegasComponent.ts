@@ -23,7 +23,7 @@ import {BodegaModel} from "../../../Model/Administracion/BodegaModel";
                     <tr *ngFor="#bodega of bodegas" [routerLink]="['VerBodega', { id : bodega.id }]" class="router">
                         <td>{{ bodega.nombre }}</td>
                         <td>{{ bodega.codigo }}</td>
-                        <td>{{ bodega.getFechaIngreso() }}</td>
+                        <td>{{ bodega.fecha | date }}</td>
                         <td><i class="fa fa-pencil"></i></td>
                         <td><i class="fa fa-trash"></i></td>
                     </tr>
@@ -35,7 +35,7 @@ import {BodegaModel} from "../../../Model/Administracion/BodegaModel";
 export class ListaBodegasComponent {
     bodegas : Array<BodegaModel>;
 
-    constructor(public _router : Router, public _bodegasService : BodegasService) {
-        this.bodegas  = this._bodegasService.getBodegas();
+    constructor(public _bodegasService : BodegasService) {
+        this.bodegas  = this._bodegasService.bodegas;
     }
 }

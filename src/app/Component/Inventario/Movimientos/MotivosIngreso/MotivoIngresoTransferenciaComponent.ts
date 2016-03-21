@@ -45,7 +45,7 @@ export class MotivoIngresoTransferenciaComponent {
             notas : [null, Validators.required]
         });
 
-        this.bodegas = this._bodegasService.getBodegas();
+        this.bodegas = this._bodegasService.bodegas;
 
         this.motivoIngresoTransferencia.valueChanges.subscribe(() => {
             this.valuesChange.emit(this.motivoIngresoTransferencia);

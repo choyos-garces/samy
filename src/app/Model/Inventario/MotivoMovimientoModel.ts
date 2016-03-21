@@ -20,4 +20,12 @@ export class MotivoMovimientoModel {
     get tipo():number {
         return this._tipo;
     }
+    
+    toJSON() {
+        return {
+            id : this.id,
+            label : this.label,
+            tipo : this.tipo
+        }
+    }
 }

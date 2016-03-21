@@ -56,8 +56,7 @@ export class IngresarBodegaComponent {
     submit() {
         if(this.ingresarBodega.valid) {
             const form = this.ingresarBodega.value;
-            let bodega = new BodegaModel(form.codigo, form.nombre);
-            bodega.fechaIngreso = new Date();
+            let bodega = new BodegaModel(null, form.codigo, form.nombre);
 
             bodega = this._bodegaService.push(bodega);
             this._router.navigate(['VerBodega', { id  : bodega.id }]);

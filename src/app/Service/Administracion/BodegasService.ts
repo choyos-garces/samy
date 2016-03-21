@@ -3,35 +3,28 @@ import {BodegaModel} from "../../Model/Administracion/BodegaModel";
 
 @Injectable()
 export class BodegasService {
-    private bodegas : Array<BodegaModel>;
+    private _bodegas : Array<BodegaModel> = [];
 
     constructor() {
-        this.bodegas = [];
-        this.bodegas.push(
-            new BodegaModel("Q-001", "Valencia", 1, new Date()),
-            new BodegaModel("G-001", "Oficina", 2, new Date()),
-            new BodegaModel("G-002", "Chrisitan", 3, new Date())
-        );
+        this.push(new BodegaModel(null, "Q-001", "Valencia"));
+        this.push(new BodegaModel(null, "G-001", "Oficina"));
+        this.push(new BodegaModel(null, "G-002", "Chrisitan"));
     }
 
     push(bodega : BodegaModel) : BodegaModel {
-        bodega.id = this.bodegas[this.bodegas.length-1].id + 1;
-        this.bodegas.push(bodega);
+        const id = this.bodegas.length != 0 ? this.bodegas[this.bodegas.length-1].id : 0;
+        bodega.id = id + 1;
+        this.bodegas = [...this.bodegas, bodega];
 
         return bodega;
     }
 
-    getBodegas() : Array<BodegaModel> {
-        return this.bodegas;
+    get bodegas():Array<BodegaModel> {
+        return this._bodegas;
     }
 
-    getById(id : number) {
-        var bodegas = this.getBodegas();
-
-        bodegas.filter((bodega : BodegaModel) => {
-            return bodega.id == id;
-        });
-
-        return bodegas;
+    set bodegas(value:Array<BodegaModel>) {
+        this._bodegas = value;
     }
+
 }

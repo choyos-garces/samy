@@ -80,7 +80,7 @@ export class MovimientoInventarioComponent {
                 public _movimientosInvetarioService : MovimientosInventarioService) {
 
         this.motivosMovimiento = this._movimientosInvetarioService.motivosMovimiento;
-        this.bodegas = this._bodegasService.getBodegas();
+        this.bodegas = this._bodegasService.bodegas;
 
         this.movimientoInventario = this._formBuilder.group({
             tipoMovimiento : [null, Validators.required],

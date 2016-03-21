@@ -1,16 +1,45 @@
 import {MaterialModel} from "../Administracion/MaterialModel";
-import {MovimientoInventarioModel} from "./MovimientoInventarioModel";
 
 export class MovimientoMaterialModel {
-    id : number;
-    material : MaterialModel;
-    cantidad : number;
-    movimientoInventario : MovimientoInventarioModel;
+    private _id : number;
+    private _material : MaterialModel;
+    private _cantidad : number;
 
-    constructor(id : number = null, material : MaterialModel, cantidad : number, movimientoInventario : MovimientoInventarioModel = null) {
-        this.id = id;
-        this.material = material;
-        this.cantidad = cantidad;
-        this.movimientoInventario = movimientoInventario;
+    constructor(id : number = null, material : MaterialModel, cantidad : number) {
+        this._id = id;
+        this._material = material;
+        this._cantidad = cantidad;
+    }
+
+    get id():number {
+        return this._id;
+    }
+
+    set id(value:number) {
+        this._id = value;
+    }
+
+    get material():MaterialModel {
+        return this._material;
+    }
+
+    set material(value:MaterialModel) {
+        this._material = value;
+    }
+
+    get cantidad():number {
+        return this._cantidad;
+    }
+
+    set cantidad(value:number) {
+        this._cantidad = value;
+    }
+
+    toJSON() {
+        return {
+            id : this.id,
+            material : this.material,
+            cantidad : this.cantidad
+        }
     }
 }

@@ -32,10 +32,12 @@ textarea.form-control
   color: $color-alert-base
 
 .input-group
+  z-index: 0
   table-layout: fixed
 
-.input-group-btn.select-group
-  min-width: 120px
+.input-group-btn.select-group .form-control
+  min-width: 110px
+  max-width: 200px
 
 .input-group-btn:first-child .form-control
   border-radius: $border-radius-simple
@@ -44,7 +46,10 @@ textarea.form-control
   border-right: 0
 
 .input-group-btn:not(:first-child) .form-control
-  border-right: 0
+  border-right-width: 0
+
+.input-group-btn:last-child .form-control
+  border-right-width: 1px !important
 
 .input-group-btn:last-child .form-control
   border-radius: $border-radius-simple
@@ -57,5 +62,5 @@ textarea.form-control
   border-top-right-radius: $border-radius-simple
 
 @media screen and (max-width : 768px)
-  .input-group-btn.select-group
-    min-width: 80px
+  .input-group-btn.select-group .form-control
+    min-width: 90px

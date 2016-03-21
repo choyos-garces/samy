@@ -14,4 +14,11 @@ export class SimpleKey {
     get label():string {
         return this._label;
     }
+
+    toJSON() {
+        return {
+            id : this.id,
+            label : this.label
+        }
+    }
 }

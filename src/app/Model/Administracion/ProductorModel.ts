@@ -10,7 +10,6 @@ export class ProductorModel {
     correoContacto : string;
     correoNotificaciones : string;
     fechaIngreso : Date;
-
     plantaciones : Array<PlantacionModel>;
 
     constructor(productor : any, flagRazon : boolean = false, flagCorreo : boolean = false) {
@@ -23,7 +22,7 @@ export class ProductorModel {
         this.correoContacto = productor.correoContacto;
         this.correoNotificaciones = (flagCorreo) ? productor.correoContacto : productor.correoNotificaciones;
         this.fechaIngreso  = productor.fechaIngreso;
-        
+
         this.plantaciones = [];
     }
 
