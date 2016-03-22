@@ -83,7 +83,7 @@ export class IngresarMovimientoInventarioComponent {
             if( movimientoInventario.motivoMovimiento.id == 5) movimientoInventario.detalles = { bodega : <BodegaModel> fa.bodega, notas :  <string> fa.notas };
             if( movimientoInventario.motivoMovimiento.id == 6) movimientoInventario.detalles = { proveedor : <ProveedorModel> fa.proveedor, notas :  <string> fa.notas };
 
-            window["test"] = movimientoInventario;
+            this._movimientosInventarioService.push(movimientoInventario);
         }
     }
 

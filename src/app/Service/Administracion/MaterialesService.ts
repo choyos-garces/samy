@@ -7,27 +7,7 @@ export class MaterialesService {
     private _materiales : Array<MaterialModel> = [];
     private _tiposMaterial : Array<SimpleKey>;
 
-    constructor() {
-        this._tiposMaterial = [
-            new SimpleKey(1, "Fundas"),
-            new SimpleKey(2, "Material Post Cosecha"),
-            new SimpleKey(3, "Etiquetas y bandas para proceso"),
-            new SimpleKey(4, "Datos de tipo carton"),
-            new SimpleKey(5, "Materiales de Paletizado"),
-            new SimpleKey(6, "Sticker de Corte")
-        ];
-
-        this._materiales.push(
-            new MaterialModel(1, "CA-001", "Cosa A", this._tiposMaterial[0]),
-            new MaterialModel(2, "CA-002", "Cosa B", this._tiposMaterial[0]),
-            new MaterialModel(3, "CB-001", "Cosa C", this._tiposMaterial[0]),
-            new MaterialModel(4, "CB-002", "Cosa D", this._tiposMaterial[0]),
-            new MaterialModel(5, "CC-001", "Cosa E", this._tiposMaterial[0]),
-            new MaterialModel(6, "CC-002", "Cosa F", this._tiposMaterial[0]),
-            new MaterialModel(7, "CD-001", "Cosa G", this._tiposMaterial[0]),
-            new MaterialModel(8, "CD-002", "Cosa H", this._tiposMaterial[0])
-        );
-    }
+    constructor() {}
 
     get materiales():Array<MaterialModel> {
         return this._materiales;

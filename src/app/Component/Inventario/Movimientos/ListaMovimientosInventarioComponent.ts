@@ -15,17 +15,20 @@ import {MovimientoInventarioModel} from "../../../Model/Inventario/MovimientoInv
                     <th>Fecha</th>
                     <th>Origen</th>
                     <th>Bodega</th>
+                    <th>#Materiales</th>
+                    <th>Motivo</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="#ingreso of movimientos">
-                    <td>{{ ingreso.fecha }}</td>
-                    <td>{{ ingreso.motivoMovimiento }}</td>
-                    <td>{{ ingreso.bodega.nombre }}</td>
-                    <td><i class="fa fa-pencil"></i></td>
-                    <td><i class="fa fa-trash-o"></i></td>
+                <tr *ngFor="#movimiento of movimientos">
+                    <td>{{ movimiento.fecha | date : "MM/dd/yy hh:mm"}}</td>
+                    <td>{{ (movimiento.tipoMovimiento == 1) ? "Ingreso" : "Egreso" }}</td>
+                    <td>{{ movimiento.bodega.nombre }}</td>
+                    <td>{{ movimiento.movimientosMateriales.length }}</td>
+                    <td>{{ movimiento.motivoMovimiento.label }}</td>
+                    <td><i class="fa fa-eye"></i></td>
                 </tr>
             </tbody>
         </table>

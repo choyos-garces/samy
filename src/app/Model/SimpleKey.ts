@@ -1,24 +1,24 @@
 export class SimpleKey {
     private _id : number;
-    private _label : string;
+    private _nombre : string;
 
     constructor(id : number , label : string) {
         this._id = id;
-        this._label = label;
+        this._nombre = label;
     }
 
     get id():number {
         return this._id;
     }
 
-    get label():string {
-        return this._label;
+    get nombre():string {
+        return this._nombre;
     }
 
     toJSON() {
         return {
             id : this.id,
-            label : this.label
+            label : this.nombre
         }
     }
 }

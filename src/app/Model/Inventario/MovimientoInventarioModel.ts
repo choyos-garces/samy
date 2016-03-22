@@ -22,11 +22,15 @@ export class MovimientoInventarioModel {
         this._fecha = fecha;
         this._movimientosMateriales = [];
     }
+    
+    set id(value:number) {
+        this._id = value;
+    }
 
     get id():number {
         return this._id;
     }
-
+    
     get bodega():BodegaModel {
         return this._bodega;
     }
