@@ -1,11 +1,11 @@
 export class MotivoMovimientoModel {
     private _id : number;
-    private _label : string;
+    private _nombre : string;
     private _tipo : number;
     
     constructor(id : number = null, label : string, tipo : number) {
         this._id = id;
-        this._label = label;
+        this._nombre = label;
         this._tipo = tipo;
     }
 
@@ -13,8 +13,8 @@ export class MotivoMovimientoModel {
         return this._id;
     }
     
-    get label():string {
-        return this._label;
+    get nombre():string {
+        return this._nombre;
     }
 
     get tipo():number {
@@ -24,7 +24,7 @@ export class MotivoMovimientoModel {
     toJSON() {
         return {
             id : this.id,
-            label : this.label,
+            label : this.nombre,
             tipo : this.tipo
         }
     }

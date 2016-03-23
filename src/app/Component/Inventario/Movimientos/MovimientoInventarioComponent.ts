@@ -12,6 +12,7 @@ import {MotivoMovimientoModel} from "../../../Model/Inventario/MotivoMovimientoM
 
 import {BodegasService} from "../../../Service/Administracion/BodegasService";
 import {MovimientosInventarioService} from "../../../Service/Inventario/MovimientosInventarioService";
+import {ControlPanelService} from "../../../Service/ControlPanelService";
 
 
 
@@ -55,7 +56,7 @@ import {MovimientosInventarioService} from "../../../Service/Inventario/Movimien
         <label class="control-label col-sm-3" for="movimientoInventarioMotivo">Tipo</label>
         <div class="col-sm-7 col-md-5">
             <select class="form-control" id="movimientoInventarioMotivo" [ngModel]="motivoMovimiento" (ngModelChange)="objectToFormControl($event, 'motivosMovimiento', 'motivoMovimiento')">
-                <option *ngFor="#opcion of motivosMovimiento | filterProperty  : 'number' : 'tipo' : movimientoInventario.controls['tipoMovimiento'].value" [value]="opcion.id">{{ opcion.label }}</option>
+                <option *ngFor="#opcion of motivosMovimiento | filterProperty  : 'number' : 'tipo' : movimientoInventario.controls['tipoMovimiento'].value" [value]="opcion.id">{{ opcion.nombre }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -73,13 +74,13 @@ export class MovimientoInventarioComponent {
     movimientoInventario : ControlGroup;
     bodegas : Array<BodegaModel>;
     seleccionMateriales : Array<MovimientoMaterialModel> = [];
-    motivosMovimiento : Array<MotivoMovimientoModel> = [];
+    motivosMovimiento : Array<MotivoMovimientoModel>;
 
     constructor(public _formBuilder : FormBuilder,
                 public _bodegasService : BodegasService,
-                public _movimientosInvetarioService : MovimientosInventarioService) {
+                public _controlPanelService : ControlPanelService) {
 
-        this.motivosMovimiento = this._movimientosInvetarioService.motivosMovimiento;
+        this._controlPanelService.getMotivosMovimiento().subscribe(motivosMovimiento => this.motivosMovimiento = motivosMovimiento)
         this.bodegas = this._bodegasService.bodegas;
 
         this.movimientoInventario = this._formBuilder.group({

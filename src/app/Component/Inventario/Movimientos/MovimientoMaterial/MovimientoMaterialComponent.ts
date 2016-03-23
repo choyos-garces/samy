@@ -1,11 +1,12 @@
 import {Component, EventEmitter, Output} from "angular2/core";
-import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
+import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 
 import {MaterialModel} from "../../../../Model/Administracion/MaterialModel";
-import {MaterialesService} from "../../../../Service/Administracion/MaterialesService";
 import {MovimientoMaterialModel} from "../../../../Model/Inventario/MovimientoMaterialModel";
 import {SimpleKey} from "../../../../Model/SimpleKey";
 import {FilterSimpleKey} from "../../../../Pipes/FilterSimpleKey";
+import {AdministracionService} from "../../../../Service/AdministracionService";
+import {OpcionesService} from "../../../../Service/OpcionesService";
 
 @Component({
     selector : "movimiento-material",
@@ -17,12 +18,12 @@ import {FilterSimpleKey} from "../../../../Pipes/FilterSimpleKey";
             <div class="input-group">
                 <div class="input-group-btn select-group">
                     <select class="form-control" id="movimientoInventarioMaterial" [(ngModel)]="tipoMaterial">
-                        <option *ngFor="#opcion of tiposMaterial" [value]="opcion.id">{{ opcion.label }}</option>
+                        <option *ngFor="#opcion of tiposMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
                     </select>
                 </div>
                 <div class="input-group-btn select-group">
                     <select class="form-control" id="movimientoInventarioMaterial" [(ngModel)]="material" (ngModelChange)="objectToFormControl($event, 'materiales', 'material')">
-                        <option *ngFor="#opcion of materiales | filterSimpleKey : 'number' : 'tipo' : tipoMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
+                        <option *ngFor="#opcion of materiales | filterSimpleKey : 'number' : 'tipo_material' : tipoMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
                     </select>
                 </div>
                 <input type="number" placeholder="Cantidad" step="0.01" min="0" class="form-control" id="movimientoInventarioCantidad" [(ngFormControl)]="movimietoMaterial.controls['cantidad']" />
@@ -36,14 +37,17 @@ import {FilterSimpleKey} from "../../../../Pipes/FilterSimpleKey";
 export class MovimientoMaterialComponent {
     @Output() agregarMaterial = new EventEmitter();
     movimietoMaterial : ControlGroup;
-    materiales :MaterialModel[];
+    materiales : MaterialModel[];
     tiposMaterial : SimpleKey[];
-    tipoMaterial; //Temporary Model
     material; //Temporary Model
-    
-    constructor(public _formBuilder : FormBuilder, public _materailesService : MaterialesService) {
-        this.materiales = this._materailesService.materiales;
-        this.tiposMaterial = this._materailesService.tiposMaterial;
+    tipoMaterial;
+
+    constructor(public _formBuilder : FormBuilder,
+                public _administracionService : AdministracionService,
+                public _opcionesService : OpcionesService) {
+
+        this._administracionService.getMateriales().subscribe(materiales => this.materiales = materiales);
+        this._opcionesService.getTiposMaterial().subscribe(tiposMaterial => this.tiposMaterial = tiposMaterial);
 
         this.movimietoMaterial = this._formBuilder.group({
             material : [null, Validators.required],
@@ -60,6 +64,7 @@ export class MovimientoMaterialComponent {
             var mm = this.movimietoMaterial.value;
             this.agregarMaterial.emit( new MovimientoMaterialModel(null, mm.material, mm.cantidad) );
 
+            this.movimietoMaterial.controls["material"].updateValue(null, {});
             this.movimietoMaterial.controls["cantidad"].updateValue(null, {});
             this.material = null;
         }

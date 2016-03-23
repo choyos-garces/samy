@@ -8,16 +8,7 @@ export class MovimientosInventarioService {
     private _movimientosInventario : Array<MovimientoInventarioModel> = [];
     private _motivosMovimiento : Array<MotivoMovimientoModel> = [];
     
-    constructor(public _inventarioMaterialesService : InventarioMaterialesService) {
-        this.motivosMovimiento = [
-            new MotivoMovimientoModel(1, "Ingreso por Proveedor", 1),
-            new MotivoMovimientoModel(2, "Transferencia desde otra Bodega", 1),
-            new MotivoMovimientoModel(3, "Devolucion por Productor", 1),
-            new MotivoMovimientoModel(4, "Envio a Productor", 0),
-            new MotivoMovimientoModel(5, "Transferir materiales a otra Bodega", 0),
-            new MotivoMovimientoModel(6, "Devolver materiales a Proveedor", 0)
-        ]
-    }
+    constructor(public _inventarioMaterialesService : InventarioMaterialesService) {}
 
     push(movimiento : MovimientoInventarioModel) : MovimientoInventarioModel {
         const id = this._movimientosInventario.length != 0 ? this._movimientosInventario[this._movimientosInventario.length-1].id : 0;
@@ -38,10 +29,6 @@ export class MovimientosInventarioService {
 
     get movimientosInventario():Array<MovimientoInventarioModel> {
         return this._movimientosInventario;
-    }
-
-    set movimientosInventario(movimientoInventario:Array<MovimientoInventarioModel>) {
-        this._movimientosInventario = movimientoInventario;
     }
 
     get motivosMovimiento():Array<MotivoMovimientoModel> {

@@ -2,10 +2,10 @@ import {Component} from "angular2/core";
 import {FormBuilder, ControlGroup, Validators} from "angular2/common";
 import {Router} from "angular2/router";
 
-import {MaterialesService} from "../../../Service/Administracion/MaterialesService";
 import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
 import {SimpleKey} from "../../../Model/SimpleKey";
 import {AdministracionService} from "../../../Service/AdministracionService";
+import {OpcionesService} from "../../../Service/OpcionesService";
 
 @Component({
     selector  : 'ingresar-material',
@@ -63,16 +63,18 @@ export class IngresarMaterialComponent {
     tiposMaterial : Array<SimpleKey>;
     ingresoMaterial : ControlGroup;
 
-    constructor(public _formBuilder : FormBuilder, public _router : Router, public _materialesService : MaterialesService, public _administracionService : AdministracionService) {
+    constructor(public _formBuilder : FormBuilder, public _router : Router, 
+                public _administracionService : AdministracionService, 
+                public _opcionesService :OpcionesService) {
         this.ingresoMaterial = this._formBuilder.group({
             nombre : [null, Validators.required],
             codigo : [null, Validators.required],
             tipo : [null, Validators.required]
         });
 
-        this._administracionService.getTiposMaterial().subscribe(response => {
+        this._opcionesService.getTiposMaterial().subscribe(response => {
             this.tiposMaterial = response;
-        });
+        }, error => console.log(error));
 
     }
 
@@ -81,8 +83,9 @@ export class IngresarMaterialComponent {
             const form = this.ingresoMaterial.value;
             let material = new MaterialModel(null, form.codigo, form.nombre, form.tipo);
 
-            material = this._materialesService.push(material);
-            this._router.navigate(['VerMaterial', { id  : material.id }]);
+            this._administracionService.postMaterial(material).subscribe(material => {
+                this._router.navigate(['VerMaterial', { id  : material.id }]);
+            });
         }
         else {
             alert("Errores en el formulario")

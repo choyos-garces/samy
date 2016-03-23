@@ -1,30 +1,32 @@
 import {Component} from 'angular2/core';
 import {RouteParams, Router, ROUTER_DIRECTIVES} from "angular2/router";
 
-import {MaterialesService} from "../../../Service/Administracion/MaterialesService";
 import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
+import {DatetimePipe} from "../../../Pipes/DatetimePipe";
+import {AdministracionService} from "../../../Service/AdministracionService";
 
 @Component({
     selector  : 'ver-material',
+    pipes : [DatetimePipe],
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="container-fluid">
-        <h3>Material: {{ material.id }}-{{ material.codigo }}</h3>
+        <h3>Material <small>(ID#{{ material?.id }})</small> {{ material?.codigo }}</h3>
         <div class="row">
             <div class="col-xs-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">Datos del Material</div>
                     <div class="panel-body">
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>Categor&iacute;a</dd><dt>{{ material.tipo.label }}</dt>
+                            <dt>Categor&iacute;a</dt><dd>{{ material?.tipo_material?.nombre }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>C&oacute;digo</dd><dt>{{ material.codigo }}</dt>
+                            <dt>C&oacute;digo</dt><dd>{{ material?.codigo }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>Nombre</dd><dt>{{ material.nombre }}</dt>
+                            <dt>Nombre</dt><dd>{{ material?.nombre }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>Fecha Ingreso</dd><dt>{{ material.fecha | date }}</dt>
+                            <dt>Fecha Ingreso</dt><dd>{{ material?.fecha | datetime }}</dd>
                         </dl>
                     </div>
                 </div>
@@ -35,12 +37,17 @@ import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
 export class VerMaterialComponent {
     material : MaterialModel;
 
-    constructor(public _materialesService : MaterialesService, public _routeParams : RouteParams, public _router : Router) {}
+    constructor(public _administracionService : AdministracionService, 
+                public _routeParams : RouteParams, 
+                public _router : Router) {}
 
     ngOnInit() {
         const id = parseInt(this._routeParams.get("id"));
-        this.material = this._materialesService.getById(id);
-
-        if(this.material == null) this._router.navigate(["/Error404"]);
+        this._administracionService.getMaterial(id).subscribe(material=> {
+            if(material == null) {
+                this._router.navigate(["/Error404"])
+            }
+            this.material = material
+        });
     }
 }

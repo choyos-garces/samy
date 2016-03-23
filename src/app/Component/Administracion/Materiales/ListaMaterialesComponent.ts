@@ -1,10 +1,12 @@
 import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router'
-import {MaterialesService} from "../../../Service/Administracion/MaterialesService";
 import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
+import {AdministracionService} from "../../../Service/AdministracionService";
+import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 
 @Component({
     selector  : 'lista-materiales',
+    pipes : [DatetimePipe],
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="container-fluid">
         <h4>Lista de Materiales</h4>
@@ -24,8 +26,8 @@ import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
                     <tr *ngFor="#material of materiales" [routerLink]="['VerMaterial', { id : material.id }]" class="router">
                         <td>{{ material.codigo }}</td>
                         <td>{{ material.nombre }}</td>
-                        <td>{{ material.tipo.label }}</td>
-                        <td>{{ material.fecha | date : "MM/dd/yy h:m" }}</td>
+                        <td>{{ material.tipo_material.nombre }}</td>
+                        <td>{{ material.fecha | datetime }}</td>
                         <td><i class="fa fa-pencil"></i></td>
                         <td><i class="fa fa-trash"></i></td>
                     </tr>
@@ -37,7 +39,9 @@ import {MaterialModel} from "../../../Model/Administracion/MaterialModel";
 export class ListaMaterialesComponent {
     materiales : Array<MaterialModel>;
 
-    constructor(public _materialesService : MaterialesService) {
-        this.materiales = this._materialesService.materiales;
+    constructor(public _administracionService : AdministracionService) {
+        this._administracionService.getMateriales().subscribe(response => {
+            this.materiales = response;
+        });
     }
 }

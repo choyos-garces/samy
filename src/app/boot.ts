@@ -15,13 +15,15 @@ import {ContactosService} from "./Service/Administracion/ContactosService";
 import {MovimientosInventarioService} from "./Service/Inventario/MovimientosInventarioService";
 import {InventarioMaterialesService} from "./Service/Inventario/InventarioMaterialesService";
 import {AdministracionService} from "./Service/AdministracionService";
+import {ControlPanelService} from "./Service/ControlPanelService";
+import {OpcionesService} from "./Service/OpcionesService";
 
 bootstrap(Index, [
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
     //provide(APP_BASE_HREF, {useValue: '/samy'}),
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
-    AdministracionService,
+    ControlPanelService, OpcionesService, AdministracionService,
     ProductoresService, BodegasService, MaterialesService, PlantacionesService, ProveedoresService, ContactosService,
     MovimientosInventarioService, InventarioMaterialesService
 ]);
