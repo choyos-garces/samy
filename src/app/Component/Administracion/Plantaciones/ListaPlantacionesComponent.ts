@@ -1,10 +1,9 @@
 import {Component} from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { ROUTER_DIRECTIVES} from 'angular2/router';
 
-import {BodegasService} from "../../../Service/Administracion/BodegasService";
-import {BodegaModel} from "../../../Model/Administracion/BodegaModel";
 import {PlantacionModel} from "../../../Model/Administracion/PlantacionModel";
 import {PlantacionesService} from "../../../Service/Administracion/PlantacionesService";
+import {AdministracionService} from "../../../Service/AdministracionService";
 
 @Component({
     selector  : 'lista-plantaciones',
@@ -27,12 +26,11 @@ import {PlantacionesService} from "../../../Service/Administracion/PlantacionesS
                 <tbody>
                     <tr *ngFor="#plantacion of plantaciones" [routerLink]="['VerPlantacion', { id : plantacion.id }]" class="router">
                         <td>{{ plantacion.nombre }}</td>
-                        <td>{{ plantacion.producto.label }}</td>
-                        <td>{{ plantacion.tipo.label }}</td>
-                        <td>{{ plantacion.propietario.nombre }}</td>
-                        <td>{{ plantacion.tamano }} {{ plantacion.unidad.label }}.</td>
+                        <td>{{ plantacion.producto.nombre }}</td>
+                        <td>{{ plantacion.tipo_producto.nombre }}</td>
+                        <td>{{ plantacion.propietario.razon_social }}</td>
+                        <td>{{ plantacion.tamano }} {{ plantacion.unidad.nombre }}</td>
                         <td><i class="fa fa-pencil"></i></td>
-                        <td><i class="fa fa-trash"></i></td>
                     </tr>
                 </tbody>
             </table>
@@ -42,7 +40,7 @@ import {PlantacionesService} from "../../../Service/Administracion/PlantacionesS
 export class ListaPlantacionesComponent {
     plantaciones : Array<PlantacionModel> = [];
 
-    constructor(public _plantacionesService : PlantacionesService) {
-        this.plantaciones  = this._plantacionesService.plantaciones;
+    constructor(public _administracionService : AdministracionService) {
+        this._administracionService.getPlantaciones().subscribe(plantaciones => this.plantaciones = plantaciones)
     }
 }

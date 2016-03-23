@@ -1,10 +1,10 @@
 import {Component, Output, EventEmitter} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
 
-import {ProductorModel} from "../../../../Model/Administracion/ProductorModel";
-import {ProductoresService} from "../../../../Service/Administracion/ProductoresService";
 import {PlantacionesService} from "../../../../Service/Administracion/PlantacionesService";
 import {PlantacionModel} from "../../../../Model/Administracion/PlantacionModel";
+import {EmpresaModel} from "../../../../Model/Administracion/EmpresaModel";
+import {AdministracionService} from "../../../../Service/AdministracionService";
 
 @Component({
     selector : 'motivo-ingreso-devolucion',
@@ -54,25 +54,12 @@ export class MotivoIngresoDevolucionComponent {
     @Output() valuesChange = new EventEmitter();
 
     motivoIngresoDevolucion : ControlGroup;
-    productores : Array<ProductorModel>;
-    plantaciones : Array<PlantacionModel>;
+    productores : EmpresaModel[];
+    plantaciones : PlantacionModel[];
 
-    constructor(public _formBuilder : FormBuilder, public _productoresService : ProductoresService, public _plantacionesService : PlantacionesService) {
-        this.motivoIngresoDevolucion = this._formBuilder.group({
-            productor : [1 , Validators.required],
-            plantacion :[null , Validators.required],
-            notas : [null, Validators.required]
-        });
-
-        this.productores = this._productoresService.getProductores();
-
-        this.motivoIngresoDevolucion.controls["productor"].valueChanges.subscribe((productor : ProductorModel) => {
-            this.plantaciones = this._plantacionesService.getByPropietario(productor);
-        });
-
-        this.motivoIngresoDevolucion.valueChanges.subscribe(() => {
-            this.valuesChange.emit(this.motivoIngresoDevolucion);
-        })
+    constructor(public _formBuilder : FormBuilder,
+                public _administracionService : AdministracionService,
+                public _plantacionesService : PlantacionesService) {
     }
 
     toggleValidationFeedback(control) {
@@ -85,6 +72,20 @@ export class MotivoIngresoDevolucionComponent {
     }
 
     ngOnInit() {
+        this.motivoIngresoDevolucion = this._formBuilder.group({
+            productor : [1 , Validators.required],
+            plantacion :[null , Validators.required],
+            notas : [null, Validators.required]
+        });
+
+        this.plantaciones = this._plantacionesService.plantaciones;
+        
+        this._administracionService.getEmpresas(0).subscribe(productores => this.productores = productores);
+
+        this.motivoIngresoDevolucion.valueChanges.subscribe(() => {
+            this.valuesChange.emit(this.motivoIngresoDevolucion);
+        });
+
         this.valuesChange.emit(this.motivoIngresoDevolucion);
     }
 }

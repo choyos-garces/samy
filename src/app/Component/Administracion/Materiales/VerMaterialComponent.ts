@@ -10,7 +10,7 @@ import {AdministracionService} from "../../../Service/AdministracionService";
     pipes : [DatetimePipe],
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="container-fluid">
-        <h3>Material <small>(ID#{{ material?.id }})</small> {{ material?.codigo }}</h3>
+        <h4>Material <small>id#{{ material?.id }}</small></h4>
         <div class="row">
             <div class="col-xs-6">
                 <div class="panel panel-default">

@@ -1,41 +1,34 @@
 import {Component} from "angular2/core";
-import {Router, ROUTER_DIRECTIVES} from "angular2/router";
+import {Router, ROUTER_DIRECTIVES, RouteParams} from "angular2/router";
 
-import {ProductoresService} from "../../../Service/Administracion/ProductoresService";
-import {ProductorModel} from "../../../Model/Administracion/ProductorModel";
-import {RouteParams} from "angular2/router";
 import {PlantacionModel} from "../../../Model/Administracion/PlantacionModel";
-import {PlantacionesService} from "../../../Service/Administracion/PlantacionesService";
+import {AdministracionService} from "../../../Service/AdministracionService";
+import {EmpresaModel} from "../../../Model/Administracion/EmpresaModel";
 
 @Component({
     selector : 'ver-productor',
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="container-fluid">
-        <h3>Productor</h3>
+        <h4>Productor <small>id#{{ productor?.id }}</small></h4>
         <div class="row">
             <div class="col-sm-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Datos de Cliente</div>
+                    <div class="panel-heading">Datos de Productor</div>
                     <div class="panel-body">
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Codigo</dt>
-                            <dd>{{ productor.id }}</dd>
+                            <dt>Codigo</dt><dd>{{ productor?.id }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Numero Tel&eacute;fono</dt>
-                            <dd>{{ productor.numeroTelefono }}</dd>
+                            <dt>Raz&oacute;n Social</dt><dd>{{ productor?.razon_social }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>{{ tiposIdentificacion[productor.tipoIdentificacion] }}</dt>
-                            <dd>{{ productor.identificacion }}</dd>
+                            <dt>Numero Tel&eacute;fono</dt><dd>{{ productor?.telefono }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Correo Contacto</dt>
-                            <dd>{{ productor.correoContacto }}</dd>
+                            <dt>{{ productor?.tipo_indentificacion?.nombre }}</dt><dd>{{ productor?.identificacion }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Correo Notificaciones</dt>
-                            <dd>{{ productor.correoNotificaciones }}</dd>
+                            <dt>Correo Contacto</dt><dd>{{ productor?.correo }}</dd>
                         </dl>
                     </div>
                 </div>
@@ -44,7 +37,7 @@ import {PlantacionesService} from "../../../Service/Administracion/PlantacionesS
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Plantaciones
-                        <a class="pull-right" [routerLink]="['../../Plantacion/IngresarPlantacion', { productor : productor.id }]"><i class="fa fa-plus fa-fw"></i> Anadir</a>
+                        <a class="pull-right" [routerLink]="['../../Plantaciones/IngresarPlantacion' , {productor : productor?.id}]"><i class="fa fa-plus fa-fw"></i> Anadir</a>
                     </div>
                     <table class="table table-hover">
                         <thead>
@@ -56,11 +49,11 @@ import {PlantacionesService} from "../../../Service/Administracion/PlantacionesS
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="#plantacion of plantaciones" [routerLink]="['../../Plantacion/VerPlantacion', { id : plantacion.id}]" class="router">
-                                <td>{{ plantacion.nombre }}</td>
-                                <td>{{ plantacion.producto.label }}</td>
-                                <td>{{ plantacion.tipo.label }}</td>
-                                <td>{{ plantacion.tamano }} {{ plantacion.unidad.label }}</td>
+                            <tr *ngFor="#plantacion of productor?.plantaciones" class="router" [routerLink]="['../../Plantaciones/VerPlantacion' , {id : plantacion?.id}]">
+                                <td>{{ plantacion?.nombre }}</td>
+                                <td>{{ plantacion?.producto?.nombre }}</td>
+                                <td>{{ plantacion?.tipo?.nombre }}</td>
+                                <td>{{ plantacion?.tamano }} {{ plantacion?.unidad?.nombre }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -70,21 +63,20 @@ import {PlantacionesService} from "../../../Service/Administracion/PlantacionesS
     </div>`
 })
 export class VerProductorComponent {
-    productor : ProductorModel;
+    productor : EmpresaModel;
     tiposIdentificacion : Array<string>;
     plantaciones : Array<PlantacionModel>;
 
     constructor(public _router : Router,
                 public _routerParams : RouteParams,
-                public _productoresService : ProductoresService,
-                public _plantacionesService : PlantacionesService ) {}
+                public _administracionService : AdministracionService) {}
 
     ngOnInit() {
         const id = parseInt(this._routerParams.get('id'));
-        this.productor = this._productoresService.getById(id);
-        if(this.productor == null) this._router.navigate(['/Error404']);
+        this._administracionService.getEmpresa(id).subscribe(empresa => {
+            if(empresa == null) this._router.navigate(['/Error404']);
+            this.productor = empresa;
+        });
 
-        this.plantaciones = this._plantacionesService.getByPropietario(this.productor);
-        this.tiposIdentificacion = this._productoresService.getTiposIdentificacion();
     }
 }

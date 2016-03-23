@@ -10,9 +10,8 @@ import {BodegaModel} from "../../../Model/Administracion/BodegaModel"
 import {MovimientoMaterialModel} from "../../../Model/Inventario/MovimientoMaterialModel";
 import {MotivoMovimientoModel} from "../../../Model/Inventario/MotivoMovimientoModel";
 
-import {BodegasService} from "../../../Service/Administracion/BodegasService";
-import {MovimientosInventarioService} from "../../../Service/Inventario/MovimientosInventarioService";
 import {ControlPanelService} from "../../../Service/ControlPanelService";
+import {AdministracionService} from "../../../Service/AdministracionService";
 
 
 
@@ -77,32 +76,8 @@ export class MovimientoInventarioComponent {
     motivosMovimiento : Array<MotivoMovimientoModel>;
 
     constructor(public _formBuilder : FormBuilder,
-                public _bodegasService : BodegasService,
-                public _controlPanelService : ControlPanelService) {
-
-        this._controlPanelService.getMotivosMovimiento().subscribe(motivosMovimiento => this.motivosMovimiento = motivosMovimiento)
-        this.bodegas = this._bodegasService.bodegas;
-
-        this.movimientoInventario = this._formBuilder.group({
-            tipoMovimiento : [null, Validators.required],
-            movimientosMateriales : [null, Validators.required],
-            bodega : [null, Validators.required],
-            motivoMovimiento : [null, Validators.required]
-        });
-
-        this.movimientoInventario.valueChanges.subscribe(() => {
-            this.valuesChange.emit(this.movimientoInventario)
-        });
-
-        this.movimientoInventario.controls["motivoMovimiento"].valueChanges.subscribe((value) => {
-            this.cambioMotivoMovimiento.emit(value);
-        });
-
-        this.movimientoInventario.controls["tipoMovimiento"].valueChanges.subscribe(() => {
-            this.cambioMotivoMovimiento.emit(null);
-        })
-
-    }
+                public _administracionService : AdministracionService,
+                public _controlPanelService : ControlPanelService) {}
 
     agregarMaterial(movimientoMaterial : MovimientoMaterialModel) : void {
         this.seleccionMateriales = [
@@ -141,6 +116,26 @@ export class MovimientoInventarioComponent {
     }
 
     ngOnInit() {
-        this.valuesChange.emit(this.movimientoInventario);
+        this._controlPanelService.getMotivosMovimiento().subscribe(motivosMovimiento => this.motivosMovimiento = motivosMovimiento)
+        this._administracionService.getBodegas().subscribe(bodegas => this.bodegas = bodegas);
+
+        this.movimientoInventario = this._formBuilder.group({
+            tipoMovimiento : [null, Validators.required],
+            movimientosMateriales : [null, Validators.required],
+            bodega : [null, Validators.required],
+            motivoMovimiento : [null, Validators.required]
+        });
+
+        this.movimientoInventario.controls["motivoMovimiento"].valueChanges.subscribe((value) => {
+            this.cambioMotivoMovimiento.emit(value);
+        });
+
+        this.movimientoInventario.controls["tipoMovimiento"].valueChanges.subscribe(() => {
+            this.cambioMotivoMovimiento.emit(null);
+        });
+        
+        this.movimientoInventario.valueChanges.subscribe(() => {
+            this.valuesChange.emit(this.movimientoInventario)
+        });
     }
 }

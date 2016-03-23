@@ -16,7 +16,7 @@ import {ProveedoresComponent} from "./Administracion/ProveedoresComponent";
             <li><a [routerLink]="['Productores']"><i class="fa fa-users fa-fw"></i> Productores</a></li>
             <li><a [routerLink]="['Materiales']"><i class="fa fa-cubes fa-fw"></i> Materiales</a></li>
             <li><a [routerLink]="['Bodegas']"><i class="fa fa-folder-o fa-fw"></i> Bodegas</a></li>
-            <li><a [routerLink]="['Plantacion']"><i class="fa fa-folder-o fa-fw"></i> Plantaciones</a></li>
+            <li><a [routerLink]="['Plantaciones']"><i class="fa fa-folder-o fa-fw"></i> Plantaciones</a></li>
             <li><a [routerLink]="['Proveedores']"><i class="fa fa-industry fa-fw"></i> Proveedores</a></li>
         </ul>
     </div>
@@ -29,7 +29,7 @@ import {ProveedoresComponent} from "./Administracion/ProveedoresComponent";
     { path: '/productores/...', name: 'Productores', component: ProductoresComponent, useAsDefault: true },
     { path: '/materiales/...', name: 'Materiales', component: MaterialesComponent },
     { path: '/bodegas/...', name: 'Bodegas', component: BodegasComponents },
-    { path: '/plantacion/...', name: 'Plantacion', component: PlantacionesComponents },
+    { path: '/plantaciones/...', name: 'Plantaciones', component: PlantacionesComponents },
     { path: '/proveedor/...', name: 'Proveedores', component: ProveedoresComponent }
 ])
 export class AdministracionComponent {

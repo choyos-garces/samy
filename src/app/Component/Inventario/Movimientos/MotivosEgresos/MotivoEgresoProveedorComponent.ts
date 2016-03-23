@@ -1,7 +1,8 @@
 import {Component, Output, EventEmitter} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
-import {ProveedorModel} from "../../../../Model/Administracion/ProveedorModel";
-import {ProveedoresService} from "../../../../Service/Administracion/ProveedoresService";
+import {EmpresaModel} from "../../../../Model/Administracion/EmpresaModel";
+import {AdministracionService} from "../../../../Service/AdministracionService";
+
 
 @Component({
     selector : "motivo-egreso-proveedor",
@@ -37,16 +38,14 @@ export class MotivoEgresoProveedorComponent {
     @Output() valuesChange = new EventEmitter();
     
     motivoEgresoProveedor : ControlGroup;
-    proveedores : Array<ProveedorModel>;
+    proveedores : EmpresaModel[];
 
     constructor(public _formBuilder : FormBuilder,
-                public _proveedoresService : ProveedoresService) {
+                public _administracionService : AdministracionService) {
         this.motivoEgresoProveedor = this._formBuilder.group({
             proveedor : [1, Validators.required],
             notas : [null, Validators.required]
         });
-
-        this.proveedores = this._proveedoresService.getProveedores();
 
         this.motivoEgresoProveedor.valueChanges.subscribe(() => {
             this.valuesChange.emit(this.motivoEgresoProveedor);
@@ -64,5 +63,6 @@ export class MotivoEgresoProveedorComponent {
     
     ngOnInit() {
         this.valuesChange.emit(this.motivoEgresoProveedor);
+        this._administracionService.getEmpresas(1).subscribe(empresas => this.proveedores = empresas);
     }
 }

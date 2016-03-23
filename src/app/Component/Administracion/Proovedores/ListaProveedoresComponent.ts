@@ -1,8 +1,7 @@
 import {Component} from "angular2/core"
 import {ROUTER_DIRECTIVES} from "angular2/router";
-import {ProveedoresService} from "../../../Service/Administracion/ProveedoresService";
-import {Router} from "angular2/router";
-import {ProveedorModel} from "../../../Model/Administracion/ProveedorModel";
+import {EmpresaModel} from "../../../Model/Administracion/EmpresaModel";
+import {AdministracionService} from "../../../Service/AdministracionService";
 
 @Component({
     selector: 'lista-proveedores',
@@ -19,18 +18,16 @@ import {ProveedorModel} from "../../../Model/Administracion/ProveedorModel";
                     <th>Tel&eacute;fono</th>
                     <th>Correo</th>
                     <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="router" *ngFor="#proveedor of proveedores" [routerLink]="['VerProveedor', { id : proveedor.id}]">
                     <td>{{ proveedor.id }}</td>
-                    <td>{{ proveedor.razonSocial }}</td>
+                    <td>{{ proveedor.razon_social }}</td>
                     <td>{{ proveedor.identificacion }}</td>
-                    <td>{{ proveedor.numeroTelefono }}</td>
+                    <td>{{ proveedor.telefono }}</td>
                     <td>{{ proveedor.correo }}</td>
                     <td><i class="fa fa-pencil"></i></td>
-                    <td><i class="fa fa-trash-o"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -38,9 +35,11 @@ import {ProveedorModel} from "../../../Model/Administracion/ProveedorModel";
     </div>`
 })
 export class ListaProveedoresComponent {
-    proveedores : Array<ProveedorModel>;
+    proveedores : EmpresaModel[] = [];
 
-    constructor(public _proveedoresService : ProveedoresService) {
-        this.proveedores = this._proveedoresService.getProveedores();
+    constructor(public _administracionService : AdministracionService) {}
+
+    ngOnInit() {
+        this._administracionService.getEmpresas(1).subscribe(empresas => this.proveedores = empresas);
     }
 }

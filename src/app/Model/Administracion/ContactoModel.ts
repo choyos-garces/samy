@@ -1,3 +1,4 @@
+import {EmpresaModel} from "./EmpresaModel";
 export class ContactoModel {
     private _id : number;
     private _nombre : string;
@@ -6,12 +7,14 @@ export class ContactoModel {
     private _fecha : Date;
     private _estado : boolean;
 
-    constructor(id : number = null, nombre : string, telefono : string, correo : string, fechaIngreso : Date = new Date() ) {
+    private _empresa : EmpresaModel;
+
+    constructor(id : number = null, nombre : string, telefono : string, correo : string, fecha : Date) {
         this._id = id;
         this._nombre = nombre;
         this._telefono = telefono;
         this._correo = correo;
-        this._fecha = fechaIngreso;
+        this._fecha = fecha;
     }
     
     get id():number {
@@ -62,9 +65,26 @@ export class ContactoModel {
         this._estado = value;
     }
 
+    get telefono():string {
+        return this._telefono;
+    }
+
+    set telefono(value:string) {
+        this._telefono = value;
+    }
+
+    get empresa():EmpresaModel {
+        return this._empresa;
+    }
+
+    set empresa(value:EmpresaModel) {
+        this._empresa = value;
+    }
+
     toJSON() {
         return {
             id : this.id,
+            empresa : this.empresa,
             nombre : this.nombre,
             numeroTelefono : this.numeroTelefono,
             correo : this.correo,

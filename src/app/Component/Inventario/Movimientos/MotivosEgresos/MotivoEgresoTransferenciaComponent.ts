@@ -1,7 +1,7 @@
 import {Component, Output, EventEmitter} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 import {BodegaModel} from "../../../../Model/Administracion/BodegaModel";
-import {BodegasService} from "../../../../Service/Administracion/BodegasService";
+import {AdministracionService} from "../../../../Service/AdministracionService";
 
 @Component({
     selector : "motivo-egreso-transferencia",
@@ -38,18 +38,8 @@ export class MotivoEgresoTransferenciaComponent {
     motivoEgresoTransferencia : ControlGroup;
     bodegas : Array<BodegaModel>;
 
-    constructor(public _formBuilder  : FormBuilder, public _bodegasService : BodegasService) {
-        this.motivoEgresoTransferencia = this._formBuilder.group({
-            bodega : [1, Validators.required],
-            notas : [null, Validators.required]
-        });
-
-        this.bodegas = this._bodegasService.bodegas;
-
-        this.motivoEgresoTransferencia.valueChanges.subscribe(() => {
-            this.valuesChange.emit(this.motivoEgresoTransferencia);
-        })
-    }
+    constructor(public _formBuilder  : FormBuilder, 
+                public _administracionService :AdministracionService) {}
 
     toggleValidationFeedback(control) {
         control = this.motivoEgresoTransferencia.controls[control];
@@ -61,6 +51,17 @@ export class MotivoEgresoTransferenciaComponent {
     }
     
     ngOnInit() {
+        this.motivoEgresoTransferencia = this._formBuilder.group({
+            bodega : [1, Validators.required],
+            notas : [null, Validators.required]
+        });
+
+
+        this.motivoEgresoTransferencia.valueChanges.subscribe(() => {
+            this.valuesChange.emit(this.motivoEgresoTransferencia);
+        });
+        
+        this._administracionService.getBodegas().subscribe(bodegas => this.bodegas = bodegas);
         this.valuesChange.emit(this.motivoEgresoTransferencia);
     }
 }

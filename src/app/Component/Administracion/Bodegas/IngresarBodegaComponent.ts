@@ -3,7 +3,6 @@ import {FORM_DIRECTIVES, FormBuilder, Control,ControlGroup, Validators} from "an
 import {Router} from "angular2/router";
 
 import {BodegaModel} from "../../../Model/Administracion/BodegaModel";
-import {BodegasService} from "../../../Service/Administracion/BodegasService";
 import {AdministracionService} from "../../../Service/AdministracionService";
 
 @Component({

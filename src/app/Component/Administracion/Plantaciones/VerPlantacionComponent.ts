@@ -1,35 +1,37 @@
 import {Component} from 'angular2/core';
 import {PlantacionModel} from "../../../Model/Administracion/PlantacionModel";
-import {PlantacionesService} from "../../../Service/Administracion/PlantacionesService";
 import {RouteParams, Router, ROUTER_DIRECTIVES} from "angular2/router";
+import {AdministracionService} from "../../../Service/AdministracionService";
+import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 
 @Component({
     selector  : 'ver-plantacion',
+    pipes : [DatetimePipe],
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="container-fluid">
-        <h4>Plantaci&oacute;n #{{ plantacion.id }}</h4>
+        <h4>Plantaci&oacute;n <small>id#{{ plantacion?.id }}</small></h4>
         <div class="row">
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">Detalles de Plantaci&oacute;n</div>
                     <div class="panel-body">
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>Nombre</dd><dt>{{ plantacion.nombre}}</dt>
+                            <dt>Nombre</dt><dd>{{ plantacion?.nombre}}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>Tama&ntilde;o</dd><dt>{{ plantacion.tamano }} {{ plantacion.unidad.label }}</dt>
+                            <dt>Tama&ntilde;o</dt><dd>{{ plantacion?.tamano }} {{ plantacion?.unidad?.nombre }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>Producto</dd><dt>{{ plantacion.producto.label }}</dt>
+                            <dt>Producto</dt><dd>{{ plantacion?.producto?.nombre }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>Tipo de Producto</dd><dt>{{ plantacion.tipo.label }}</dt>
+                            <dt>Tipo de Producto</dt><dd>{{ plantacion?.tipo_producto?.nombre }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>Fecha</dd><dt>{{ plantacion.fecha | date }}</dt>
+                            <dt>Fecha</dt><dd>{{ plantacion?.fecha | datetime }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dd>Propietario</dd><dt><a [routerLink]="['../../Productores/VerProductor', { id : plantacion.propietario.id }]">{{ plantacion.propietario.nombre }}</a></dt>
+                            <dt>Propietario</dt><dd><a [routerLink]="['../../Productores/VerProductor', { id : plantacion?.propietario?.id }]">{{ plantacion?.propietario?.razon_social }}</a></dd>
                         </dl>
                     </div>
                 </div>
@@ -40,11 +42,16 @@ import {RouteParams, Router, ROUTER_DIRECTIVES} from "angular2/router";
 export class VerPlantacionComponent {
     plantacion : PlantacionModel;
 
-    constructor(public _plantacionesService : PlantacionesService, public _routeParams : RouteParams, public _router : Router) {}
+    constructor(public _routeParams : RouteParams, 
+                public _router : Router, 
+                public _administracionService : AdministracionService) {}
 
     ngOnInit() {
         const id = parseInt(this._routeParams.get("id"));
-        this.plantacion = this._plantacionesService.getById(id);
-        if(this.plantacion == null) this._router.navigate(["/Error404"]);
+        this._administracionService.getPlantacion(id).subscribe(plantacion => {
+            if(plantacion == null) this._router.navigate(["/Error404"]);
+            this.plantacion = plantacion
+        });
+        
     }
 }

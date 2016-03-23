@@ -27,7 +27,7 @@ export class MaterialModel {
         return this._codigo;
     }
 
-    get tipo():SimpleKey {
+    get tipo_material():SimpleKey {
         return this._tipo_material;
     }
 
@@ -43,7 +43,7 @@ export class MaterialModel {
         return {
             id : this.id,
             codigo : this.codigo,
-            tipo : this.tipo,
+            tipoMaterial : this.tipo_material,
             nombre : this.nombre,
             fecha : this.fecha
         }

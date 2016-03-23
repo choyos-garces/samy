@@ -1,54 +1,53 @@
 import {Component} from "angular2/core"
 import {Router, ROUTER_DIRECTIVES, RouteParams} from "angular2/router";
-
-import {ProveedoresService} from "../../../Service/Administracion/ProveedoresService";
-import {ProveedorModel} from "../../../Model/Administracion/ProveedorModel";
+import {EmpresaModel} from "../../../Model/Administracion/EmpresaModel";
+import {AdministracionService} from "../../../Service/AdministracionService";
 
 @Component({
     selector: 'ver-proveedor',
     directives : [ROUTER_DIRECTIVES],
     template : `<div class="container-fluid">
-    <h3>{{ proveedor.razonSocial }}</h3>
-    <div class="row">
-        <div class="col-sm-6">
-            <dl class="dl-horizontal">
-                <dt>Identificaci&oacute;n</dt>
-                <dd>{{ proveedor.identificacion }}</dd>
-                <dt>Tel&eacute;fono</dt>
-                <dd>{{ proveedor.numeroTelefono }}</dd>
-            </dl>
-            <dl>
-                <dt>Correo</dt>
-                <dd>{{ proveedor.correo }}</dd>
-                <dt>Direcci&oacute;n</dt>
-                <dd>{{ proveedor.direccion }}</dd>
-            </dl>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel">
-                <div class="panel-heading">
-                    <strong>Contacto</strong>
-                    <button type="button" class="action">A&ntilde;adir <i class="fa fa-plus"></i></button>
-                </div>
-                <div class="panel-body">
+    <h4>Poveedor <small>id#{{ proveedor?.id }}</small></h4>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Datos de Proveedor</div>
+                    <div class="panel-body">
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Codigo</dt><dd>{{ proveedor?.id }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Raz&oacute;n Social</dt><dd>{{ proveedor?.razon_social }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Numero Tel&eacute;fono</dt><dd>{{ proveedor?.telefono }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>{{ proveedor?.tipo_indentificacion?.nombre }}</dt><dd>{{ proveedor?.identificacion }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Correo Contacto</dt><dd>{{ proveedor?.correo }}</dd>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>`
 })
 export class VerProveedorComponent {
-    proveedor : ProveedorModel;
+    proveedor : EmpresaModel;
 
     constructor(public _router : Router,
                 public _routeParams : RouteParams,
-                public _proveedoresService : ProveedoresService) {
+                public _administracionService : AdministracionService) {}
 
+    ngOnInit() {
         const id = parseInt(this._routeParams.get("id"));
-        this.proveedor = this._proveedoresService.getById(id);
-
-        if(this.proveedor == null) {
-            this._router.navigate(["/Error404"]);
-        }
+        this._administracionService.getEmpresa(id).subscribe(empresa => {
+            this.proveedor = empresa;
+            if(empresa == null) {
+                this._router.navigate(["/Error404"]);
+            }
+        })
     }
 }

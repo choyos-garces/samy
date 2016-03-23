@@ -8,7 +8,7 @@ import {Router, RouteParams} from "angular2/router";
     selector  : 'ver-bodega',
     pipes : [DatetimePipe],
     template : `<div class="container-fluid">
-        <h3>Material <small>(ID#{{ bodega?.id }})</small> {{ bodega?.codigo }}</h3>
+        <h4>Material <small>id#{{ bodega?.id }}</small></h4>
         <div class="row">
             <div class="col-xs-6">
                 <div class="panel panel-default">

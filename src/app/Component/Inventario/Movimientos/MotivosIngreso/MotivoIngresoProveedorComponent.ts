@@ -1,8 +1,7 @@
 import {Component, Output, EventEmitter} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
-
-import {ProveedorModel} from "../../../../Model/Administracion/ProveedorModel";
-import {ProveedoresService} from "../../../../Service/Administracion/ProveedoresService";
+import {EmpresaModel} from "../../../../Model/Administracion/EmpresaModel";
+import {AdministracionService} from "../../../../Service/AdministracionService";
 
 @Component({
     selector : 'motivo-ingreso-proveedor',
@@ -11,7 +10,7 @@ import {ProveedoresService} from "../../../../Service/Administracion/Proveedores
         <label class="control-label col-sm-3" for="motivoIngresoProveedorProveedor">Proveedor</label>
         <div class="col-sm-7 col-md-5">
             <select class="form-control" id="motivoIngresoProveedorProveedor" [ngModel]="proveedor" (ngModelChange)="assignarFormControl($event, 'proveedores', 'proveedor')">
-                <option *ngFor="#proveedor of proveedores;#i = index" [value]="i">{{ proveedor.razonSocial }}</option>
+                <option *ngFor="#proveedor of proveedores;#i = index" [value]="i">{{ proveedor.razon_social }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -38,21 +37,10 @@ export class MotivoIngresoProveedorComponent {
     @Output() valuesChange = new EventEmitter();
 
     motivoIngresoProveedor : ControlGroup;
-    proveedores : Array<ProveedorModel>;
+    proveedores : EmpresaModel[];
 
     constructor(public _formBuilder : FormBuilder,
-                public _proveedoresService : ProveedoresService) {
-        this.motivoIngresoProveedor = this._formBuilder.group({
-            proveedor : [1 , Validators.required],
-            factura : [null, Validators.required]
-        });
-
-        this.proveedores = this._proveedoresService.getProveedores();
-
-        this.motivoIngresoProveedor.valueChanges.subscribe(() => {
-            this.valuesChange.emit(this.motivoIngresoProveedor);
-        })
-    }
+                public _administracionService : AdministracionService) {}
 
     toggleValidationFeedback(control) : boolean {
         control = this.motivoIngresoProveedor.controls[control];
@@ -64,6 +52,15 @@ export class MotivoIngresoProveedorComponent {
     }
 
     ngOnInit() {
-        this.valuesChange.emit(this.motivoIngresoProveedor);
+        this.motivoIngresoProveedor = this._formBuilder.group({
+            proveedor : [1 , Validators.required],
+            factura : [null, Validators.required]
+        });
+
+        this._administracionService.getEmpresas(1).subscribe(proveedores => this.proveedores = proveedores);
+
+        this.motivoIngresoProveedor.valueChanges.subscribe(() => {
+            this.valuesChange.emit(this.motivoIngresoProveedor);
+        });
     }
 }
