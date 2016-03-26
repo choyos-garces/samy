@@ -9,8 +9,8 @@ import {MovimientoMaterialModel} from "../../../../Model/Inventario/MovimientoMa
                 <thead>
                     <tr>
                         <th class="col-xs-1"></th>
-                        <th></th>
-                        <th></th>
+                        <th colspan="2"></th>
+                        <th class="hidden-xs hidden-sm"></th>
                         <th class="col-xs-1"></th>
                     </tr>
                 </thead>
@@ -18,6 +18,7 @@ import {MovimientoMaterialModel} from "../../../../Model/Inventario/MovimientoMa
                     <tr *ngFor="#movimiento of materiales;#i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ movimiento.material.nombre }}</td>
+                        <td class="hidden-xs hidden-sm">{{ movimiento.material.tipo_material.nombre }}</td>
                         <td class="text-right">{{ movimiento.cantidad }}</td>
                         <td><button class="btn" (click)="remove(movimiento)"><i class="fa fa-trash-o"></i></button></td>
                     </tr>
@@ -25,6 +26,7 @@ import {MovimientoMaterialModel} from "../../../../Model/Inventario/MovimientoMa
                 <tfoot>
                     <tr>
                         <td colspan="3">Selecci&oacute;n Total:</td>
+                        <td class="hidden-xs hidden-sm"></td>
                         <td><span class="btn">{{ total() }}</span></td>
                     </tr>
                 </tfoot>

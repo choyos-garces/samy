@@ -24,36 +24,44 @@ import {PlantacionModel} from "../../../Model/Administracion/PlantacionModel";
     template: `<div class="container-fluid">
         <h4>Movimientos de Inventario</h4>
         <form class="form-horizontal" autocomplete="off" spellcheck="false">
-            <movimiento-inventario (valuesChange)="submitChanges($event, 0)" (cambioMotivoMovimiento)="activarFormulario($event)"></movimiento-inventario>
-            <div class="form-group">
-                <div class="col-sm-10 col-md-8"><hr /></div>
-            </div>
-            <motivo-ingreso-proveedor (valuesChange)="submitChanges($event,1)" [hidden]="formularioActivo != 1"></motivo-ingreso-proveedor>
-            <motivo-ingreso-transferencia (valuesChange)="submitChanges($event, 2)" [hidden]="formularioActivo != 2"></motivo-ingreso-transferencia>
-            <motivo-ingreso-devolucion (valuesChange)="submitChanges($event, 3)" [hidden]="formularioActivo != 3"></motivo-ingreso-devolucion>
-            <motivo-egreso-productor (valuesChange)="submitChanges($event, 4)" [hidden]="formularioActivo != 4"></motivo-egreso-productor>
-            <motivo-egreso-transferencia (valuesChange)="submitChanges($event, 5)" [hidden]="formularioActivo != 5"></motivo-egreso-transferencia>
-            <motivo-egreso-proveedor (valuesChange)="submitChanges($event, 6)" [hidden]="formularioActivo != 6"></motivo-egreso-proveedor>
-            <div class="form-group">
-                <div class="col-sm-7 col-md-5 col-sm-push-3">
-                    <button class="btn btn-primary" [disabled]="!readyToSubmit()" (click)="submit()">Generar Ingreso</button>
+            <fieldset [disabled]="waiting">
+                <movimiento-inventario (valuesChange)="submitChanges($event, 0)" (cambioMotivoMovimiento)="activarFormulario($event)"></movimiento-inventario>
+                <div class="form-group">
+                    <div class="col-sm-10 col-md-8"><hr /></div>
                 </div>
-            </div>
+                <motivo-ingreso-proveedor (valuesChange)="submitChanges($event,1)" [hidden]="formularioActivo != 1"></motivo-ingreso-proveedor>
+                <motivo-ingreso-transferencia (valuesChange)="submitChanges($event, 2)" [hidden]="formularioActivo != 2"></motivo-ingreso-transferencia>
+                <motivo-ingreso-devolucion (valuesChange)="submitChanges($event, 3)" [hidden]="formularioActivo != 3"></motivo-ingreso-devolucion>
+                <motivo-egreso-productor (valuesChange)="submitChanges($event, 4)" [hidden]="formularioActivo != 4"></motivo-egreso-productor>
+                <motivo-egreso-transferencia (valuesChange)="submitChanges($event, 5)" [hidden]="formularioActivo != 5"></motivo-egreso-transferencia>
+                <motivo-egreso-proveedor (valuesChange)="submitChanges($event, 6)" [hidden]="formularioActivo != 6"></motivo-egreso-proveedor>
+                <div class="form-group">
+                    <div class="col-sm-7 col-md-5 col-sm-push-3">
+                        <button class="btn btn-primary" [disabled]="!readyToSubmit()" (click)="submit()">Generar Ingreso</button>
+                    </div>
+                </div>
+            </fieldset>
         </form>
     </div>`
 })
 export class IngresarMovimientoInventarioComponent {
     formularios : Array<ControlGroup> = [];
     formularioActivo : number;
+    waiting : boolean;
 
-    constructor(public _router : Router, public _movimientosInventarioService : MovimientosInventarioService) {}
+    constructor(public _router : Router,
+                public _movimientosInventarioService : MovimientosInventarioService) {}
+
+    ngOnInit() {
+        this.waiting = false;
+    }
 
     activarFormulario(motivoMovimiento : MotivoMovimientoModel) : void {
         this.formularioActivo = (motivoMovimiento != null) ? motivoMovimiento.id : null;
     }
 
-    submitChanges(form : ControlGroup, tipo : string) {
-        this.formularios[tipo] = form;
+    submitChanges(form : ControlGroup, tipo : number) {
+        console.log(form.valid)
     }
 
     readyToSubmit() : boolean {
@@ -71,6 +79,7 @@ export class IngresarMovimientoInventarioComponent {
 
     submit() {
         if(this.readyToSubmit()) {
+            this.waiting = true;
             var formularioMovimiento = this.formularios[0].value;
             var movimientoInventario = new MovimientoInventarioModel(null, formularioMovimiento.bodega, formularioMovimiento.tipoMovimiento, formularioMovimiento.motivoMovimiento);
             movimientoInventario.movimientosMateriales = formularioMovimiento.movimientosMateriales;

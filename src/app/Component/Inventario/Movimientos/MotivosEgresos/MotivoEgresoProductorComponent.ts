@@ -1,7 +1,6 @@
 import {Component, Output, EventEmitter} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 
-import {PlantacionesService} from "../../../../Service/Administracion/PlantacionesService";
 import {PlantacionModel} from "../../../../Model/Administracion/PlantacionModel";
 import {AdministracionService} from "../../../../Service/AdministracionService";
 import {EmpresaModel} from "../../../../Model/Administracion/EmpresaModel";
@@ -15,7 +14,7 @@ import {PlantacionPropietarioPipe} from "../../../../Pipes/PlantacionPropietario
         <label class="control-label col-sm-3" for="motivoEgresoProductorProductor">Productor</label>
         <div class="col-sm-7 col-md-5">
             <select class="form-control" id="motivoEgresoProductorProductor" [ngModel]="productor" (ngModelChange)="objectToFormControl($event, 'productores', 'productor')">
-                <option *ngFor="#opcion of productores" [value]="opcion.id">{{ opcion.nombre }}</option>
+                <option *ngFor="#opcion of productores" [value]="opcion.id">{{ opcion.razon_social }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -29,7 +28,7 @@ import {PlantacionPropietarioPipe} from "../../../../Pipes/PlantacionPropietario
         <label class="control-label col-sm-3" for="motivoEgresoProductorPlantacion">Plantaci&oacute;n</label>
         <div class="col-sm-7 col-md-5">
             <select class="form-control" id="motivoEgresoProductorPlantacion" [ngModel]="plantacion" (ngModelChange)="objectToFormControl($event, 'plantaciones', 'plantacion')">
-                <option *ngFor="#opcion of plantaciones | plantacionPropietario : motivoEgresoProductor.controls['productor']">{{ opcion.nombre }}</option>
+                <option *ngFor="#opcion of plantaciones | plantacionPropietario : motivoEgresoProductor.controls['productor'].value">{{ opcion.nombre }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -59,19 +58,7 @@ export class MotivoEgresoProductorComponent {
     plantaciones : PlantacionModel[] = [];
 
     constructor(public _formBuilder : FormBuilder,
-                public _adminsitracionService : AdministracionService,
-                public _plantacionesService : PlantacionesService) {}
-
-    toggleValidationFeedback(control) {
-        control = this.motivoEgresoProductor.controls[control];
-        return !(!control.valid && control.touched);
-    }
-
-    objectToFormControl(id, collection : string, control : string) : void {
-        const result = this[collection].filter((item : any) => item.id == id);
-
-        this.motivoEgresoProductor.controls[control].updateValue((result.length == 1) ? result[0] : null,{});
-    }
+                public _adminsitracionService : AdministracionService) {}
 
     ngOnInit() {
 
@@ -84,10 +71,22 @@ export class MotivoEgresoProductorComponent {
         this.motivoEgresoProductor.valueChanges.subscribe(() => {
             this.valuesChange.emit(this.motivoEgresoProductor);
         });
-        
+
         this._adminsitracionService.getEmpresas(0).subscribe(empresas => this.productores = empresas);
-        this.plantaciones = this._plantacionesService.plantaciones;
-        
+        this._adminsitracionService.getPlantaciones().subscribe(plantaciones => this.plantaciones = plantaciones);
+
         this.valuesChange.emit(this.motivoEgresoProductor);
     }
+    
+    toggleValidationFeedback(control) {
+        control = this.motivoEgresoProductor.controls[control];
+        return !(!control.valid && control.touched);
+    }
+
+    objectToFormControl(id, collection : string, control : string) : void {
+        const result = this[collection].filter((item : any) => item.id == id);
+
+        this.motivoEgresoProductor.controls[control].updateValue((result.length == 1) ? result[0] : null,{});
+    }
+    
 }

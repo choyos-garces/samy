@@ -23,7 +23,7 @@ import {OpcionesService} from "../../../../Service/OpcionesService";
                 </div>
                 <div class="input-group-btn select-group">
                     <select class="form-control" id="movimientoInventarioMaterial" [(ngModel)]="material" (ngModelChange)="objectToFormControl($event, 'materiales', 'material')">
-                        <option *ngFor="#opcion of materiales | filterSimpleKey : 'number' : 'tipoMaterial' : tipoMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
+                        <option *ngFor="#opcion of materiales | filterSimpleKey : 'tipo_material' : tipoMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
                     </select>
                 </div>
                 <input type="number" placeholder="Cantidad" step="0.01" min="0" class="form-control" id="movimientoInventarioCantidad" [(ngFormControl)]="movimietoMaterial.controls['cantidad']" />
@@ -44,10 +44,11 @@ export class MovimientoMaterialComponent {
 
     constructor(public _formBuilder : FormBuilder,
                 public _administracionService : AdministracionService,
-                public _opcionesService : OpcionesService) {
+                public _opcionesService : OpcionesService) {}
 
-        this._administracionService.getMateriales().subscribe(materiales => this.materiales = materiales);
+    ngOnInit(){
         this._opcionesService.getTiposMaterial().subscribe(tiposMaterial => this.tiposMaterial = tiposMaterial);
+        this._administracionService.getMateriales().subscribe(materiales => this.materiales = materiales);
 
         this.movimietoMaterial = this._formBuilder.group({
             material : [null, Validators.required],
@@ -67,12 +68,12 @@ export class MovimientoMaterialComponent {
             this.movimietoMaterial.controls["material"].updateValue(null, {});
             this.movimietoMaterial.controls["cantidad"].updateValue(null, {});
             this.material = null;
+            this.tipoMaterial = null;
         }
     }
 
     objectToFormControl(id, collection, control) : void {
         const result = this[collection].filter((item : any) => item.id == id );
-
         this.movimietoMaterial.controls[control].updateValue((result.length == 1) ? result[0] : null);
     }
 }

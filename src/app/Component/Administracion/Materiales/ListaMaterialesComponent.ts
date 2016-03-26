@@ -16,9 +16,8 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
                     <tr>
                         <th>Codigo</th>
                         <th>Nombre</th>
-                        <th>Tipo Material</th>
+                        <th class="hidden-xs">Tipo Material</th>
                         <th>Creado</th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -26,10 +25,9 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
                     <tr *ngFor="#material of materiales" [routerLink]="['VerMaterial', { id : material.id }]" class="router">
                         <td>{{ material.codigo }}</td>
                         <td>{{ material.nombre }}</td>
-                        <td>{{ material.tipo_material.nombre }}</td>
-                        <td>{{ material.fecha | datetime }}</td>
+                        <td class="hidden-xs">{{ material.tipo_material.nombre }}</td>
+                        <td>{{ material.fecha | datetime : "short"}}</td>
                         <td><i class="fa fa-pencil"></i></td>
-                        <td><i class="fa fa-trash"></i></td>
                     </tr>
                 </tbody>
             </table>

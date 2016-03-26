@@ -6,7 +6,6 @@ import {ROUTER_PROVIDERS, APP_BASE_HREF, LocationStrategy, HashLocationStrategy}
 
 import {Index} from "./Component/index";
 
-import {PlantacionesService} from "./Service/Administracion/PlantacionesService";
 import {MovimientosInventarioService} from "./Service/Inventario/MovimientosInventarioService";
 import {InventarioMaterialesService} from "./Service/Inventario/InventarioMaterialesService";
 import {AdministracionService} from "./Service/AdministracionService";
@@ -18,6 +17,6 @@ bootstrap(Index, [
     ROUTER_PROVIDERS,
     //provide(APP_BASE_HREF, {useValue: '/samy'}),
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
-    ControlPanelService, OpcionesService, AdministracionService, PlantacionesService,
+    ControlPanelService, OpcionesService, AdministracionService,
     MovimientosInventarioService, InventarioMaterialesService
 ]);

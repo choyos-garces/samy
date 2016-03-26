@@ -2,7 +2,6 @@ import {Component} from 'angular2/core';
 import { ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {PlantacionModel} from "../../../Model/Administracion/PlantacionModel";
-import {PlantacionesService} from "../../../Service/Administracion/PlantacionesService";
 import {AdministracionService} from "../../../Service/AdministracionService";
 
 @Component({

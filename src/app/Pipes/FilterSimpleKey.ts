@@ -5,7 +5,9 @@ import {Pipe} from "angular2/core";
 })
 export class FilterSimpleKey {
     transform(collection :  any[], arg : string []) : any[] {
-        var key = (arg[0] == "number") ? parseInt(arg[2]) : arg[2];
-        return (typeof collection != "undefined") ? collection.filter((item : any) => item[arg[1]].id == key) : collection;
+        var key = arg[1];
+        return (typeof collection != "undefined" && typeof arg[0] != "undefined") ? collection.filter((item : any) => {
+            return item[arg[0]].id == key;
+        }) : collection;
     }
 }

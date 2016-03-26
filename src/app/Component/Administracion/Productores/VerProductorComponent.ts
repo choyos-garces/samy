@@ -43,16 +43,16 @@ import {EmpresaModel} from "../../../Model/Administracion/EmpresaModel";
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Producto</th>
-                                <th>Tipo</th>
+                                <th class="hidden-xs">Producto</th>
+                                <th class="hidden-xs hidden-sm">Tipo</th>
                                 <th>Tama&ntilde;o</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="#plantacion of productor?.plantaciones" class="router" [routerLink]="['../../Plantaciones/VerPlantacion' , {id : plantacion?.id}]">
                                 <td>{{ plantacion?.nombre }}</td>
-                                <td>{{ plantacion?.producto?.nombre }}</td>
-                                <td>{{ plantacion?.tipo?.nombre }}</td>
+                                <td class="hidden-xs">{{ plantacion?.producto?.nombre }}</td>
+                                <td class="hidden-xs hidden-sm">{{ plantacion?.tipo_producto?.nombre }}</td>
                                 <td>{{ plantacion?.tamano }} {{ plantacion?.unidad?.nombre }}</td>
                             </tr>
                         </tbody>

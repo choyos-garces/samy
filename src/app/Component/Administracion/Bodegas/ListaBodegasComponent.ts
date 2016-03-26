@@ -16,10 +16,9 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
                     <tr>
                         <th>Nombre</th>
                         <th>Codigo</th>
-                        <th>Ingreso</th>
-                        <th>Matriales</th>
-                        <th>Inventario</th>
-                        <th></th>
+                        <th>Creada</th>
+                        <th class="text-center">Matriales</th>
+                        <th class="text-center">Inventario</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -27,11 +26,10 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
                     <tr *ngFor="#bodega of bodegas" [routerLink]="['VerBodega', { id : bodega.id }]" class="router">
                         <td>{{ bodega.nombre }}</td>
                         <td>{{ bodega.codigo }}</td>
-                        <td>{{ bodega.fecha | datetime }}</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>{{ bodega.fecha | datetime : "shoty"}}</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
                         <td><i class="fa fa-pencil"></i></td>
-                        <td><i class="fa fa-trash"></i></td>
                     </tr>
                 </tbody>
             </table>

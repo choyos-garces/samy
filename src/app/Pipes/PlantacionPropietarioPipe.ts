@@ -7,6 +7,6 @@ import {PlantacionModel} from "../Model/Administracion/PlantacionModel";
 })
 export class PlantacionPropietarioPipe {
     transform(collection :  PlantacionModel[], arg : EmpresaModel[]) : any[] {
-        return (typeof collection != "undefined" ) ? collection.filter((plantacion : PlantacionModel) => plantacion.propietario.id == arg[0].id ) : collection;
+        return (typeof collection != "undefined" && arg[0] != null ) ? collection.filter((plantacion : PlantacionModel) => plantacion.propietario.id == arg[0].id ) : collection;
     }
 }

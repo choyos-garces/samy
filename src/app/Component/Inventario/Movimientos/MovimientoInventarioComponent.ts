@@ -79,42 +79,6 @@ export class MovimientoInventarioComponent {
                 public _administracionService : AdministracionService,
                 public _controlPanelService : ControlPanelService) {}
 
-    agregarMaterial(movimientoMaterial : MovimientoMaterialModel) : void {
-        this.seleccionMateriales = [
-            ...this.seleccionMateriales,
-            movimientoMaterial
-        ];
-
-        this.movimientoInventario.controls["movimientosMateriales"].updateValue(this.seleccionMateriales, {});
-    }
-
-    removerMaterial(movimientoMaterial : MovimientoMaterialModel) : void {
-        const index = this.seleccionMateriales.indexOf(movimientoMaterial);
-        
-        this.seleccionMateriales = [
-            ...this.seleccionMateriales.slice(0, index),
-            ...this.seleccionMateriales.slice(index +1)
-        ];
-
-        if(this.seleccionMateriales.length == 0) {
-            this.movimientoInventario.controls["movimientosMateriales"].updateValue(null, {});
-        }
-        else {
-            this.movimientoInventario.controls["movimientosMateriales"].updateValue(this.seleccionMateriales, {});
-        }
-    }
-
-    toggleValidationFeedback(control) : boolean {
-        control = this.movimientoInventario.controls[control];
-        return !(!control.valid && control.touched);
-    }
-
-    objectToFormControl(id, collection, control) : void {
-        const result = this[collection].filter((item : any) => item.id == id );
-
-        this.movimientoInventario.controls[control].updateValue((result.length == 1) ? result[0] : null);
-    }
-
     ngOnInit() {
         this._controlPanelService.getMotivosMovimiento().subscribe(motivosMovimiento => this.motivosMovimiento = motivosMovimiento)
         this._administracionService.getBodegas().subscribe(bodegas => this.bodegas = bodegas);
@@ -126,16 +90,32 @@ export class MovimientoInventarioComponent {
             motivoMovimiento : [null, Validators.required]
         });
 
-        this.movimientoInventario.controls["motivoMovimiento"].valueChanges.subscribe((value) => {
-            this.cambioMotivoMovimiento.emit(value);
-        });
+        this.movimientoInventario.controls["motivoMovimiento"].valueChanges.subscribe((value) => this.cambioMotivoMovimiento.emit(value));
+        this.movimientoInventario.controls["tipoMovimiento"].valueChanges.subscribe(() => this.cambioMotivoMovimiento.emit(null));
+        this.movimientoInventario.valueChanges.subscribe(() => this.valuesChange.emit(this.movimientoInventario));
+    }
+    
+    agregarMaterial(movimientoMaterial : MovimientoMaterialModel) : void {
+        this.seleccionMateriales = [...this.seleccionMateriales, movimientoMaterial];
+        this.movimientoInventario.controls["movimientosMateriales"].updateValue(this.seleccionMateriales, {});
+    }
 
-        this.movimientoInventario.controls["tipoMovimiento"].valueChanges.subscribe(() => {
-            this.cambioMotivoMovimiento.emit(null);
-        });
+    removerMaterial(movimientoMaterial : MovimientoMaterialModel) : void {
+        const index = this.seleccionMateriales.indexOf(movimientoMaterial);
         
-        this.movimientoInventario.valueChanges.subscribe(() => {
-            this.valuesChange.emit(this.movimientoInventario)
-        });
+        this.seleccionMateriales = [...this.seleccionMateriales.slice(0, index), ...this.seleccionMateriales.slice(index +1)];
+
+        if (this.seleccionMateriales.length == 0) this.movimientoInventario.controls["movimientosMateriales"].updateValue(null, {});
+        else this.movimientoInventario.controls["movimientosMateriales"].updateValue(this.seleccionMateriales, {});
+    }
+
+    toggleValidationFeedback(control) : boolean {
+        control = this.movimientoInventario.controls[control];
+        return !(!control.valid && control.touched);
+    }
+
+    objectToFormControl(id, collection, control) : void {
+        const result = this[collection].filter((item : any) => item.id == id );
+        this.movimientoInventario.controls[control].updateValue((result.length == 1) ? result[0] : null);
     }
 }
