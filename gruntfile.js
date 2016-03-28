@@ -16,7 +16,6 @@ module.exports = function(grunt) {
                     emitDecoratorMetadata: true,
                     removeComents: false,
                     noImplicitAny: false
-
                 }
             }
         },
@@ -108,49 +107,21 @@ module.exports = function(grunt) {
             }
         },
 
-        uglify: {
-            app: {
-                files: [
-                    {expand: true, cwd: 'build/app', src: '**/*.js', dest: 'dist/app'},
-                    {expand: true, cwd: 'build/scripts', src: '**/*.js', dest: 'dist/scripts'}
-                ]
-            }
-        },
-
-        cssmin: {
-            target: {
-                files: [
-                    {expand: true, cwd: 'build', src: '**/*.css', dest: 'dist', ext: '.css'}
-                ]
-            }
-        },
-
         clean: {
             build: ["build/**/*"],
             dist: ["dist/**/*"]
-        },
-
-        sloc : {
-            src : {
-                files: {
-                    'build/app' : ['*/**']
-                }
-            }
         }
+
     });
 
     grunt.registerTask("build", ["clean:build", "typescript", "sass", "copy:libs","copy:build"]);
     grunt.registerTask("start", ["build", "watch"]);
     grunt.registerTask("server", ["build", "browserSync", "watch"]);
-
-    grunt.loadNpmTasks("grunt-contrib-cssmin");
-    grunt.loadNpmTasks("grunt-contrib-uglify");
+    
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-typescript");
     grunt.loadNpmTasks("grunt-contrib-sass");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-watch");
-    grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-browser-sync");
-    grunt.loadNpmTasks('grunt-sloc');
 };

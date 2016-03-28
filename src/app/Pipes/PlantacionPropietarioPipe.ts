@@ -1,6 +1,6 @@
 import {Pipe} from "angular2/core";
-import {EmpresaModel} from "../Model/Administracion/EmpresaModel";
-import {PlantacionModel} from "../Model/Administracion/PlantacionModel";
+import {EmpresaModel} from "../Administracion/Models/EmpresaModel";
+import {PlantacionModel} from "../Administracion/Models/PlantacionModel";
 
 @Pipe({
     name : 'plantacionPropietario'

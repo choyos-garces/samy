@@ -1,19 +1,19 @@
 {
-  "name": "web",
-  "version": "1.0.0",
-  "description": "Pagina de Hoyos Garces SA",
+  "name": "samy",
+  "version": "0.0.1",
+  "description": "Sistema de inventario para HoyosGarces S.A.",
   "main": "index.html",
   "scripts": {
-    "typings": "typings install --ambient",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "typings": "typings",
+    "postinstall": "typings install --ambient"
   },
   "keywords": [
     "hoyosgarces",
-    "web"
+    "samy"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/choyos-garces/web.git"
+    "url": "https://github.com/choyos-garces/samy.git"
   },
   "author": "choyos",
   "license": "UNLICENSED",
@@ -29,19 +29,17 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-sloc": "^0.6.0",
     "grunt-typescript": "^0.8.0",
-    "typings": "^0.6.8"
+    "typings": "^0.7.9"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.6",
-    "bootstrap": "*",
-    "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
-    "font-awesome": "^4.5.0",
-    "jquery": "*",
-    "lodash": "^4.3.0",
+    "angular2": "2.0.0-beta.12",
+    "systemjs": "0.19.24",
+    "es6-shim": "^0.35",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.0",
-    "systemjs": "0.19.20",
-    "zone.js": "0.5.14"
+    "rxjs": "5.0.0-beta.2",
+    "zone.js": "0.6.6",
+    "jquery": "*",
+    "bootstrap": "*",
+    "font-awesome": "^4.5.0"
   }
 }
