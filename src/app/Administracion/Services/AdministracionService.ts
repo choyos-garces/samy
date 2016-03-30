@@ -53,7 +53,7 @@ export class AdministracionService extends apiService{
     }
 
     getPlantacion( id : number ) {
-        return this.get("plantaciones/", id).map(response => <PlantacionModel> response);
+        return this.get("plantaciones", id).map(response => <PlantacionModel> response);
     }
 
     postPlantacion(plantacion : PlantacionModel) {

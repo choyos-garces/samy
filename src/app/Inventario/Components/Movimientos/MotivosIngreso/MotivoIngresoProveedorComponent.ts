@@ -9,8 +9,8 @@ import {AdministracionService} from "../../../../Administracion/Services/Adminis
     <div class="form-group" [ngClass]=" !toggleValidationFeedback('proveedor') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="motivoIngresoProveedorProveedor">Proveedor</label>
         <div class="col-sm-7 col-md-5">
-            <select class="form-control" id="motivoIngresoProveedorProveedor" [ngModel]="proveedor" (ngModelChange)="assignarFormControl($event, 'proveedores', 'proveedor')">
-                <option *ngFor="#proveedor of proveedores;#i = index" [value]="i">{{ proveedor.razon_social }}</option>
+            <select class="form-control" id="motivoIngresoProveedorProveedor" [ngModel]="proveedor" (ngModelChange)=" objectToFormControl($event, 'proveedores', 'proveedor')">
+                <option *ngFor="#opcion of proveedores" [value]="opcion.id">{{ opcion.razonSocial }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -42,25 +42,37 @@ export class MotivoIngresoProveedorComponent {
     constructor(public _formBuilder : FormBuilder,
                 public _administracionService : AdministracionService) {}
 
+    ngOnInit() {
+        this._administracionService.getEmpresas(1).subscribe(proveedores => this.proveedores = proveedores);
+        
+        this.motivoIngresoProveedor = this._formBuilder.group({
+            proveedor : [null , Validators.required],
+            factura : [null, Validators.required]
+        });
+
+        this.motivoIngresoProveedor.valueChanges.subscribe(() => this.emitirValores());
+    }
+
+    emitirValores() : void {
+        if(this.motivoIngresoProveedor.valid) {
+            const opciones = {
+                proveedor : <EmpresaModel> this.motivoIngresoProveedor.value.proveedor,
+                factura : <string> this.motivoIngresoProveedor.value.factura
+            };
+            return this.valuesChange.emit(opciones);
+        }
+        else
+            return this.valuesChange.emit(null);
+    }
+    
     toggleValidationFeedback(control) : boolean {
         control = this.motivoIngresoProveedor.controls[control];
         return !(!control.valid && control.touched);
     }
 
-    assignarFormControl(index, collection, control) : void {
-        this.motivoIngresoProveedor.controls[control] = new Control(this[collection][index], null);
-    }
+    objectToFormControl(id, collection : string, control : string) : void {
+        const result = this[collection].filter((item : any) => item.id == id);
 
-    ngOnInit() {
-        this.motivoIngresoProveedor = this._formBuilder.group({
-            proveedor : [1 , Validators.required],
-            factura : [null, Validators.required]
-        });
-
-        this._administracionService.getEmpresas(1).subscribe(proveedores => this.proveedores = proveedores);
-
-        this.motivoIngresoProveedor.valueChanges.subscribe(() => {
-            this.valuesChange.emit(this.motivoIngresoProveedor);
-        });
+        (<Control>this.motivoIngresoProveedor.controls[control]).updateValue((result.length == 1) ? result[0] : null);
     }
 }

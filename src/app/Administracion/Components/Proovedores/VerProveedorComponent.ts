@@ -23,10 +23,10 @@ import {AdministracionService} from "../../Services/AdministracionService";
                             <dt>Numero Tel&eacute;fono</dt><dd>{{ proveedor?.telefono }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>{{ proveedor?.tipo_indentificacion?.nombre }}</dt><dd>{{ proveedor?.identificacion }}</dd>
+                            <dt>{{ proveedor?.tipo_identificacion?.nombre }}</dt><dd>{{ proveedor?.identificacion }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Correo Contacto</dt><dd>{{ proveedor?.correo }}</dd>
+                            <dt>Corre</dt><dd>{{ proveedor?.correo }}</dd>
                         </dl>
                     </div>
                 </div>

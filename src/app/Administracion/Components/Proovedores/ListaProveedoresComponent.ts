@@ -23,7 +23,7 @@ import {AdministracionService} from "../../Services/AdministracionService";
             <tbody>
                 <tr class="router" *ngFor="#proveedor of proveedores" [routerLink]="['VerProveedor', { id : proveedor.id}]">
                     <td>{{ proveedor.id }}</td>
-                    <td>{{ proveedor.razon_social }}</td>
+                    <td>{{ proveedor.razonSocial }}</td>
                     <td>{{ proveedor.identificacion }}</td>
                     <td>{{ proveedor.telefono }}</td>
                     <td>{{ proveedor.correo }}</td>

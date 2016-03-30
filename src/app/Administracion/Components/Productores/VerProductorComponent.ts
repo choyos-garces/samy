@@ -19,16 +19,16 @@ import {EmpresaModel} from "../../Models/EmpresaModel";
                             <dt>Codigo</dt><dd>{{ productor?.id }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Raz&oacute;n Social</dt><dd>{{ productor?.razon_social }}</dd>
+                            <dt>Raz&oacute;n Social</dt><dd>{{ productor?.razonSocial }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Numero Tel&eacute;fono</dt><dd>{{ productor?.telefono }}</dd>
+                            <dt>Tel&eacute;fono</dt><dd>{{ productor?.telefono }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>{{ productor?.tipo_indentificacion?.nombre }}</dt><dd>{{ productor?.identificacion }}</dd>
+                            <dt>{{ productor?.tipoIdentificacion?.nombre }}</dt><dd>{{ productor?.identificacion }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Correo Contacto</dt><dd>{{ productor?.correo }}</dd>
+                            <dt>Correo</dt><dd>{{ productor?.correo }}</dd>
                         </dl>
                     </div>
                 </div>
@@ -43,17 +43,15 @@ import {EmpresaModel} from "../../Models/EmpresaModel";
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th class="hidden-xs">Producto</th>
-                                <th class="hidden-xs hidden-sm">Tipo</th>
-                                <th>Tama&ntilde;o</th>
+                                <th>Producto</th>
+                                <th class="hidden-sm">Tipo</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="#plantacion of productor?.plantaciones" class="router" [routerLink]="['../../Plantaciones/VerPlantacion' , {id : plantacion?.id}]">
                                 <td>{{ plantacion?.nombre }}</td>
-                                <td class="hidden-xs">{{ plantacion?.producto?.nombre }}</td>
-                                <td class="hidden-xs hidden-sm">{{ plantacion?.tipo_producto?.nombre }}</td>
-                                <td>{{ plantacion?.tamano }} {{ plantacion?.unidad?.nombre }}</td>
+                                <td>{{ plantacion?.producto?.nombre }}</td>
+                                <td class="hidden-sm">{{ plantacion?.tipoProducto?.nombre }}</td>
                             </tr>
                         </tbody>
                     </table>

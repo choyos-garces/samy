@@ -14,7 +14,7 @@ export class MovimientoInventarioModel {
     private _movimientosMateriales : Array<MovimientoMaterialModel>;
     private _detalles : { proveedor?:EmpresaModel, bodega?:BodegaModel, plantacion?:PlantacionModel, factura?:string, notas?:string};
 
-    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : number, motivoMovimiento : SimpleKey, fecha : Date = new Date) {
+    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : number, motivoMovimiento : SimpleKey, fecha? : Date) {
         this._id = id;
         this._bodega = bodega;
         this._tipoMovimiento = tipoMoviemiento;
@@ -72,7 +72,7 @@ export class MovimientoInventarioModel {
             motivoMovimiento : this.motivoMovimiento,
             fecha : this.fecha,
             movimientosMateriales : this.movimientosMateriales,
-            opciones : this.detalles
+            detalles : this.detalles
         }
     }
 }

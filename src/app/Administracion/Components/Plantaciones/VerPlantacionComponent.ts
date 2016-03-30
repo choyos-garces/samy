@@ -25,13 +25,13 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
                             <dt>Producto</dt><dd>{{ plantacion?.producto?.nombre }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Tipo de Producto</dt><dd>{{ plantacion?.tipo_producto?.nombre }}</dd>
+                            <dt>Tipo de Producto</dt><dd>{{ plantacion?.tipoProducto?.nombre }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
                             <dt>Fecha</dt><dd>{{ plantacion?.fecha | datetime }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Propietario</dt><dd><a [routerLink]="['../../Productores/VerProductor', { id : plantacion?.propietario?.id }]">{{ plantacion?.propietario?.razon_social }}</a></dd>
+                            <dt>Propietario</dt><dd><a [routerLink]="['../../Productores/VerProductor', { id : plantacion?.propietario?.id }]">{{ plantacion?.propietario?.razonSocial }}</a></dd>
                         </dl>
                     </div>
                 </div>

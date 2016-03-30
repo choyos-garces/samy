@@ -4,6 +4,7 @@ export class MovimientoMaterialModel {
     private _id : number;
     private _material : MaterialModel;
     private _cantidad : number;
+    private _tipoMovimiento : number;
 
     constructor(id : number = null, material : MaterialModel, cantidad : number) {
         this._id = id;
@@ -35,11 +36,20 @@ export class MovimientoMaterialModel {
         this._cantidad = value;
     }
 
+    get tipoMovimiento():number {
+        return this._tipoMovimiento;
+    }
+
+    set tipoMovimiento(value:number) {
+        this._tipoMovimiento = value;
+    }
+
     toJSON() {
         return {
             id : this.id,
             material : this.material,
-            cantidad : this.cantidad
+            cantidad : this.cantidad,
+            tipoMovimiento : this.tipoMovimiento
         }
     }
 }

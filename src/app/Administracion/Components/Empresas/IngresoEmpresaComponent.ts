@@ -7,7 +7,7 @@ import {EmpresaModel} from "../../Models/EmpresaModel";
 @Component({
     selector : 'ingreso-empresa',
     template : `
-    <div class="form-group" [ngClass]=" !toggleValidationFeedback('razon') ? 'has-error' : ''">
+    <div class="form-group" [ngClass]="toggleValidationFeedback('razon') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="empresaRazon">Raz&oacute;n Social</label>
         <div class="col-sm-7 col-md-5">
             <input type="text" class="form-control" placeholder="Nombre de la Empresa" [(ngFormControl)]="datosEmpresa.controls['razon']" id="empresaRazon"/>
@@ -19,7 +19,7 @@ import {EmpresaModel} from "../../Models/EmpresaModel";
             </div>
         </div>
     </div>
-    <div class="form-group" [ngClass]=" !toggleValidationFeedback('identificacion') ? 'has-error' : ''">
+    <div class="form-group" [ngClass]="(toggleValidationFeedback('identificacion') || toggleValidationFeedback('tipoIdentificacion')) ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="empresaIdentificacion">Identificaci&oacute;n</label>
         <div class="col-sm-7 col-md-5">
             <div class="input-group">
@@ -38,10 +38,10 @@ import {EmpresaModel} from "../../Models/EmpresaModel";
             </div>
         </div>
     </div>
-    <div class="form-group" [ngClass]=" !toggleValidationFeedback('telefono') ? 'has-error' : ''">
+    <div class="form-group" [ngClass]="toggleValidationFeedback('telefono') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="empresaTelefono">Tel&eacute;fono</label>
         <div class="col-sm-7 col-md-5">
-            <input type="text" class="form-control" placeholder="Convencional/Oficina" [(ngFormControl)]="datosEmpresa.controls['telefono']" id="empresaTelefono"/>
+            <input type="tel" class="form-control" placeholder="Convencional/Oficina" [(ngFormControl)]="datosEmpresa.controls['telefono']" id="empresaTelefono"/>
         </div>
         <div class="col-sm-2 col-md-4">
             <div class="form-control-static control-error">
@@ -50,7 +50,7 @@ import {EmpresaModel} from "../../Models/EmpresaModel";
             </div>
         </div>
     </div>
-    <div class="form-group" [ngClass]="!toggleValidationFeedback('correo') ? 'has-error' : ''">
+    <div class="form-group" [ngClass]="toggleValidationFeedback('correo') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="empresaCorreo">Correro</label>
         <div class="col-sm-7 col-md-5">
             <input type="email" class="form-control" placeholder="Correo para notificaciones/facturas" [ngFormControl]="datosEmpresa.controls['correo']" id="empresaCorreo" />
@@ -62,7 +62,7 @@ import {EmpresaModel} from "../../Models/EmpresaModel";
             </div>
         </div>
     </div>
-    <div class="form-group" [ngClass]="!toggleValidationFeedback('direccion') ? 'has-error' : ''">
+    <div class="form-group" [ngClass]="toggleValidationFeedback('direccion') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="empresaCorreo">Direcci&oacute;n</label>
         <div class="col-sm-7 col-md-5">
             <textarea class="form-control" [ngFormControl]="datosEmpresa.controls['direccion']" id="empresaDireccion"></textarea>
@@ -91,7 +91,7 @@ export class IngresoEmpresaComponent {
         this.datosEmpresa = this._formBuilder.group({
             tipoEmpresa : [this.tipoEmpresa, Validators.required],
             razon: [null, Validators.required],
-            tipoIdentificacion: [null],
+            tipoIdentificacion: [null, Validators.required],
             identificacion: [null, Validators.required],
             telefono: [null, Validators.required],
             correo: [null, Validators.required],
@@ -112,8 +112,7 @@ export class IngresoEmpresaComponent {
 
     toggleValidationFeedback(control) : boolean {
         control = this.datosEmpresa.controls[control];
-        return !(!control.valid && control.touched);
-
+        return (!control.valid && control.touched);
     }
 
     objectToFormControl(id, collection : string, control : string) : void {

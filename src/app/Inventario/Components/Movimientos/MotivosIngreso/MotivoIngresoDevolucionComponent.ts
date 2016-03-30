@@ -14,7 +14,7 @@ import {PlantacionPropietarioPipe} from "../../../../Pipes/PlantacionPropietario
         <label class="control-label col-sm-3" for="motivoIngresoDevolucionProductor">Productor</label>
         <div class="col-sm-7 col-md-5">
             <select class="form-control" id="motivoIngresoDevolucionProductor" [ngModel]="productor" (ngModelChange)="objectToFormControl($event, 'productores', 'productor')">
-                <option *ngFor="#productor of productores" [value]="productor.id">{{ productor.razon_social }}</option>
+                <option *ngFor="#productor of productores" [value]="productor.id">{{ productor.razonSocial }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -62,20 +62,28 @@ export class MotivoIngresoDevolucionComponent {
                 public _administracionService : AdministracionService) {}
 
     ngOnInit() {
+        this._administracionService.getEmpresas(0).subscribe(productores => this.productores = productores);
+        this._administracionService.getPlantaciones().subscribe(plantaciones =>this.plantaciones = plantaciones);
+
         this.motivoIngresoDevolucion = this._formBuilder.group({
-            productor : [1 , Validators.required],
+            productor : [null , Validators.required],
             plantacion :[null , Validators.required],
             notas : [null, Validators.required]
         });
 
-        this._administracionService.getEmpresas(0).subscribe(productores => this.productores = productores);
-        this._administracionService.getPlantaciones().subscribe(plantaciones =>this.plantaciones = plantaciones);
+        this.motivoIngresoDevolucion.valueChanges.subscribe(() => this.emitirValores());
+    }
 
-        this.motivoIngresoDevolucion.valueChanges.subscribe(() => {
-            this.valuesChange.emit(this.motivoIngresoDevolucion);
-        });
-
-        this.valuesChange.emit(this.motivoIngresoDevolucion);
+    emitirValores() : void {
+        if(this.motivoIngresoDevolucion.valid) {
+            const opciones = {
+                plantacion : <PlantacionModel> this.motivoIngresoDevolucion.value.plantacion,
+                notas : <string> this.motivoIngresoDevolucion.value.notas
+            };
+            return this.valuesChange.emit(opciones);
+        }
+        else
+            return this.valuesChange.emit(null);
     }
 
     toggleValidationFeedback(control) {
@@ -85,6 +93,7 @@ export class MotivoIngresoDevolucionComponent {
 
     objectToFormControl(id, collection, control) : void {
         const result = this[collection].filter((item : any) => item.id == id );
+
         (<Control>this.motivoIngresoDevolucion.controls[control]).updateValue((result.length == 1) ? result[0] : null);
     }
 }

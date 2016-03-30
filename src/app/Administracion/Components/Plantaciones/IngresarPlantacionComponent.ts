@@ -19,7 +19,7 @@ import {OpcionesService} from "../../../ControlPanel/Services/OpcionesService";
                     <label class="control-label col-sm-3" for="plantacionPropietario">Propietario</label>
                     <div class="col-sm-7 col-md-5">
                         <select class="form-control" id="plantacionPropietario" [ngModel]="propietario" (ngModelChange)="objectToFormControl($event, 'propietarios', 'propietario')" >
-                            <option *ngFor="#opcion of propietarios" [value]="opcion.id">{{ opcion.razon_social }} &lt;{{ opcion.identificacion }}&gt;</option>
+                            <option *ngFor="#opcion of propietarios" [value]="opcion.id">{{ opcion.razonSocial }} &lt;{{ opcion.identificacion }}&gt;</option>
                         </select>
                     </div>
                     <div class="col-sm-2 col-md-4">

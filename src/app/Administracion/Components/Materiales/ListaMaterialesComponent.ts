@@ -25,7 +25,7 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
                     <tr *ngFor="#material of materiales" [routerLink]="['VerMaterial', { id : material.id }]" class="router">
                         <td>{{ material.codigo }}</td>
                         <td>{{ material.nombre }}</td>
-                        <td class="hidden-xs">{{ material.tipo_material.nombre }}</td>
+                        <td class="hidden-xs">{{ material.tipoMaterial.nombre }}</td>
                         <td>{{ material.fecha | datetime : "short"}}</td>
                         <td><i class="fa fa-pencil"></i></td>
                     </tr>
@@ -40,7 +40,6 @@ export class ListaMaterialesComponent {
     constructor(public _administracionService : AdministracionService) {
         this._administracionService.getMateriales().subscribe(response => {
             this.materiales = response;
-        },
-            err => { console.log("failed")});
+        });
     }
 }

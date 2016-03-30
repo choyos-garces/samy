@@ -12,7 +12,9 @@ export class DatetimePipe {
     }
 
     private addZero(value : number) : string {
-        return value < 10 ? "0" + value : ""+ value;
+        if(value == 0 ) return "00";
+        else if (value < 10 ) return "0" + value;
+        else return "" + value;
     }
 
     private getMes(value : number) : string {

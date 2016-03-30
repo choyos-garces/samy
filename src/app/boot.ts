@@ -6,18 +6,15 @@ import {ROUTER_PROVIDERS, APP_BASE_HREF, LocationStrategy, HashLocationStrategy}
 
 import {Index} from "./index";
 
-import {MovimientosInventarioService} from "./Inventario/Services/MovimientosInventarioService";
-import {InventarioMaterialesService} from "./Inventario/Services/InventarioMaterialesService";
 import {AdministracionService} from "./Administracion/Services/AdministracionService";
 import {ControlPanelService} from "./ControlPanel/Services/ControlPanelService";
 import {OpcionesService} from "./ControlPanel/Services/OpcionesService";
+import {InventarioService} from "./Inventario/Services/InventarioService";
 
-enableProdMode();
+//enableProdMode(); //Production Mode
 bootstrap(Index, [
-    HTTP_PROVIDERS,
-    ROUTER_PROVIDERS,
+    HTTP_PROVIDERS, ROUTER_PROVIDERS,
     //provide(APP_BASE_HREF, {useValue: '/samy'}),
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
-    ControlPanelService, OpcionesService, AdministracionService,
-    MovimientosInventarioService, InventarioMaterialesService
+    ControlPanelService, OpcionesService, AdministracionService, InventarioService
 ]);

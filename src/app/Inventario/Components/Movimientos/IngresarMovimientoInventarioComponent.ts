@@ -1,10 +1,7 @@
 import {Component} from 'angular2/core';
-import {ControlGroup} from "angular2/common";
 import {Router} from "angular2/router";
 
-import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel"
 import {MotivoMovimientoModel} from "../../Models/MotivoMovimientoModel";
-import {MovimientosInventarioService} from "../../Services/MovimientosInventarioService";
 import {MovimientoInventarioComponent} from "./MovimientoInventarioComponent";
 import {MotivoIngresoTransferenciaComponent} from "./MotivosIngreso/MotivoIngresoTransferenciaComponent";
 import {MotivoIngresoDevolucionComponent} from "./MotivosIngreso/MotivoIngresoDevolucionComponent";
@@ -12,9 +9,8 @@ import {MotivoIngresoProveedorComponent} from "./MotivosIngreso/MotivoIngresoPro
 import {MotivoEgresoProductorComponent} from "./MotivosEgresos/MotivoEgresoProductorComponent";
 import {MotivoEgresoProveedorComponent} from "./MotivosEgresos/MotivoEgresoProveedorComponent";
 import {MotivoEgresoTransferenciaComponent} from "./MotivosEgresos/MotivoEgresoTransferenciaComponent";
-import {BodegaModel} from "../../../Administracion/Models/BodegaModel";
-import {PlantacionModel} from "../../../Administracion/Models/PlantacionModel";
-import {EmpresaModel} from "../../../Administracion/Models/EmpresaModel";
+import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel";
+import {InventarioService} from "../../Services/InventarioService";
 
 @Component({
     selector: 'ingresar-inventario',
@@ -25,14 +21,14 @@ import {EmpresaModel} from "../../../Administracion/Models/EmpresaModel";
             <fieldset [disabled]="waiting">
                 <movimiento-inventario (valuesChange)="submitChanges($event, 0)" (cambioMotivoMovimiento)="activarFormulario($event)"></movimiento-inventario>
                 <div class="form-group">
-                    <div class="col-sm-10 col-md-8"><hr /></div>
+                    <div class="col-sm-12 col-md-10"><hr /></div>
                 </div>
-                <motivo-ingreso-proveedor (valuesChange)="submitChanges($event,1)" [hidden]="formularioActivo != 1"></motivo-ingreso-proveedor>
-                <motivo-ingreso-transferencia (valuesChange)="submitChanges($event, 2)" [hidden]="formularioActivo != 2"></motivo-ingreso-transferencia>
-                <motivo-ingreso-devolucion (valuesChange)="submitChanges($event, 3)" [hidden]="formularioActivo != 3"></motivo-ingreso-devolucion>
-                <motivo-egreso-productor (valuesChange)="submitChanges($event, 4)" [hidden]="formularioActivo != 4"></motivo-egreso-productor>
-                <motivo-egreso-transferencia (valuesChange)="submitChanges($event, 5)" [hidden]="formularioActivo != 5"></motivo-egreso-transferencia>
-                <motivo-egreso-proveedor (valuesChange)="submitChanges($event, 6)" [hidden]="formularioActivo != 6"></motivo-egreso-proveedor>
+                <motivo-ingreso-proveedor (valuesChange)="submitChanges($event, 1)" [hidden]="formularioActivo != 1"></motivo-ingreso-proveedor>
+                <motivo-ingreso-transferencia (valuesChange)="submitChanges($event, 1)" [hidden]="formularioActivo != 2"></motivo-ingreso-transferencia>
+                <motivo-ingreso-devolucion (valuesChange)="submitChanges($event, 1)" [hidden]="formularioActivo != 3"></motivo-ingreso-devolucion>
+                <motivo-egreso-productor (valuesChange)="submitChanges($event, 1)" [hidden]="formularioActivo != 4"></motivo-egreso-productor>
+                <motivo-egreso-transferencia (valuesChange)="submitChanges($event, 1)" [hidden]="formularioActivo != 5"></motivo-egreso-transferencia>
+                <motivo-egreso-proveedor (valuesChange)="submitChanges($event, 1)" [hidden]="formularioActivo != 6"></motivo-egreso-proveedor>
                 <div class="form-group">
                     <div class="col-sm-7 col-md-5 col-sm-push-3">
                         <button class="btn btn-primary" [disabled]="!readyToSubmit()" (click)="submit()">Generar Ingreso</button>
@@ -43,12 +39,12 @@ import {EmpresaModel} from "../../../Administracion/Models/EmpresaModel";
     </div>`
 })
 export class IngresarMovimientoInventarioComponent {
-    formularios : Array<ControlGroup> = [];
+    formularios : any[] = [];
     formularioActivo : number;
     waiting : boolean;
 
     constructor(public _router : Router,
-                public _movimientosInventarioService : MovimientosInventarioService) {}
+                public _inventarioService : InventarioService ) {}
 
     ngOnInit() {
         this.waiting = false;
@@ -56,21 +52,16 @@ export class IngresarMovimientoInventarioComponent {
 
     activarFormulario(motivoMovimiento : MotivoMovimientoModel) : void {
         this.formularioActivo = (motivoMovimiento != null) ? motivoMovimiento.id : null;
+        this.formularios[1] = null;
     }
 
-    submitChanges(form : ControlGroup, tipo : number) {
-        console.log(form.valid)
+    submitChanges(data : any, tipo : number) {
+        this.formularios[tipo] = data;
     }
 
     readyToSubmit() : boolean {
-        var mainFormValid = false, subFormValid = false;
-        if(typeof this.formularios[0] !== "undefined") {
-            mainFormValid = this.formularios[0].valid;
-
-            if( typeof this.formularios[this.formularioActivo] !== "undefined") {
-                subFormValid = this.formularios[this.formularioActivo].valid;
-            }
-        }
+        var mainFormValid = (typeof this.formularios[0] !== "undefined" && this.formularios[0] != null);
+        var subFormValid = ( typeof this.formularios[1] !== "undefined" && this.formularios[1] != null);
 
         return mainFormValid && subFormValid;
     }
@@ -78,19 +69,13 @@ export class IngresarMovimientoInventarioComponent {
     submit() {
         if(this.readyToSubmit()) {
             this.waiting = true;
-            var formularioMovimiento = this.formularios[0].value;
-            var movimientoInventario = new MovimientoInventarioModel(null, formularioMovimiento.bodega, formularioMovimiento.tipoMovimiento, formularioMovimiento.motivoMovimiento);
-            movimientoInventario.movimientosMateriales = formularioMovimiento.movimientosMateriales;
+            const datos = this.formularios[0], detalles = this.formularios[1];
+            let movimiento = new MovimientoInventarioModel(null, datos.bodega, datos.tipoMovimiento, datos.motivoMovimiento);
+            movimiento.movimientosMateriales = datos.movimientosMateriales;
+            movimiento.detalles = detalles;
 
-            const fa = this.formularios[this.formularioActivo].value;
-            if( movimientoInventario.motivoMovimiento.id == 1) movimientoInventario.detalles = { proveedor : <EmpresaModel> fa.proveedor, factura : <string> fa.factura };
-            if( movimientoInventario.motivoMovimiento.id == 2) movimientoInventario.detalles = { bodega : <BodegaModel> fa.bodega, notas :  <string> fa.notas };
-            if( movimientoInventario.motivoMovimiento.id == 3) movimientoInventario.detalles = { plantacion : <PlantacionModel> fa.plantacion };
-            if( movimientoInventario.motivoMovimiento.id == 4) movimientoInventario.detalles = { plantacion : <PlantacionModel> fa.plantacion };
-            if( movimientoInventario.motivoMovimiento.id == 5) movimientoInventario.detalles = { bodega : <BodegaModel> fa.bodega, notas :  <string> fa.notas };
-            if( movimientoInventario.motivoMovimiento.id == 6) movimientoInventario.detalles = { proveedor : <EmpresaModel> fa.proveedor, notas :  <string> fa.notas };
-
-            this._movimientosInventarioService.push(movimientoInventario);
+            this._inventarioService.postMovimiento(movimiento)
+                //.subscribe(movimiento => this._router.navigate([]));
         }
     }
 

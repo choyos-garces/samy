@@ -23,7 +23,7 @@ import {OpcionesService} from "../../../../ControlPanel/Services/OpcionesService
                 </div>
                 <div class="input-group-btn select-group">
                     <select class="form-control" id="movimientoInventarioMaterial" [(ngModel)]="material" (ngModelChange)="objectToFormControl($event, 'materiales', 'material')">
-                        <option *ngFor="#opcion of materiales | filterSimpleKey : 'tipo_material' : tipoMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
+                        <option *ngFor="#opcion of materiales | filterSimpleKey : 'tipoMaterial' : tipoMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
                     </select>
                 </div>
                 <input type="number" placeholder="Cantidad" step="0.01" min="0" class="form-control" id="movimientoInventarioCantidad" [(ngFormControl)]="movimietoMaterial.controls['cantidad']" />

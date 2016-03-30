@@ -17,7 +17,7 @@ import {AdministracionService} from "../../Services/AdministracionService";
                     <div class="panel-heading">Datos del Material</div>
                     <div class="panel-body">
                         <dl class="col-xs-6 col-sm-12 col-md-6">
-                            <dt>Categor&iacute;a</dt><dd>{{ material?.tipo_material?.nombre }}</dd>
+                            <dt>Categor&iacute;a</dt><dd>{{ material?.tipoMaterial?.nombre }}</dd>
                         </dl>
                         <dl class="col-xs-6 col-sm-12 col-md-6">
                             <dt>C&oacute;digo</dt><dd>{{ material?.codigo }}</dd>

@@ -3,14 +3,14 @@ import {SimpleKey} from "../../ControlPanel/Models/SimpleKey";
 export class MaterialModel {
     private _id : number;
     private _codigo : string;
-    private _tipo_material : SimpleKey;
+    private _tipoMaterial : SimpleKey;
     private _nombre : string;
     private _fecha : Date|string;
 
     constructor(id : number = null, codigo : string, nombre : string, tipo: SimpleKey, fechaIngreso : Date = new Date()) {
         this._id = id;
         this._codigo = codigo;
-        this._tipo_material = tipo;
+        this._tipoMaterial = tipo;
         this._nombre = nombre;
         this._fecha = fechaIngreso;
     }
@@ -28,7 +28,7 @@ export class MaterialModel {
     }
 
     get tipo_material():SimpleKey {
-        return this._tipo_material;
+        return this._tipoMaterial;
     }
 
     get nombre():string {

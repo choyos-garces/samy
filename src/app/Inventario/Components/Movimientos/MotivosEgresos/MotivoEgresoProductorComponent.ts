@@ -14,7 +14,7 @@ import {PlantacionPropietarioPipe} from "../../../../Pipes/PlantacionPropietario
         <label class="control-label col-sm-3" for="motivoEgresoProductorProductor">Productor</label>
         <div class="col-sm-7 col-md-5">
             <select class="form-control" id="motivoEgresoProductorProductor" [ngModel]="productor" (ngModelChange)="objectToFormControl($event, 'productores', 'productor')">
-                <option *ngFor="#opcion of productores" [value]="opcion.id">{{ opcion.razon_social }}</option>
+                <option *ngFor="#opcion of productores" [value]="opcion.id">{{ opcion.razonSocial }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -28,7 +28,7 @@ import {PlantacionPropietarioPipe} from "../../../../Pipes/PlantacionPropietario
         <label class="control-label col-sm-3" for="motivoEgresoProductorPlantacion">Plantaci&oacute;n</label>
         <div class="col-sm-7 col-md-5">
             <select class="form-control" id="motivoEgresoProductorPlantacion" [ngModel]="plantacion" (ngModelChange)="objectToFormControl($event, 'plantaciones', 'plantacion')">
-                <option *ngFor="#opcion of plantaciones | plantacionPropietario : motivoEgresoProductor.controls['productor'].value">{{ opcion.nombre }}</option>
+                <option *ngFor="#opcion of plantaciones | plantacionPropietario : motivoEgresoProductor.controls['productor'].value" [value]="opcion.id">{{ opcion.nombre }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -60,7 +60,7 @@ export class MotivoEgresoProductorComponent {
     constructor(public _formBuilder : FormBuilder,
                 public _adminsitracionService : AdministracionService) {}
 
-    ngOnInit() {
+    ngOnInit() : void {
 
         this.motivoEgresoProductor = this._formBuilder.group({
             productor : [null , Validators.required],
@@ -68,17 +68,25 @@ export class MotivoEgresoProductorComponent {
             notas : [null, Validators.required]
         });
 
-        this.motivoEgresoProductor.valueChanges.subscribe(() => {
-            this.valuesChange.emit(this.motivoEgresoProductor);
-        });
-
         this._adminsitracionService.getEmpresas(0).subscribe(empresas => this.productores = empresas);
         this._adminsitracionService.getPlantaciones().subscribe(plantaciones => this.plantaciones = plantaciones);
 
-        this.valuesChange.emit(this.motivoEgresoProductor);
+        this.motivoEgresoProductor.valueChanges.subscribe(() => this.emitirValores());
     }
-    
-    toggleValidationFeedback(control) {
+
+    emitirValores() : void {
+        if(this.motivoEgresoProductor.valid) {
+            const opciones = {
+                plantacion : <PlantacionModel> this.motivoEgresoProductor.value.plantacion,
+                notas : <string> this.motivoEgresoProductor.value.notas
+            };
+            return this.valuesChange.emit(opciones);
+        }
+        else
+            return this.valuesChange.emit(null);
+    }
+
+    toggleValidationFeedback(control) : boolean {
         control = this.motivoEgresoProductor.controls[control];
         return !(!control.valid && control.touched);
     }

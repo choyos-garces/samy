@@ -1,8 +1,8 @@
 import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from "angular2/router";
 
-import {MovimientosInventarioService} from "../../Services/MovimientosInventarioService";
 import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel";
+import {InventarioService} from "../../Services/InventarioService";
 
 @Component({
     selector: 'lista-movimientos',
@@ -38,7 +38,9 @@ import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel"
 export class ListaMovimientosInventarioComponent {
     movimientos : Array<MovimientoInventarioModel>;
 
-    constructor(public _movimientosService : MovimientosInventarioService) {
-        this.movimientos = this._movimientosService.movimientosInventario;
+    constructor(public _inventarioService : InventarioService) {}
+    
+    ngOnInit() {
+        
     }
 }

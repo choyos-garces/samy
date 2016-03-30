@@ -18,7 +18,7 @@ import {MovimientoMaterialModel} from "../../../Models/MovimientoMaterialModel";
                     <tr *ngFor="#movimiento of materiales;#i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ movimiento.material.nombre }}</td>
-                        <td class="hidden-xs hidden-sm">{{ movimiento.material.tipo_material.nombre }}</td>
+                        <td class="hidden-xs hidden-sm">{{ movimiento.material.tipoMaterial.nombre }}</td>
                         <td class="text-right">{{ movimiento.cantidad }}</td>
                         <td><button class="btn" (click)="remove(movimiento)"><i class="fa fa-trash-o"></i></button></td>
                     </tr>

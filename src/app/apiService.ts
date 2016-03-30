@@ -1,5 +1,4 @@
 import {Http, Headers, RequestOptions} from "angular2/http";
-import {Observable} from "rxjs/Observable";
 
 export class apiService {
     private baseURL : string;
@@ -7,8 +6,8 @@ export class apiService {
     component : string;
     
     constructor(public _http : Http) {
-        this.baseURL = "http://192.168.9.7/api/public";
-        //this.baseURL = "http://localhost/api/public/app_dev.php";
+        this.baseURL = "http://192.168.9.7/api/public"; //Production
+        //this.baseURL = "http://localhost/api/public/app_dev.php"; //Development
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
         this.headerOptions = new RequestOptions({ headers: headers });

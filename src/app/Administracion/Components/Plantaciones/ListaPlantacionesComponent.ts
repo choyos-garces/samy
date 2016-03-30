@@ -26,8 +26,8 @@ import {AdministracionService} from "../../Services/AdministracionService";
                     <tr *ngFor="#plantacion of plantaciones" [routerLink]="['VerPlantacion', { id : plantacion.id }]" class="router">
                         <td>{{ plantacion.nombre }}</td>
                         <td>{{ plantacion.producto.nombre }}</td>
-                        <td>{{ plantacion.tipo_producto.nombre }}</td>
-                        <td>{{ plantacion.propietario.razon_social }}</td>
+                        <td>{{ plantacion.tipoProducto.nombre }}</td>
+                        <td>{{ plantacion.propietario.razonSocial }}</td>
                         <td>{{ plantacion.tamano }} {{ plantacion.unidad.nombre }}</td>
                         <td><i class="fa fa-pencil"></i></td>
                     </tr>

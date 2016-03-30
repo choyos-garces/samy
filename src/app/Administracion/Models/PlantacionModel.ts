@@ -6,7 +6,7 @@ export class PlantacionModel {
     private _propietario : EmpresaModel;
     private _nombre : string;
     private _producto : SimpleKey;
-    private _tipo_producto : SimpleKey;
+    private _tipoProducto : SimpleKey;
     private _tamano : number;
     private _unidad : SimpleKey;
     private _fecha : Date;
@@ -16,7 +16,7 @@ export class PlantacionModel {
         this._propietario = propietario;
         this._nombre = nombre;
         this._producto = producto;
-        this._tipo_producto = tipo;
+        this._tipoProducto = tipo;
         this._tamano = tamano;
         this._unidad = unidad;
         this._fecha = fecha;
@@ -38,8 +38,8 @@ export class PlantacionModel {
         return this._producto;
     }
 
-    get tipo_producto():SimpleKey {
-        return this._tipo_producto;
+    get tipoProducto():SimpleKey {
+        return this._tipoProducto;
     }
 
     get tamano():number {
@@ -60,7 +60,7 @@ export class PlantacionModel {
             propietario: this.propietario,
             nombre: this.nombre,
             producto: this.producto,
-            tipoProducto: this.tipo_producto,
+            tipoProducto: this.tipoProducto,
             tamano: this.tamano,
             unidad: this.unidad,
             fecha: this.fecha

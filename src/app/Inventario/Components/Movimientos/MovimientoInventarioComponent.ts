@@ -92,9 +92,24 @@ export class MovimientoInventarioComponent {
 
         this.movimientoInventario.controls["motivoMovimiento"].valueChanges.subscribe((value) => this.cambioMotivoMovimiento.emit(value));
         this.movimientoInventario.controls["tipoMovimiento"].valueChanges.subscribe(() => this.cambioMotivoMovimiento.emit(null));
-        this.movimientoInventario.valueChanges.subscribe(() => this.valuesChange.emit(this.movimientoInventario));
+        this.movimientoInventario.valueChanges.subscribe(() => this.emitirValores());
     }
-    
+
+    emitirValores() : void {
+        if(this.movimientoInventario.valid) {
+            const opciones = {
+                tipoMovimiento : this.movimientoInventario.value.tipoMovimiento,
+                movimientosMateriales : this.movimientoInventario.value.movimientosMateriales,
+                bodega : this.movimientoInventario.value.bodega,
+                motivoMovimiento : this.movimientoInventario.value.motivoMovimiento,
+            };
+            return this.valuesChange.emit(opciones);
+        }
+        else
+            return this.valuesChange.emit(null);
+    }
+
+
     agregarMaterial(movimientoMaterial : MovimientoMaterialModel) : void {
         this.seleccionMateriales = [...this.seleccionMateriales, movimientoMaterial];
         (<Control>this.movimientoInventario.controls["movimientosMateriales"]).updateValue(this.seleccionMateriales, {});

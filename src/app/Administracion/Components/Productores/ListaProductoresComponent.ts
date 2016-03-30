@@ -25,7 +25,7 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
                 </thead>
                 <tbody>
                     <tr *ngFor="#productor of productores" [routerLink]="['VerProductor', { id : productor.id }]" class="router">
-                        <td>{{ productor.razon_social }}</td>
+                        <td>{{ productor.razonSocial }}</td>
                         <td>{{ productor.telefono }}</td>
                         <td>{{ productor.correo }}</td>
                         <td class="hidden-xs">{{ productor.fecha | datetime }}</td>

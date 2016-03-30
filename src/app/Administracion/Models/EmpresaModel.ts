@@ -2,9 +2,9 @@ import {SimpleKey} from "../../ControlPanel/Models/SimpleKey";
 
 export class EmpresaModel {
     private _id : number;
-    private _razon_social : string;
+    private _razonSocial : string;
     private _identificacion : string;
-    private _tipo_identificacion : SimpleKey;
+    private _tipoIdentificacion : SimpleKey;
     private _telefono : string;
     private _correo : string;
     private _direccion : string;
@@ -13,9 +13,9 @@ export class EmpresaModel {
     
     constructor(id:number, razon_social:string, indentificacion:string, tipo_identificacion:SimpleKey, telefono:string, correo:string, direccion:string, tipoEmpresa : string, fecha?:Date|string) {
         this._id = id;
-        this._razon_social = razon_social;
+        this._razonSocial = razon_social;
         this._identificacion = indentificacion;
-        this._tipo_identificacion = tipo_identificacion;
+        this._tipoIdentificacion = tipo_identificacion;
         this._telefono = telefono;
         this._correo = correo;
         this._direccion = direccion;
@@ -27,16 +27,16 @@ export class EmpresaModel {
         return this._id;
     }
 
-    get razon_social():string {
-        return this._razon_social;
+    get razonSocial():string {
+        return this._razonSocial;
     }
 
     get identificacion():string {
         return this._identificacion;
     }
 
-    get tipo_identificacion():SimpleKey {
-        return this._tipo_identificacion;
+    get tipoIdentificacion():SimpleKey {
+        return this._tipoIdentificacion;
     }
 
     get telefono():string {
@@ -62,8 +62,8 @@ export class EmpresaModel {
     toJSON() {
         return {
             id : this.id,
-            razonSocial : this.razon_social,
-            tipoIdentificacion : this.tipo_identificacion,
+            razonSocial : this.razonSocial,
+            tipoIdentificacion : this.tipoIdentificacion,
             identificacion : this.identificacion,
             telefono : this.telefono,
             correo : this.correo,

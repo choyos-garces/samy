@@ -9,8 +9,8 @@ import {AdministracionService} from "../../../../Administracion/Services/Adminis
         <div class="form-group" [ngClass]=" !toggleValidationFeedback('bodega') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="motivoEgresoTransferenciaBodega">Bodega</label>
         <div class="col-sm-7 col-md-5">
-            <select class="form-control" id="motivoEgresoTransferenciaBodega" [ngModel]="bodega" (ngModelChange)="assignarFormControl($event, 'bodegas', 'bodega')">
-                <option *ngFor="#bodega of bodegas;#i = index" [value]="i">{{ bodega.nombre }}</option>
+            <select class="form-control" id="motivoEgresoTransferenciaBodega" [ngModel]="bodega" (ngModelChange)="objectToFormControl($event, 'bodegas', 'bodega')">
+                <option *ngFor="#bodega of bodegas" [value]="bodega.id">{{ bodega.nombre }}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-4">
@@ -41,27 +41,37 @@ export class MotivoEgresoTransferenciaComponent {
     constructor(public _formBuilder  : FormBuilder, 
                 public _administracionService :AdministracionService) {}
 
+    ngOnInit() {
+        this._administracionService.getBodegas().subscribe(bodegas => this.bodegas = bodegas);
+
+        this.motivoEgresoTransferencia = this._formBuilder.group({
+            bodega : [null, Validators.required],
+            notas : [null, Validators.required]
+        });
+
+        this.motivoEgresoTransferencia.valueChanges.subscribe(() => this.emitirValores());
+    }
+
+    emitirValores() : void {
+        if(this.motivoEgresoTransferencia.valid) {
+            const opciones = {
+                bodega : <BodegaModel> this.motivoEgresoTransferencia.value.bodega,
+                notas : <string> this.motivoEgresoTransferencia.value.notas
+            };
+            return this.valuesChange.emit(opciones);
+        }
+        else
+            return this.valuesChange.emit(null);
+    }
+
     toggleValidationFeedback(control) {
         control = this.motivoEgresoTransferencia.controls[control];
         return !(!control.valid && control.touched);
     }
 
-    assignarFormControl(index, collection, control) : void {
-        (<Control>this.motivoEgresoTransferencia.controls[control]).updateValue(this[collection][index], {});
-    }
-    
-    ngOnInit() {
-        this.motivoEgresoTransferencia = this._formBuilder.group({
-            bodega : [1, Validators.required],
-            notas : [null, Validators.required]
-        });
+    objectToFormControl(id, collection : string, control : string) : void {
+        const result = this[collection].filter((item : any) => item.id == id);
 
-
-        this.motivoEgresoTransferencia.valueChanges.subscribe(() => {
-            this.valuesChange.emit(this.motivoEgresoTransferencia);
-        });
-        
-        this._administracionService.getBodegas().subscribe(bodegas => this.bodegas = bodegas);
-        this.valuesChange.emit(this.motivoEgresoTransferencia);
+        (<Control>this.motivoEgresoTransferencia.controls[control]).updateValue((result.length == 1) ? result[0] : null);
     }
 }
