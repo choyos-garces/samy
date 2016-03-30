@@ -75,7 +75,9 @@ export class IngresarMovimientoInventarioComponent {
             movimiento.detalles = detalles;
 
             this._inventarioService.postMovimiento(movimiento)
-                //.subscribe(movimiento => this._router.navigate([]));
+                .subscribe(movimiento => {
+                    this._router.navigate(["../Inventario/MovimientosInventario"])
+                });
         }
     }
 

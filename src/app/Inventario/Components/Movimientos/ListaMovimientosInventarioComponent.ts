@@ -3,9 +3,11 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 
 import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel";
 import {InventarioService} from "../../Services/InventarioService";
+import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 
 @Component({
     selector: 'lista-movimientos',
+    pipes: [DatetimePipe],
     directives: [ROUTER_DIRECTIVES],
     template: `<div class="container-fluid">
     <div class="table-responsive">
@@ -14,20 +16,20 @@ import {InventarioService} from "../../Services/InventarioService";
                 <tr>
                     <th>Fecha</th>
                     <th>Origen</th>
+                    <th>Motivo</th>
                     <th>Bodega</th>
                     <th>#Materiales</th>
-                    <th>Motivo</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="#movimiento of movimientos">
-                    <td>{{ movimiento.fecha | date : "MM/dd/yy hh:mm"}}</td>
+                    <td>{{ movimiento.fecha | datetime}}</td>
                     <td>{{ (movimiento.tipoMovimiento == 1) ? "Ingreso" : "Egreso" }}</td>
+                    <td>{{ movimiento.motivoMovimiento.nombre }}</td>
                     <td>{{ movimiento.bodega.nombre }}</td>
                     <td>{{ movimiento.movimientosMateriales.length }}</td>
-                    <td>{{ movimiento.motivoMovimiento.label }}</td>
                     <td><i class="fa fa-eye"></i></td>
                 </tr>
             </tbody>
@@ -36,11 +38,12 @@ import {InventarioService} from "../../Services/InventarioService";
     </div>`
 })
 export class ListaMovimientosInventarioComponent {
-    movimientos : Array<MovimientoInventarioModel>;
+    movimientos : MovimientoInventarioModel[];
 
     constructor(public _inventarioService : InventarioService) {}
     
     ngOnInit() {
-        
+        this._inventarioService.getMovimientos()
+            .subscribe(movimientos => this.movimientos = movimientos);
     }
 }

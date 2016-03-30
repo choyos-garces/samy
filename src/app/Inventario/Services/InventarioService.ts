@@ -15,14 +15,14 @@ export class InventarioService extends apiService {
      * Movimiento
      */
     getMovimientos() {
-        
+        return this.get("movimientos").map(response => <MovimientoInventarioModel[]> response.movimientos);
     }
     
     getMovimiento( id : number ) {
-        
+        return this.get("movimientos", id).map(response => <MovimientoInventarioModel> response);
     }
     
     postMovimiento( moviento : MovimientoInventarioModel ) {
-        window["test"] = JSON.stringify(moviento);
+        return this.post("movimientos", moviento).map(response => <MovimientoInventarioModel> response);
     }
 }
