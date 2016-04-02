@@ -15,9 +15,13 @@ export class InventarioService extends apiService {
      * Existentes
      */
     getExistente() {
-        return this.get("existente").map(response => response.inventarios)
+        return this.get("existente").map(response => response.inventarios);
     }
-    
+
+    getInventarioDetall( materialId, bodegaId ) {
+        const param = "material/" + materialId + "/bodega/" + bodegaId;
+        return this.get("existente", param).map(response => response );
+    }
     /**
      * Movimiento
      */

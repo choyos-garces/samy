@@ -68,7 +68,7 @@ export class IngresarMovimientoInventarioComponent {
 
     submit() {
         if(this.readyToSubmit()) {
-            //this.waiting = true;
+            this.waiting = true;
             const datos = this.formularios[0], detalles = this.formularios[1];
             let movimiento = new MovimientoInventarioModel(null, datos.bodega, datos.tipoMovimiento, datos.motivoMovimiento);
             movimiento.movimientosMateriales = datos.movimientosMateriales;
@@ -76,8 +76,7 @@ export class IngresarMovimientoInventarioComponent {
 
             this._inventarioService.postMovimiento(movimiento)
                 .subscribe(movimiento => {
-                    console.log(movimiento);
-                    // this._router.navigate(["../../MovimientosInventario"])
+                    this._router.navigate(["../../MovimientosInventario"])
                 });
         }
     }

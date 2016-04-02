@@ -23,7 +23,7 @@ export class DatetimePipe {
     }
 
     private defaultFormat(date) {
-        return date.getHours() +":"+date.getMinutes() + " " + this.addZero(date.getMonth()+1) + "/" + this.addZero(date.getDate()) +"/"+ date.getFullYear();
+        return this.addZero(date.getHours()) +":"+ this.addZero(date.getMinutes()) + " " + this.addZero(date.getMonth()+1) + "/" + this.addZero(date.getDate()) +"/"+ date.getFullYear();
     }
 
     private longFormat(date) {

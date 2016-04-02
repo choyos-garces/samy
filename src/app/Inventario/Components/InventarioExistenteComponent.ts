@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core'
 import {ROUTER_DIRECTIVES, RouteConfig} from "angular2/router";
-import {ListaInventarioExistente} from "./Existente/ListaInventarioExistente";
+import {ListaInventarioExistenteComponent} from "./Existente/ListaInventarioExistenteComponent";
+import {InventarioDetalleComponent} from "./Existente/InventarioDetalleComponent";
 
 @Component({
     selector : 'inventario-existente',
@@ -14,6 +15,7 @@ import {ListaInventarioExistente} from "./Existente/ListaInventarioExistente";
     <router-outlet></router-outlet>`
 })
 @RouteConfig([
-    { path : '/', name: 'ListaMovimientosInventrio', component : ListaInventarioExistente, useAsDefault: true },
+    { path : '/', name: 'ListaMovimientosInventrio', component : ListaInventarioExistenteComponent, useAsDefault: true },
+    { path : '/material/:materialId/bodega/:bodegaId', name: 'InventarioDetalle', component : InventarioDetalleComponent },
 ])
 export class InventarioExistenteComponent {}
