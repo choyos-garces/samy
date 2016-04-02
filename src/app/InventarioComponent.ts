@@ -19,7 +19,7 @@ import {MovimientosInventarioComponent} from "./Inventario/Components/Movimiento
     `
 })
 @RouteConfig([
-    { path : '/', name : 'InventarioExistente', component : InventarioExistenteComponent, useAsDefault : true },
+    { path : '/existente/...', name : 'InventarioExistente', component : InventarioExistenteComponent, useAsDefault : true },
     { path : '/movimientos/...', name : 'MovimientosInventario', component : MovimientosInventarioComponent },
 ])
 export class InventarioComponent {

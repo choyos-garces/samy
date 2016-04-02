@@ -12,6 +12,13 @@ export class InventarioService extends apiService {
     }
 
     /**
+     * Existentes
+     */
+    getExistente() {
+        return this.get("existente").map(response => response.inventarios)
+    }
+    
+    /**
      * Movimiento
      */
     getMovimientos() {
