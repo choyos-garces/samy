@@ -18,7 +18,7 @@ export class InventarioService extends apiService {
         return this.get("existente").map(response => response.inventarios);
     }
 
-    getInventarioDetall( materialId, bodegaId ) {
+    getInventarioDetall( materialId : number, bodegaId : number ) {
         const param = "material/" + materialId + "/bodega/" + bodegaId;
         return this.get("existente", param).map(response => response );
     }
