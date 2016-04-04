@@ -1,33 +1,32 @@
 .notify
-  z-index: 999
+  z-index: 89
   position: fixed
-  overflow: hidden
-  top: 0
+  top: $nav-bar-height
   left: 0
   right: 0
-  bottom: 0
-  opacity: 0
-  display: none
-  transition: top .3s ease-out, opacity .3s ease-out, display .5s linear
-
-.notify.pop
-  opacity: 1
-  display: block
 
 .notify-toaster
+  transition: top .2s ease-out, opacity .2s ease-out
+  -webkit-transition: top .2s ease-out, opacity .2s ease-out
+  position: absolute
+  left: 0
+  right: 0
+  opacity: 0
   top: -40px
   text-align: center
 
-.notify-toaster.pop
-  top: 5.6em
 
-.notify-body
+.notify-toaster.pop
+  display: block
+  opacity: 1
+  top: 24px
+
+.notify-toast
   display: inline-block
   background: $color-accent-light
   border: 1px solid $color-accent-base
   border-radius: $border-radius-simple
   color: #fff
-  margin: auto
   padding: .6em .8em 0
   box-shadow: 0 0 8px $color-light-primary
 
@@ -40,17 +39,20 @@
       padding-bottom: .6em
 
 .notify-loader
-  top: $nav-bar-height
-  background: rgba(255,255,255,.6)
+  position: absolute
+  opacity: 0
+  left: 0
+  right: 0
 
   .loader
     position: absolute
-    height: 4px
+    height: 3px
     width: 24px
     background-color: $color-accent-base
-    box-shadow: 0 0 8px $color-light-primary
 
 .notify-loader.pop
+  opacity: 1
+
   .loader
     animation-name: loader
     animation-duration: 3s

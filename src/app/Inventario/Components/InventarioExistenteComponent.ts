@@ -15,7 +15,7 @@ import {InventarioDetalleComponent} from "./Existente/InventarioDetalleComponent
     <router-outlet></router-outlet>`
 })
 @RouteConfig([
-    { path : '/', name: 'ListaMovimientosInventrio', component : ListaInventarioExistenteComponent, useAsDefault: true },
+    { path : '/', name: 'ListaInventarioExistente', component : ListaInventarioExistenteComponent, useAsDefault: true },
     { path : '/material/:materialId/bodega/:bodegaId', name: 'InventarioDetalle', component : InventarioDetalleComponent },
 ])
 export class InventarioExistenteComponent {}

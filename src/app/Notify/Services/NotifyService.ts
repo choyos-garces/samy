@@ -27,11 +27,12 @@ export class NotifyService {
     private _toasterObserver : Observer<boolean>;
     private _loaderObserver : Observer<boolean>;
     private _messages : string[];
+    private _default : opciones;
 
     constructor() {
         this._messages = [];
 
-        this.opciones = {
+        this.opciones = this._default = {
             delay : 3000,
             type : NotifyTypes.NOTIFY_TOAST
         };
@@ -61,6 +62,7 @@ export class NotifyService {
 
         setTimeout(() => {
             this.clear();
+            this.opciones = this._default;
             this._toasterObserver.next(false);
         }, this.opciones.delay)
     }
@@ -69,18 +71,16 @@ export class NotifyService {
         return this._messages;
     }
 
-    show(msg : string | string[], opciones? : opciones) {
+    show(msg : string | string[], delay? : number) {
         this.addMessage(msg);
-        if(typeof opciones != "undefined") {
-            if(opciones.delay) this.opciones.delay = opciones.delay;
-        }
+        if(typeof delay != "undefined") this.opciones.delay = delay;
 
         this.toogleDisplay();
     }
 
     error(msg : string | string[], delay? : number) {
         this.addMessage(msg);
-        this.opciones.delay = 10000;
+        this.opciones.delay = (typeof delay != "undefined") ? delay : 7000;
 
         this.toogleDisplay();
     }

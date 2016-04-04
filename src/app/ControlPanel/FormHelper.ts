@@ -18,8 +18,9 @@ export class FormHelper {
     }
 
     protected objectToFormControl(event, collection, control) : void {
-        const id = parseInt(event.target.value);
+        const id = parseInt((typeof event == "object") ? event.target.value : event);
         var value;
+        
         if(isNaN(id)) {
             value = null;
         }
@@ -39,4 +40,7 @@ export class FormHelper {
         return (<Control>this.formControl.controls[control]).value;
     }
 
+    protected maxDecimalAllowed( event : any , digits : number, scale : number ) : void {
+
+    }
 }

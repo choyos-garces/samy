@@ -4,6 +4,7 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel";
 import {InventarioService} from "../../Services/InventarioService";
 import {DatetimePipe} from "../../../Pipes/DatetimePipe";
+import {NotifyService} from "../../../Notify/Services/NotifyService";
 
 @Component({
     selector: 'lista-movimientos',
@@ -15,22 +16,21 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th>Origen</th>
+                    <th class="text-center">Origen</th>
                     <th>Motivo</th>
-                    <th>Bodega</th>
-                    <th>#Materiales</th>
-                    <th></th>
+                    <th class="text-center">Bodega</th>
+                    <th class="text-center">Materiales</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="#movimiento of movimientos">
+                <tr *ngFor="#movimiento of movimientos" [routerLink]="['/Inventario/MovimientosInventario/VerMovimientoInventario', { id : movimiento.id }]" class="router">
                     <td>{{ movimiento.fecha | datetime}}</td>
-                    <td>{{ (movimiento.tipoMovimiento == 1) ? "Ingreso" : "Egreso" }}</td>
+                    <td class="text-center">{{ (movimiento.tipoMovimiento == 1) ? "Ingreso" : "Egreso" }}</td>
                     <td>{{ movimiento.motivoMovimiento.nombre }}</td>
-                    <td>{{ movimiento.bodega.nombre }}</td>
-                    <td>{{ movimiento.movimientosMateriales.length }}</td>
-                    <td><i class="fa fa-eye"></i></td>
+                    <td class="text-center">{{ movimiento.bodega.nombre }}</td>
+                    <td class="text-center">{{ movimiento.movimientosMateriales.length }}</td>
+                    <td class="text-center"><i class="fa fa-ellipsis-v"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -40,10 +40,21 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 export class ListaMovimientosInventarioComponent {
     movimientos : MovimientoInventarioModel[];
 
-    constructor(public _inventarioService : InventarioService) {}
+    constructor(public _inventarioService : InventarioService,
+                public _notifyService : NotifyService) {}
     
     ngOnInit() {
+        this._notifyService.loader(true);
         this._inventarioService.getMovimientos()
-            .subscribe(movimientos => this.movimientos = movimientos);
+            .subscribe(
+                movimientos => {
+                    this.movimientos = movimientos;
+                    this._notifyService.loader(false);
+                },
+                error => {
+                    this._notifyService.error("Error en la comunicaci&oacute;n con el Servidor");
+                    this._notifyService.loader(false);
+                }
+            );
     }
 }

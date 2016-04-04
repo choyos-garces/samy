@@ -24,7 +24,7 @@ import {FormHelper} from "../../../../ControlPanel/FormHelper";
                         <option *ngFor="#opcion of materiales | filterSimpleKey : 'tipoMaterial' : tipoMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
                     </select>
                 </div>
-                <input type="number" placeholder="Cantidad" step="0.01" min="0" max="999" class="form-control" id="cantidad" [(ngFormControl)]="formControl.controls['cantidad']" />
+                <input type="number" placeholder="Cantidad" step="0.01" min="0" max="999" class="form-control" id="cantidad" [(ngFormControl)]="formControl.controls['cantidad']" (keyup)="maxDecimalAllowed($event, 7, 2)" />
                 <div class="input-group-btn">            
                     <button class="btn btn-primary" (click)="envioMaterial()" [disabled]="disableEnvio()"><i class="fa fa-check"></i></button>
                 </div>

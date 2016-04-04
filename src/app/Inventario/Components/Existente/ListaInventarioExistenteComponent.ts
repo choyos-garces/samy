@@ -21,6 +21,7 @@ import {NotifyService} from "../../../Notify/Services/NotifyService";
                         <th class="text-center">En Bodega</th>
                         <th class="text-center">Total</th>
                         <th class="text-center">Ultimo Movimiento</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,7 @@ import {NotifyService} from "../../../Notify/Services/NotifyService";
                         <td class="text-center">{{ inventario.cantidad }}</td>
                         <td class="text-center">{{ inventario.material.cantidad }}</td>
                         <td class="text-center">{{ inventario.fecha | datetime }}</td>
+                        <td class="text-center"><i class="fa fa-ellipsis-v"></i></td>
                     </tr>
                 </tbody>
             </table>

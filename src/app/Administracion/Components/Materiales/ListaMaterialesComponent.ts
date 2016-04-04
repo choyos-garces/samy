@@ -3,6 +3,7 @@ import {ROUTER_DIRECTIVES} from 'angular2/router'
 import {MaterialModel} from "../../Models/MaterialModel";
 import {AdministracionService} from "../../Services/AdministracionService";
 import {DatetimePipe} from "../../../Pipes/DatetimePipe";
+import {NotifyService} from "../../../Notify/Services/NotifyService";
 
 @Component({
     selector  : 'lista-materiales',
@@ -37,7 +38,7 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 export class ListaMaterialesComponent {
     materiales : Array<MaterialModel>;
 
-    constructor(public _administracionService : AdministracionService) {
+    constructor(public _administracionService : AdministracionService, public _notifyService : NotifyService) {
         this._administracionService.getMateriales().subscribe(response => {
             this.materiales = response;
         });
