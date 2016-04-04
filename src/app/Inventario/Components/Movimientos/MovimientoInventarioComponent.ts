@@ -20,7 +20,7 @@ import {AdministracionService} from "../../../Administracion/Services/Administra
     pipes : [FilterPropertyPipe],
     directives : [MovimientoMaterialComponent, MovimientoListaMaterialesComponent],
     template : `
-        <div class="form-group" [ngClass]=" !toggleValidationFeedback('bodega') ? 'has-error' : ''">
+    <div class="form-group" [ngClass]=" !toggleValidationFeedback('bodega') ? 'has-error' : ''">
         <label class="control-label col-sm-3" for="movimientoInventarioBodega">Movimiento</label>
         <div class="col-sm-7 col-md-5">
             <select class="form-control" id="movimientoInventarioBodega" [(ngFormControl)]="movimientoInventario.controls['tipoMovimiento']">

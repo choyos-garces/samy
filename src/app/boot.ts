@@ -6,6 +6,7 @@ import {ROUTER_PROVIDERS, APP_BASE_HREF, LocationStrategy, HashLocationStrategy}
 
 import {Index} from "./index";
 
+import {NotifyService} from "./Notify/Services/NotifyService";
 import {AdministracionService} from "./Administracion/Services/AdministracionService";
 import {ControlPanelService} from "./ControlPanel/Services/ControlPanelService";
 import {OpcionesService} from "./ControlPanel/Services/OpcionesService";
@@ -16,5 +17,6 @@ bootstrap(Index, [
     HTTP_PROVIDERS, ROUTER_PROVIDERS,
     //provide(APP_BASE_HREF, {useValue: '/samy'}),
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
+    NotifyService,
     ControlPanelService, OpcionesService, AdministracionService, InventarioService
 ]);

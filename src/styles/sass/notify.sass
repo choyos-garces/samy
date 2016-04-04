@@ -1,0 +1,79 @@
+.notify
+  z-index: 999
+  position: fixed
+  overflow: hidden
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  opacity: 0
+  display: none
+  transition: top .3s ease-out, opacity .3s ease-out, display .5s linear
+
+.notify.pop
+  opacity: 1
+  display: block
+
+.notify-toaster
+  top: -40px
+  text-align: center
+
+.notify-toaster.pop
+  top: 5.6em
+
+.notify-body
+  display: inline-block
+  background: $color-accent-light
+  border: 1px solid $color-accent-base
+  border-radius: $border-radius-simple
+  color: #fff
+  margin: auto
+  padding: .6em .8em 0
+  box-shadow: 0 0 8px $color-light-primary
+
+  ul.list-unstyled
+    text-align: left
+    min-width: 250px
+    max-width: 400px
+
+    li:not(:last-child)
+      padding-bottom: .6em
+
+.notify-loader
+  top: $nav-bar-height
+  background: rgba(255,255,255,.6)
+
+  .loader
+    position: absolute
+    height: 4px
+    width: 24px
+    background-color: $color-accent-base
+    box-shadow: 0 0 8px $color-light-primary
+
+.notify-loader.pop
+  .loader
+    animation-name: loader
+    animation-duration: 3s
+    animation-iteration-count: infinite
+
+@keyframes loader
+  0%
+    width: 15%
+    left: 0
+
+  15%
+    width: 80%
+    left: 50%
+
+  40%
+    width: 30%
+    left: 100%
+
+  85%
+    width: 70%
+    left: 50%
+
+
+  100%
+    width: 15%
+    left: 0

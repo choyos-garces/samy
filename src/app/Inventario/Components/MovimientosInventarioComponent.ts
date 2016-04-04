@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES, RouteConfig} from "angular2/router";
 import {ListaMovimientosInventarioComponent} from "./Movimientos/ListaMovimientosInventarioComponent";
-import {IngresarMovimientoInventarioComponent} from "./Movimientos/IngresarMovimientoInventarioComponent";
+import {IngresarMovimientoInventario} from "./test/IngresarMovimientoInventario";
 
 @Component({
     selector : 'movimientos-inventario',
@@ -18,7 +18,7 @@ import {IngresarMovimientoInventarioComponent} from "./Movimientos/IngresarMovim
 })
 @RouteConfig([
     { path : '/', name: 'ListaMovimientosInventrio', component : ListaMovimientosInventarioComponent, useAsDefault: true },
-    { path : '/ingresar', name : 'IngresarMovimientoInventario', component: IngresarMovimientoInventarioComponent }
+    { path : '/ingresar', name : 'IngresarMovimientoInventario', component: IngresarMovimientoInventario }
 ])
 
 export class MovimientosInventarioComponent {}

@@ -3,10 +3,13 @@ import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
 import {AdministracionComponent} from "./AdministracionComponent";
 import {InventarioComponent} from "./InventarioComponent";
 import {Error404Component} from "./Feedback/Error404Component";
+import {NotifyComponent} from "./Notify/Components/NotifyComponent";
 
 @Component({
     selector : 'index',
+    directives : [NotifyComponent, ROUTER_DIRECTIVES],
     template : `
+    <notify></notify>
     <div class="dashboard">
         <div class="container">
             <div class="dash-wrap">
@@ -22,7 +25,6 @@ import {Error404Component} from "./Feedback/Error404Component";
         <router-outlet></router-outlet>
     </div>
     `,
-    directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([
     { path: '/404', name: 'Error404', component: Error404Component },

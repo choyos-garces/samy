@@ -5,12 +5,10 @@ import {apiService} from "../../apiService";
 
 @Injectable()
 export class OpcionesService extends apiService {
-    private url : string;
-
+    
     constructor(_http : Http) {
         super(_http);
         this.component = "controlPanel";
-        this.url = "http://localhost/api/public/app_dev.php/controlPanel/opciones/";
     }
 
     getTiposMaterial() {
@@ -32,5 +30,8 @@ export class OpcionesService extends apiService {
     getUnidadesArea() {
         return this.get( "opciones", "unidadesArea").map(response => <SimpleKey[]> response);
     }
-
+    
+    getMotivosMovimientoInventario() {
+        return this.get( "opciones", "motivosMovimientoInventario").map(response => <SimpleKey[]> response);
+    }
 }

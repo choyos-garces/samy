@@ -11,6 +11,7 @@ import {MotivoEgresoProveedorComponent} from "./MotivosEgresos/MotivoEgresoProve
 import {MotivoEgresoTransferenciaComponent} from "./MotivosEgresos/MotivoEgresoTransferenciaComponent";
 import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel";
 import {InventarioService} from "../../Services/InventarioService";
+import {NotifyService} from "../../../Notify/Services/NotifyService";
 
 @Component({
     selector: 'ingresar-inventario',
@@ -19,6 +20,7 @@ import {InventarioService} from "../../Services/InventarioService";
         <h4>Movimientos de Inventario</h4>
         <form class="form-horizontal" autocomplete="off" spellcheck="false">
             <fieldset [disabled]="waiting">
+                
                 <movimiento-inventario (valuesChange)="submitChanges($event, 0)" (cambioMotivoMovimiento)="activarFormulario($event)"></movimiento-inventario>
                 <div class="form-group">
                     <div class="col-sm-12 col-md-10"><hr /></div>
@@ -44,7 +46,8 @@ export class IngresarMovimientoInventarioComponent {
     waiting : boolean;
 
     constructor(public _router : Router,
-                public _inventarioService : InventarioService ) {}
+                public _inventarioService : InventarioService,
+                public _notifyService : NotifyService ) {}
 
     ngOnInit() {
         this.waiting = false;
@@ -74,10 +77,16 @@ export class IngresarMovimientoInventarioComponent {
             movimiento.movimientosMateriales = datos.movimientosMateriales;
             movimiento.detalles = detalles;
 
+            this._notifyService.loader(true);
             this._inventarioService.postMovimiento(movimiento)
                 .subscribe(movimiento => {
-                    this._router.navigate(["../../MovimientosInventario"])
-                });
+                    this._notifyService.show("Movimiento Ingresado!");
+                    this._router.navigate(["../../MovimientosInventario"]);
+                },
+                error => {
+                    this._notifyService.show(error.json(), {delay: 10000});
+                    this._router.navigate(["../../MovimientosInventario"]);
+                }, () => this._notifyService.loader(false));
         }
     }
 

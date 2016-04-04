@@ -3,6 +3,7 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 import {InventarioService} from "../../Services/InventarioService";
 import {InventarioMaterialModel} from "../../Models/InventarioMaterialModel";
 import {ROUTER_DIRECTIVES} from "angular2/router";
+import {NotifyService} from "../../../Notify/Services/NotifyService";
 
 @Component({
     selector : 'lista-existente',
@@ -39,9 +40,14 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 export class ListaInventarioExistenteComponent {
     inventarios : InventarioMaterialModel[];
 
-    constructor(public _inventarioService : InventarioService) {}
+    constructor(public _inventarioService : InventarioService,
+                public _notifyService : NotifyService) {}
     
     ngOnInit() {
-        this._inventarioService.getExistente().subscribe(inventarios => this.inventarios = inventarios);
+        this._notifyService.loader(true);
+        this._inventarioService.getExistente().subscribe(
+            inventarios => this.inventarios = inventarios, // On Success
+            (error) => this._notifyService.show(error.status + " : " +error.url),
+            () => this._notifyService.loader(false)); // On Completed
     }
 }

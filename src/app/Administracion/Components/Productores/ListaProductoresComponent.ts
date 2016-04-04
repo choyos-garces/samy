@@ -3,6 +3,7 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 import {EmpresaModel} from "../../Models/EmpresaModel";
 import {AdministracionService} from "../../Services/AdministracionService";
 import {DatetimePipe} from "../../../Pipes/DatetimePipe";
+import {NotifyService} from "../../../Notify/Services/NotifyService";
 
 
 @Component({
@@ -40,7 +41,8 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 export class ListaProductoresComponent {
     productores : EmpresaModel[];
 
-    constructor(public _administracionService : AdministracionService) {}
+    constructor(public _administracionService : AdministracionService,
+                public _notifyService : NotifyService) {}
 
     ngOnInit() {
         this._administracionService.getEmpresas(0).subscribe(productores => this.productores = productores);

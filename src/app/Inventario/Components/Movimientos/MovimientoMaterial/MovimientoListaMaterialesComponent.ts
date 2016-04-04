@@ -20,7 +20,7 @@ import {MovimientoMaterialModel} from "../../../Models/MovimientoMaterialModel";
                         <td>{{ movimiento.material.nombre }}</td>
                         <td class="hidden-xs hidden-sm">{{ movimiento.material.tipoMaterial.nombre }}</td>
                         <td class="text-right">{{ movimiento.cantidad }}</td>
-                        <td><button class="btn" (click)="remove(movimiento)"><i class="fa fa-trash-o"></i></button></td>
+                        <td><button class="btn" (click)="remover(movimiento)"><i class="fa fa-trash-o"></i></button></td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -36,13 +36,13 @@ import {MovimientoMaterialModel} from "../../../Models/MovimientoMaterialModel";
 })
 export class MovimientoListaMaterialesComponent {
     @Input() materiales;
-    @Output() actualizarMateriales = new EventEmitter();
+    @Output() _movimientoMaterial = new EventEmitter();
 
     total() : number {
-        return (typeof this.materiales) != "undefined" ? this.materiales.length : 0;
+        return this.materiales == null ? 0 : this.materiales.length;
     }
 
-    remove(movimientoMaterial : MovimientoMaterialModel) {
-        this.actualizarMateriales.emit(movimientoMaterial);
+    remover(movimientoMaterial : MovimientoMaterialModel) {
+        this._movimientoMaterial.emit(movimientoMaterial);
     }
 }
