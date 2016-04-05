@@ -149,7 +149,7 @@ export class IngresarMovimientoInventario extends FormHelper {
                 .subscribe(
                     movimiento => {
                         this._notifyService.show("Movimiento Ingresado con exito.", 3000);
-                        this._router.navigate(["/Inventario/MovimientosInventario/VerInventario", {id : movimiento.id}]);
+                        this._router.navigate(["/Inventario/MovimientosInventario/VerMovimientoInventario", {id : movimiento.id}]);
                         this._notifyService.loader(false);
                     },
                     error => {
