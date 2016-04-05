@@ -4,6 +4,7 @@ import {MaterialModel} from "../../Models/MaterialModel";
 import {AdministracionService} from "../../Services/AdministracionService";
 import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 import {NotifyService} from "../../../Notify/Services/NotifyService";
+import {Controller} from "../../../ControlPanel/Controller";
 
 @Component({
     selector  : 'lista-materiales',
@@ -15,32 +16,34 @@ import {NotifyService} from "../../../Notify/Services/NotifyService";
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Codigo</th>
+                        <th class="text-center">Codigo</th>
                         <th>Nombre</th>
                         <th class="hidden-xs">Tipo Material</th>
-                        <th>Creado</th>
+                        <th class="text-center">Creado</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="#material of materiales" [routerLink]="['VerMaterial', { id : material.id }]" class="router">
-                        <td>{{ material.codigo }}</td>
+                        <td class="text-center">{{ material.codigo }}</td>
                         <td>{{ material.nombre }}</td>
                         <td class="hidden-xs">{{ material.tipoMaterial.nombre }}</td>
                         <td>{{ material.fecha | datetime : "short"}}</td>
-                        <td><i class="fa fa-pencil"></i></td>
+                        <td class="text-center"><i class="fa fa-ellipsis-v"></i></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>`
 })
-export class ListaMaterialesComponent {
+export class ListaMaterialesComponent extends Controller {
     materiales : Array<MaterialModel>;
 
-    constructor(public _administracionService : AdministracionService, public _notifyService : NotifyService) {
-        this._administracionService.getMateriales().subscribe(response => {
-            this.materiales = response;
-        });
+    constructor(public _administracionService : AdministracionService,
+                _notifyService : NotifyService) { super(_notifyService) }
+
+    ngOnInit() {
+        this._notifyService.loader(true);
+        this.subscribeResource("materiales", this._administracionService.getMateriales())
     }
 }

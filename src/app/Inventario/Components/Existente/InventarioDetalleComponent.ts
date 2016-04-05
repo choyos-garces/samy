@@ -93,7 +93,7 @@ export class InventarioDetalleComponent {
         this._invetarioService.getInventarioDetall(materialId, bodegaId).subscribe(
             response => {
                 this.inventario = response.inventario;
-                this.movimientosMateriales = response.movimientos;
+                this.movimientosMateriales = <MovimientoMaterialModel[]>response.movimientos;
             },
             error => {
                 this._notifyService.error(error.json());

@@ -5,7 +5,8 @@ import {MaterialModel} from "../../../../Administracion/Models/MaterialModel";
 import {MovimientoMaterialModel} from "../../../Models/MovimientoMaterialModel";
 import {SimpleKey} from "../../../../ControlPanel/Models/SimpleKey";
 import {FilterSimpleKey} from "../../../../Pipes/FilterSimpleKey";
-import {FormHelper} from "../../../../ControlPanel/FormHelper";
+import {FormController} from "../../../../ControlPanel/FormController";
+import {NotifyService} from "../../../../Notify/Services/NotifyService";
 
 @Component({
     selector : "movimiento-material",
@@ -24,7 +25,7 @@ import {FormHelper} from "../../../../ControlPanel/FormHelper";
                         <option *ngFor="#opcion of materiales | filterSimpleKey : 'tipoMaterial' : tipoMaterial" [value]="opcion.id">{{ opcion.nombre }}</option>
                     </select>
                 </div>
-                <input type="number" placeholder="Cantidad" step="0.01" min="0" max="999" class="form-control" id="cantidad" [(ngFormControl)]="formControl.controls['cantidad']" (keyup)="maxDecimalAllowed($event, 7, 2)" />
+                <input type="number" placeholder="Cantidad" step="0.01" min="0" max="999" class="form-control" id="cantidad" [(ngFormControl)]="formControl.controls['cantidad']" />
                 <div class="input-group-btn">            
                     <button class="btn btn-primary" (click)="envioMaterial()" [disabled]="disableEnvio()"><i class="fa fa-check"></i></button>
                 </div>
@@ -32,15 +33,15 @@ import {FormHelper} from "../../../../ControlPanel/FormHelper";
         </div>
     </div>`
 })
-export class MovimientoMaterialComponent extends FormHelper {
+export class MovimientoMaterialComponent extends FormController {
     @Input() materiales : MaterialModel[];
     @Input() tiposMateriales : SimpleKey[];
     @Output() _movimientoMaterial = new EventEmitter();
     material; // Temporary Model
     tipoMaterial; // Temporary Model
 
-    constructor(public _formBuilder : FormBuilder) {
-        super();
+    constructor(public _formBuilder : FormBuilder, _notifyService : NotifyService) {
+        super(_notifyService);
     }
 
     ngOnInit() : void {

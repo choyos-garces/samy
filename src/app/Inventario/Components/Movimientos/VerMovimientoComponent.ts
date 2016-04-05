@@ -33,10 +33,11 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
             </div>
         </div>
     </div>
-    <h4>Detalle de los materiales</h4>
+    <h4>Detalle de Materiales</h4>
     <table class="table table-hover">
         <thead>
             <tr>
+                <th>Codigo</th>
                 <th>Material</th>
                 <th>Tipo</th>
                 <th class="text-center">Cantidad</th>
@@ -45,7 +46,8 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
         </thead>
         <tbody>
             <tr *ngFor="#movimiento of movimientoInventario?.movimientosMateriales" [routerLink]="['/Inventario/InventarioExistente/InventarioDetalle', { materialId : movimiento.material.id, bodegaId : movimiento.bodega.id }]" class="router">
-                <td>{{ movimiento.material.nombre }}</td>
+                <td>{{ movimiento.material.codigo }}</td>
+                <td><a [routerLink]="['/Administracion/Materiales/VerMaterial', { id : movimiento.material.id }]">{{ movimiento.material.nombre }}</a></td>
                 <td>{{ movimiento.material.tipoMaterial.nombre }}</td>
                 <td class="text-center">{{ (movimiento.tipoMovimiento == 0) ? "-" : "+" }}{{ movimiento.cantidad }}</td>
                 <td class="text-center"><i class="fa fa-ellipsis-v"></i></td>
