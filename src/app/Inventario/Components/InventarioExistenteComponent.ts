@@ -6,13 +6,14 @@ import {InventarioDetalleComponent} from "./Existente/InventarioDetalleComponent
 @Component({
     selector : 'inventario-existente',
     directives : [ROUTER_DIRECTIVES],
-    template : `<div class="shelf-drawer">
-        <div class="container-fluid">
-            <h1>Inventario / Existente</h1>
-            <ul class="nav nav-pills"></ul>
-        </div>
+    template : 
+`<div class="shelf-drawer">
+    <div class="container-fluid">
+        <h1>Inventario / <a [routerLink]="['/Inventario/InventarioExistente']">Existente</a></h1>
+        <ul class="nav nav-pills"></ul>
     </div>
-    <router-outlet></router-outlet>`
+</div>
+<router-outlet></router-outlet>`
 })
 @RouteConfig([
     { path : '/', name: 'ListaInventarioExistente', component : ListaInventarioExistenteComponent, useAsDefault: true },

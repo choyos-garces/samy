@@ -8,17 +8,16 @@ import {ListaPlantacionesComponent} from "./Plantaciones/ListaPlantacionesCompon
 @Component({
     selector : 'plantaciones',
     directives : [ROUTER_DIRECTIVES],
-    template : `
-    <div class="shelf-drawer">
-        <div class="container-fluid">
-            <h1>Administraci&oacute;n / Plantaciones</h1>
-            <ul class="nav nav-pills">
-                <li><a [routerLink]="['IngresarPlantacion']" class="action"><i class="fa fa-plus"></i> Ingresar Plantaci&oacute;n</a></li>
-            </ul>
-        </div>
+    template :
+`<div class="shelf-drawer">
+    <div class="container-fluid">
+        <h1>Administraci&oacute;n / <a [routerLink]="['/Administracion/Plantaciones']"></a>Plantaciones</h1>
+        <ul class="nav nav-pills">
+            <li><a [routerLink]="['IngresarPlantacion']" class="action"><i class="fa fa-plus"></i> Ingresar Plantaci&oacute;n</a></li>
+        </ul>
     </div>
-    <router-outlet></router-outlet>
-    `
+</div>
+<router-outlet></router-outlet>`
 })
 @RouteConfig([
     { path: "/", name: "ListaPlantaciones", component: ListaPlantacionesComponent, useAsDefault: true },

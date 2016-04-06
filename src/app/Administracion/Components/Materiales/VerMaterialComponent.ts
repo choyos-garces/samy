@@ -16,7 +16,7 @@ import {InventarioMaterialModel} from "../../../Inventario/Models/InventarioMate
     template : `
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-sm-6">
             <h4>Material #{{ material?.id }}</h4>
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -37,26 +37,28 @@ import {InventarioMaterialModel} from "../../../Inventario/Models/InventarioMate
         </div>
     </div>
     <h4>Inventario en Bodegas</h4>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th class="text-center">Codigo</th>
-                <th>Bodega</th>
-                <th class="text-center">Total</th>
-                <th class="text-center">Ult. Movimiento</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="#inventario of inventarioMaterial" [routerLink]="['/Inventario/InventarioExistente/InventarioDetalle', { materialId : inventario.material.id , bodegaId : inventario.bodega.id}]" class="router">
-                <td class="text-center">{{ inventario.bodega.codigo }}</td>
-                <td><a [routerLink]="['/Administracion/Bodegas/VerBodega', {id : inventario.bodega.id}]">{{ inventario.bodega.nombre }}</a></td>
-                <td class="text-center">{{ inventario.cantidad }}</td>
-                <td class="text-center">{{ inventario.fecha | datetime : 'short' }}</td>
-                <td><i class="fa fa-ellipsis-v"></i></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">Codigo</th>
+                    <th>Bodega</th>
+                    <th class="text-center">Total</th>
+                    <th class="text-center">Ult. Movimiento</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="#inventario of inventarioMaterial" [routerLink]="['/Inventario/InventarioExistente/InventarioDetalle', { materialId : inventario.material.id , bodegaId : inventario.bodega.id}]" class="router">
+                    <td class="text-center">{{ inventario.bodega.codigo }}</td>
+                    <td><a [routerLink]="['/Administracion/Bodegas/VerBodega', {id : inventario.bodega.id}]">{{ inventario.bodega.nombre }}</a></td>
+                    <td class="text-center">{{ inventario.cantidad }}</td>
+                    <td class="text-center">{{ inventario.fecha | datetime : 'short' }}</td>
+                    <td><i class="fa fa-ellipsis-v"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>`
 })
 export class VerMaterialComponent extends Controller {

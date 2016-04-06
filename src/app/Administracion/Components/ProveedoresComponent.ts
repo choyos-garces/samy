@@ -5,21 +5,19 @@ import {IngresarProveedorComponent} from "./Proovedores/IngresarProveedorCompone
 import {ListaProveedoresComponent} from "./Proovedores/ListaProveedoresComponent";
 import {VerProveedorComponent} from "./Proovedores/VerProveedorComponent";
 
-
 @Component({
     selector : 'proveedores',
     directives : [ROUTER_DIRECTIVES],
-    template : `
-    <div class="shelf-drawer">
-        <div class="container-fluid">
-            <h1>Administraci&oacute;n / Proveedores</h1>
-            <ul class="nav nav-pills">
-                <li><a [routerLink]="['IngresarProveedor']" class="action"><i class="fa fa-plus"></i> Nuevo Proveedor</a></li>
-            </ul>
-        </div>
+    template :
+`<div class="shelf-drawer">
+    <div class="container-fluid">
+        <h1>Administraci&oacute;n / <a [routerLink]="['/Administracion/Proveedores']">Proveedores</a></h1>
+        <ul class="nav nav-pills">
+            <li><a [routerLink]="['IngresarProveedor']" class="action"><i class="fa fa-plus"></i> Nuevo Proveedor</a></li>
+        </ul>
     </div>
-    <router-outlet></router-outlet>
-    `
+</div>
+<router-outlet></router-outlet>`
 })
 @RouteConfig([
     { path: '/', name: 'ListaProveedores', component: ListaProveedoresComponent, useAsDefault: true },

@@ -7,17 +7,16 @@ import {VerProductorComponent} from "./Productores/VerProductorComponent";
 @Component({
     selector : 'productores',
     directives : [ROUTER_DIRECTIVES],
-    template : `
-    <div class="shelf-drawer">
-        <div class="container-fluid">
-            <h1>Administraci&oacute;n / Productores</h1>
-            <ul class="nav nav-pills">
-                <li><a [routerLink]="['IngresarProductor']" class="action"><i class="fa fa-plus"></i> Nuevo Productor</a></li>
-            </ul>
-        </div>
+    template :
+`<div class="shelf-drawer">
+    <div class="container-fluid">
+        <h1>Administraci&oacute;n / <a [routerLink]="['/Administracion/Productores']">Productores</a></h1>
+        <ul class="nav nav-pills">
+            <li><a [routerLink]="['IngresarProductor']" class="action"><i class="fa fa-plus"></i> Nuevo Productor</a></li>
+        </ul>
     </div>
-    <router-outlet></router-outlet>
-    `
+</div>
+<router-outlet></router-outlet>`
 })
 @RouteConfig([
     { path: '/', name: 'ListaProductores', component: ListaProductoresComponent, useAsDefault: true },

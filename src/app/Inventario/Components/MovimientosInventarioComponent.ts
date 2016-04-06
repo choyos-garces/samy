@@ -7,15 +7,16 @@ import {VerMovimientoComponent} from "./Movimientos/VerMovimientoComponent";
 @Component({
     selector : 'movimientos-inventario',
     directives : [ROUTER_DIRECTIVES],
-    template : `<div class="shelf-drawer">
-        <div class="container-fluid">
-            <h1>Inventario / Movimiento</h1>
-            <ul class="nav nav-pills">
-                <li><a [routerLink]="['IngresarMovimientoInventario']" class="action"><i class="fa fa-arrow-circle-o-down"></i> Realizar Movimiento</a></li>
-            </ul>
-        </div>
+    template :
+`<div class="shelf-drawer">
+    <div class="container-fluid">
+        <h1>Inventario / <a [routerLink]="['/Inventario/MovimientosInventario']">Movimiento</a></h1>
+        <ul class="nav nav-pills">
+            <li><a [routerLink]="['IngresarMovimientoInventario']" class="action"><i class="fa fa-arrow-circle-o-down"></i> Realizar Movimiento</a></li>
+        </ul>
     </div>
-    <router-outlet></router-outlet>`
+</div>
+<router-outlet></router-outlet>`
 })
 @RouteConfig([
     { path : '/', name: 'ListaMovimientosInventario', component : ListaMovimientosInventarioComponent, useAsDefault: true },

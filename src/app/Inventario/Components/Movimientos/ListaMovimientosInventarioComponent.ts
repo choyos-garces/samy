@@ -28,7 +28,7 @@ import {NotifyService} from "../../../Notify/Services/NotifyService";
                     <td>{{ movimiento.fecha | datetime}}</td>
                     <td class="text-center">{{ (movimiento.tipoMovimiento == 1) ? "Ingreso" : "Egreso" }}</td>
                     <td>{{ movimiento.motivoMovimiento.nombre }}</td>
-                    <td class="text-center">{{ movimiento.bodega.nombre }}</td>
+                    <td class="text-center"><a [routerLink]="['/Administracion/Bodegas/VerBodega', { id : movimiento.bodega.id }]">{{ movimiento.bodega.nombre }}</a></td>
                     <td class="text-center">{{ movimiento.movimientosMateriales.length }}</td>
                     <td class="text-center"><i class="fa fa-ellipsis-v"></i></td>
                 </tr>
