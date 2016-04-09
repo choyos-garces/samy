@@ -4,7 +4,7 @@ import {RouteParams, Router, ROUTER_DIRECTIVES} from "angular2/router";
 import {MaterialModel} from "../../Models/MaterialModel";
 import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 import {AdministracionService} from "../../Services/AdministracionService";
-import {Controller} from "../../../ControlPanel/Controller";
+import {Controller} from "../../../App/Controller";
 import {NotifyService} from "../../../Notify/Services/NotifyService";
 import {InventarioService} from "../../../Inventario/Services/InventarioService";
 import {InventarioMaterialModel} from "../../../Inventario/Models/InventarioMaterialModel";

@@ -10,20 +10,7 @@ import {ProveedoresComponent} from "./Administracion/Components/ProveedoresCompo
 @Component({
     selector : 'recursos',
     directives: [ROUTER_DIRECTIVES],
-    template : `
-    <div class="sidebar">
-        <ul class="nav nav-pills nav-stacked">
-            <li><a [routerLink]="['Productores']"><i class="fa fa-users fa-fw"></i> Productores</a></li>
-            <li><a [routerLink]="['Materiales']"><i class="fa fa-cubes fa-fw"></i> Materiales</a></li>
-            <li><a [routerLink]="['Bodegas']"><i class="fa fa-folder-o fa-fw"></i> Bodegas</a></li>
-            <li><a [routerLink]="['Plantaciones']"><i class="fa fa-folder-o fa-fw"></i> Plantaciones</a></li>
-            <li><a [routerLink]="['Proveedores']"><i class="fa fa-industry fa-fw"></i> Proveedores</a></li>
-        </ul>
-    </div>
-    <div class="main">
-        <router-outlet></router-outlet>
-    </div>
-    `
+    template : '<router-outlet></router-outlet>'
 })
 @RouteConfig([
     { path: '/productores/...', name: 'Productores', component: ProductoresComponent, useAsDefault: true },

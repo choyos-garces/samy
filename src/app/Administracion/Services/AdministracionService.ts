@@ -4,7 +4,7 @@ import {MaterialModel} from "../Models/MaterialModel";
 import {BodegaModel} from "../Models/BodegaModel";
 import {EmpresaModel} from "../Models/EmpresaModel";
 import {PlantacionModel} from "../Models/PlantacionModel";
-import {apiService} from "../../apiService";
+import {apiService} from "../../App/Services/apiService";
 
 @Injectable()
 export class AdministracionService extends apiService{

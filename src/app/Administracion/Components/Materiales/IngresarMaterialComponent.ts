@@ -3,9 +3,9 @@ import {FormBuilder, ControlGroup, Validators, Control} from "angular2/common";
 import {Router} from "angular2/router";
 
 import {MaterialModel} from "../../Models/MaterialModel";
-import {SimpleKey} from "../../../ControlPanel/Models/SimpleKey";
+import {SimpleKey} from "../../../App/Models/SimpleKey";
 import {AdministracionService} from "../../Services/AdministracionService";
-import {OpcionesService} from "../../../ControlPanel/Services/OpcionesService";
+import {OpcionesService} from "../../../App/Services/OpcionesService";
 
 @Component({
     selector  : 'ingresar-material',

@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
-import {OpcionesService} from "../../../ControlPanel/Services/OpcionesService";
-import {SimpleKey} from "../../../ControlPanel/Models/SimpleKey";
+import {OpcionesService} from "../../../App/Services/OpcionesService";
+import {SimpleKey} from "../../../App/Models/SimpleKey";
 import {EmpresaModel} from "../../Models/EmpresaModel";
 
 @Component({

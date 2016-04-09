@@ -4,7 +4,7 @@ import {BodegaModel} from "../../Models/BodegaModel";
 import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 import {Router, RouteParams, ROUTER_DIRECTIVES} from "angular2/router";
 import {NotifyService} from "../../../Notify/Services/NotifyService";
-import {Controller} from "../../../ControlPanel/Controller";
+import {Controller} from "../../../App/Controller";
 import {InventarioService} from "../../../Inventario/Services/InventarioService";
 import {InventarioMaterialModel} from "../../../Inventario/Models/InventarioMaterialModel";
 

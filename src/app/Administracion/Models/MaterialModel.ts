@@ -1,4 +1,4 @@
-import {SimpleKey} from "../../ControlPanel/Models/SimpleKey";
+import {SimpleKey} from "../../App/Models/SimpleKey";
 
 export class MaterialModel {
     private _id : number;

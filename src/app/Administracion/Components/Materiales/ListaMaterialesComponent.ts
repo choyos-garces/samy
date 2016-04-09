@@ -4,7 +4,7 @@ import {MaterialModel} from "../../Models/MaterialModel";
 import {AdministracionService} from "../../Services/AdministracionService";
 import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 import {NotifyService} from "../../../Notify/Services/NotifyService";
-import {Controller} from "../../../ControlPanel/Controller";
+import {Controller} from "../../../App/Controller";
 
 @Component({
     selector  : 'lista-materiales',

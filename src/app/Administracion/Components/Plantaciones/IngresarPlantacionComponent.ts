@@ -3,10 +3,10 @@ import {FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, Control} from "a
 import {Router, RouteParams} from "angular2/router";
 
 import {PlantacionModel} from "../../Models/PlantacionModel";
-import {SimpleKey} from "../../../ControlPanel/Models/SimpleKey";
+import {SimpleKey} from "../../../App/Models/SimpleKey";
 import {EmpresaModel} from "../../Models/EmpresaModel";
 import {AdministracionService} from "../../Services/AdministracionService";
-import {OpcionesService} from "../../../ControlPanel/Services/OpcionesService";
+import {OpcionesService} from "../../../App/Services/OpcionesService";
 
 @Component({
     selector  : 'ingresar-plantacion',

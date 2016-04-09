@@ -1,4 +1,4 @@
-import {SimpleKey} from "../../ControlPanel/Models/SimpleKey";
+import {SimpleKey} from "../../App/Models/SimpleKey";
 import {EmpresaModel} from "./EmpresaModel";
 
 export class PlantacionModel {
