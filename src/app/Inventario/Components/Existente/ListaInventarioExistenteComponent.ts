@@ -6,11 +6,11 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 import {NotifyService} from "../../../Notify/Services/NotifyService";
 import {BusquedaInventarioExistente} from "./BusquedaInventarioExistente";
 import {FilterByQueryPipe} from "../../../Pipes/FilterByQueryPipe";
-import {FormController} from "../../../ControlPanel/FormController";
-import {OpcionesService} from "../../../ControlPanel/Services/OpcionesService";
+import {FormController} from "../../../App/FormController";
+import {OpcionesService} from "../../../App/Services/OpcionesService";
 import {AdministracionService} from "../../../Administracion/Services/AdministracionService";
 import {BodegaModel} from "../../../Administracion/Models/BodegaModel";
-import {SimpleKey} from "../../../ControlPanel/Models/SimpleKey";
+import {SimpleKey} from "../../../App/Models/SimpleKey";
 
 @Component({
     selector : 'lista-existente',

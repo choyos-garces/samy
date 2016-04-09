@@ -1,33 +1,11 @@
 @import "variables"
 @import "bootstrap_overrides"
-@import "shelf/shelf"
 @import "notify"
+@import "Navigation/dashboard"
+@import "Navigation/sidebar"
+@import "Navigation/main"
 
 @import "querybox"
-.dashboard
-  background-color: #fff
-  position: fixed
-  top: 0
-  left: 0
-  right: 0
-  line-height: $nav-bar-height
-  vertical-align: middle
-  height: $nav-bar-height
-  font-size: 18px
-  border-bottom: 1px solid $color-dark-lightest
-  text-align: right
-  z-index: 99
-
-.dash-wrap
-  position: relative
-
-.toggleSidebar
-  display: none
-  text-align: center
-  left: 0
-  position: absolute
-  height: $nav-bar-height
-  width: $nav-bar-height
 
 .action
   float: right
@@ -55,3 +33,7 @@
   .icon-group
     i.fa:first-child:not(.fa-fw)
       margin-right: 0
+
+@media print
+  dashboard, sidebar, notify
+    display: none

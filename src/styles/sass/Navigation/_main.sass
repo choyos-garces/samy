@@ -1,0 +1,47 @@
+#main
+  position: absolute
+  top: $nav-bar-height
+  left: $nav-sidebar-width
+  right: 0
+
+  .shelf-drawer
+    position: relative
+
+  .shelf-drawer ul
+    position: absolute
+    bottom: 0
+    right: 12px
+
+    li:not(:last-child)
+      padding-right: .4em
+
+  ul.nav
+    line-height: 1
+
+    a.action
+      color: #fff
+      background: $color-primary-base
+      border: 1px solid $color-primary-dark
+
+    a.action:hover
+      background: $color-primary-hover
+
+    a.action:active
+      background: $color-primary-active
+      border-color: $color-primary-hover
+
+    a.action.alert
+      margin: 0
+      background: $color-alert-base
+      border: 1px solid $color-alert-dark
+
+    a.action.alert:hover
+      background: $color-alert-hover
+
+    a.action.alert:active
+      background: $color-alert-active
+      border-color: $color-alert-hover
+
+@media screen and (max-width : 768px)
+  #main
+    left: 0

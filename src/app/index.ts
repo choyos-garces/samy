@@ -1,41 +1,29 @@
 import {Component} from 'angular2/core'
 import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
+
+import {NotifyComponent} from "./Notify/Components/NotifyComponent";
+import {DashboardComponent} from "./App/Components/Navigation/DashboardComponent";
+import {SidebarComponent} from "./App/Components/Navigation/SidebarComponent";
+
 import {AdministracionComponent} from "./AdministracionComponent";
 import {InventarioComponent} from "./InventarioComponent";
-import {Error404Component} from "./Feedback/Error404Component";
-import {NotifyComponent} from "./Notify/Components/NotifyComponent";
 
 @Component({
     selector : 'index',
-    directives : [NotifyComponent, ROUTER_DIRECTIVES],
-    template : `
-    <notify></notify>
-    <div class="dashboard">
-        <div class="container">
-            <div class="dash-wrap">
-                <a class="toggleSidebar" (click)="toggleSidebar()"><i class="fa fa-navicon"></i></a>
-                <ul class="list-inline">
-                    <li><a [routerLink]="['Administracion']">Administraci&oacute;n</a></li>
-                    <li><a [routerLink]="['Inventario']">Inventario</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container shelf">
-        <router-outlet></router-outlet>
-    </div>
-    `,
+    directives : [NotifyComponent, ROUTER_DIRECTIVES, DashboardComponent, SidebarComponent],
+    template :
+`<dashboard></dashboard>
+<notify></notify>
+<sidebar></sidebar>
+<div id="main">
+    <router-outlet></router-outlet>
+</div>`
+
 })
 @RouteConfig([
-    { path: '/404', name: 'Error404', component: Error404Component },
     { path: '/administracion/...', name: 'Administracion', component: AdministracionComponent, useAsDefault: true },
     { path: '/inventario/...', name: 'Inventario', component: InventarioComponent }
 ])
 export class Index {
-
     constructor() {}
-
-    toggleSidebar() {
-        document.querySelector(".sidebar").classList.toggle("open")
-    }
 }

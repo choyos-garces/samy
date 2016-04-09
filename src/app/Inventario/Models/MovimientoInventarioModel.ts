@@ -1,5 +1,5 @@
 import {MovimientoMaterialModel} from "./MovimientoMaterialModel";
-import {SimpleKey} from "../../ControlPanel/Models/SimpleKey";
+import {SimpleKey} from "../../App/Models/SimpleKey";
 
 import {BodegaModel} from "../../Administracion/Models/BodegaModel";
 import {EmpresaModel} from "../../Administracion/Models/EmpresaModel";

@@ -1,11 +1,11 @@
 import {Component, Output, EventEmitter, Input} from "angular2/core";
 import {NotifyService} from "../../../Notify/Services/NotifyService";
 import {FormBuilder, ControlGroup} from "angular2/common";
-import {FormController} from "../../../ControlPanel/FormController";
-import {SimpleKey} from "../../../ControlPanel/Models/SimpleKey";
+import {FormController} from "../../../App/FormController";
+import {SimpleKey} from "../../../App/Models/SimpleKey";
 import {BodegaModel} from "../../../Administracion/Models/BodegaModel";
 import {AdministracionService} from "../../../Administracion/Services/AdministracionService";
-import {OpcionesService} from "../../../ControlPanel/Services/OpcionesService";
+import {OpcionesService} from "../../../App/Services/OpcionesService";
 
 @Component({
     selector : 'busqueda-inventario-existente',

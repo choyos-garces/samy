@@ -1,12 +1,17 @@
 body
   color: $color-dark-secondary
+  overflow-y: scroll
+
 
 h1, h2, h3, h4, h5, h6
   font-weight: 300
 
-.form-control, .btn
+.panel, .form-control, .btn
   border-radius: $border-radius-simple
 
+.form-control::-webkit-inner-spin-button,
+.form-control::-webkit-outer-spin-button
+  display: none
 
 label
   cursor: pointer

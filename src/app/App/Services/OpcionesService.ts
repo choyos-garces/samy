@@ -1,7 +1,8 @@
 import {Injectable} from "angular2/core";
-import {SimpleKey} from "../Models/SimpleKey";
 import {Http} from "angular2/http";
-import {apiService} from "../../apiService";
+
+import {SimpleKey} from "../Models/SimpleKey";
+import {apiService} from "./apiService";
 
 @Injectable()
 export class OpcionesService extends apiService {

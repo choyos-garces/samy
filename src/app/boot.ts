@@ -8,8 +8,8 @@ import {Index} from "./index";
 
 import {NotifyService} from "./Notify/Services/NotifyService";
 import {AdministracionService} from "./Administracion/Services/AdministracionService";
-import {ControlPanelService} from "./ControlPanel/Services/ControlPanelService";
-import {OpcionesService} from "./ControlPanel/Services/OpcionesService";
+import {ControlPanelService} from "./App/Services/ControlPanelService";
+import {OpcionesService} from "./App/Services/OpcionesService";
 import {InventarioService} from "./Inventario/Services/InventarioService";
 
 //enableProdMode(); //Production Mode

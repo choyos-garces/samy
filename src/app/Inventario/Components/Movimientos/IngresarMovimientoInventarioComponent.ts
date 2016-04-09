@@ -2,23 +2,23 @@ import {Component} from "angular2/core";
 import {FormBuilder, Validators} from "angular2/common";
 import {Router} from "angular2/router";
 
-import {FormController} from "../../../ControlPanel/FormController";
+import {FormController} from "../../../App/FormController";
 
-import {FormFeedbackComponent} from "../../../ControlPanel/Components/FormFeedbackComponent";
-import {FormLabelComponent} from "../../../ControlPanel/Components/FormLabelComponent";
+import {FormFeedbackComponent} from "../../../App/Components/Forms/FormFeedbackComponent";
+import {FormLabelComponent} from "../../../App/Components/Forms/FormLabelComponent";
 import {MovimientoListaMaterialesComponent} from "./MovimientoMaterial/MovimientoListaMaterialesComponent";
 import {MovimientoMaterialComponent} from "./MovimientoMaterial/MovimientoMaterialComponent";
 
 import {FilterPropertyPipe} from "../../../Pipes/FilterPropertyPipe";
 
-import {OpcionesService} from "../../../ControlPanel/Services/OpcionesService";
+import {OpcionesService} from "../../../App/Services/OpcionesService";
 import {AdministracionService} from "../../../Administracion/Services/AdministracionService";
 import {InventarioService} from "../../Services/InventarioService";
 import {NotifyService} from "../../../Notify/Services/NotifyService";
 
 import {BodegaModel} from "../../../Administracion/Models/BodegaModel";
 import {MaterialModel} from "../../../Administracion/Models/MaterialModel";
-import {SimpleKey} from "../../../ControlPanel/Models/SimpleKey";
+import {SimpleKey} from "../../../App/Models/SimpleKey";
 import {MovimientoMaterialModel} from "../../Models/MovimientoMaterialModel";
 import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel";
 

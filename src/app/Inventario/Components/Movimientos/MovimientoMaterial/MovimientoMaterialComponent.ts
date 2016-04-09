@@ -3,9 +3,9 @@ import {FormBuilder, Validators} from "angular2/common";
 
 import {MaterialModel} from "../../../../Administracion/Models/MaterialModel";
 import {MovimientoMaterialModel} from "../../../Models/MovimientoMaterialModel";
-import {SimpleKey} from "../../../../ControlPanel/Models/SimpleKey";
+import {SimpleKey} from "../../../../App/Models/SimpleKey";
 import {FilterSimpleKey} from "../../../../Pipes/FilterSimpleKey";
-import {FormController} from "../../../../ControlPanel/FormController";
+import {FormController} from "../../../../App/FormController";
 import {NotifyService} from "../../../../Notify/Services/NotifyService";
 
 @Component({

@@ -7,16 +7,7 @@ import {MovimientosInventarioComponent} from "./Inventario/Components/Movimiento
 @Component({
     selector : 'inventario',
     directives : [ROUTER_DIRECTIVES],
-    template : `<div class="sidebar">
-        <ul class="nav nav-pills nav-stacked">
-            <li><a [routerLink]="['InventarioExistente']"><i class="fa fa-pie-chart fa-fw"></i> Existente</a></li>
-            <li><a [routerLink]="['MovimientosInventario']"><i class="fa fa-table fa-fw"></i> Movimientos</a></li>
-        </ul>
-    </div>
-    <div class="main">
-        <router-outlet></router-outlet>
-    </div>
-    `
+    template : '<router-outlet></router-outlet>'
 })
 @RouteConfig([
     { path : '/existente/...', name : 'InventarioExistente', component : InventarioExistenteComponent, useAsDefault : true },
