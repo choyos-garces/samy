@@ -37,7 +37,7 @@ import {PlantacionModel} from "../../../Administracion/Models/PlantacionModel";
             <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('tipoMovimiento')}">
                 <form-label [opciones]="{ id : 'tipoMovimiento', nombre : 'Acci&oacute;n'}"></form-label>
                 <div class="col-sm-7 col-md-5">
-                    <select class="form-control" id="tipoMovimiento" [(ngFormControl)]="formControl.controls['tipoMovimiento']">
+                    <select class="form-control" id="tipoMovimiento" (change)="updateMotivoMovimiento()" [(ngFormControl)]="formControl.controls['tipoMovimiento']">
                         <option [value]="1">Ingreso</option>
                         <option [value]="0">Egreso</option>
                     </select>
@@ -47,7 +47,7 @@ import {PlantacionModel} from "../../../Administracion/Models/PlantacionModel";
             <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('bodega')}">
                 <form-label [opciones]="{ id : 'bodega', nombre : 'Bodega'}"></form-label>
                 <div class="col-sm-7 col-md-5">
-                    <select class="form-control" id="bodega" [ngModel]="b" (change)="objectToFormControl($event, 'bodegas', 'bodega')" >
+                    <select class="form-control" id="bodega" [ngModel]="model.bodega" (click)="updateControlTouched('bodega')" (ngModelChange)="objectToFormControl($event, 'bodegas', 'bodega')" >
                         <option *ngFor="#bodega of bodegas" [value]="bodega.id">{{ bodega.nombre }}</option>
                     </select>
                 </div>
@@ -60,14 +60,21 @@ import {PlantacionModel} from "../../../Administracion/Models/PlantacionModel";
             <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('motivoMovimiento')}">
                 <form-label [opciones]="{ id : 'motivo', nombre : 'Motivo'}"></form-label>
                 <div class="col-sm-7 col-md-5">
-                    <select class="form-control" id="motivo" [ngModel]="m" (change)="objectToFormControl($event, 'motivosMovimiento', 'motivoMovimiento')" >
+                    <select class="form-control" id="motivo" [ngModel]="model.motivo" (click)="updateControlTouched('motivoMovimiento')" (ngModelChange)="objectToFormControl($event, 'motivosMovimiento', 'motivoMovimiento')" >
                         <option *ngFor="#motivoMovimiento of motivosMovimiento | filterProperty : 'number' : 'tipo' : getControlValue('tipoMovimiento')" [value]="motivoMovimiento.id">{{ motivoMovimiento.nombre }}</option>
                     </select>
                 </div>
                 <form-feedback [message]="'Seleccionar una opci&oacute;n por favor.'"></form-feedback>
             </div>
             
-            <movimiento-detalles [plantaciones]="plantaciones" [bodegas]="bodegas" [productores]="productores" [proveedores]="proveedores" [motivoMovimiento]="getControlValue('motivoMovimiento')"></movimiento-detalles>
+            <movimiento-detalles [plantaciones]="plantaciones" 
+            [bodegas]="bodegasElegibles()" 
+            [productores]="productores" 
+            [proveedores]="proveedores" 
+            [motivoMovimiento]="getControlValue('motivoMovimiento')"
+            [reset]="getControlValue('tipoMovimiento')"
+            (_detalle)="agregarDetalle($event)"
+            ></movimiento-detalles>
             
             <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('notas')}">
                 <form-label [opciones]="{ id : 'notas', nombre : 'Obervaciones'}"></form-label>
@@ -94,6 +101,8 @@ export class IngresarMovimientoInventario extends FormController {
     proveedores : EmpresaModel[];
     productores : EmpresaModel[];
     plantaciones : PlantacionModel[];
+
+    model = { bodega : null, motivo : null};
     
     constructor(public _router : Router,
                 public _formBuilder : FormBuilder,
@@ -108,6 +117,7 @@ export class IngresarMovimientoInventario extends FormController {
             bodega : [null, Validators.required],
             motivoMovimiento : [null, Validators.required],
             movimientosMateriales: [null, Validators.required],
+            detalles: [null, Validators.required],
             notas: [null, Validators.required]
         });
 
@@ -121,8 +131,17 @@ export class IngresarMovimientoInventario extends FormController {
         this.subscribeResource("plantaciones", this._administracionService.getPlantaciones());
     }
 
+    updateMotivoMovimiento() {
+        this.updateControlValue("motivoMovimiento", null);
+        this.model.motivo = null;
+    }
+
+    agregarDetalle(detalle) {
+        this.updateControlValue("detalle", detalle);
+    }
+
     materialesElegibles() : MaterialModel[] {
-        let selecionados = <MovimientoMaterialModel[]>this.formControl.controls["movimientosMateriales"].value;
+        let selecionados = <MovimientoMaterialModel[]>this.getControlValue("movimientosMateriales");
         return (selecionados == null) ? this.materiales :
             this.materiales.filter(material => {
                 for(let i = 0; i < selecionados.length; i++) {
@@ -130,6 +149,14 @@ export class IngresarMovimientoInventario extends FormController {
                 }
                 return true;
             });
+    }
+
+    bodegasElegibles() : BodegaModel[] {
+        let selecionada = <BodegaModel>this.getControlValue("bodega");
+        return (selecionada == null ) ? this.bodegas :
+            this.bodegas.filter(bodega => {
+                return bodega.id != selecionada.id
+            })
     }
 
     agregarMaterial( material : MovimientoMaterialModel ) : void {
@@ -147,10 +174,6 @@ export class IngresarMovimientoInventario extends FormController {
         stackMateriales = [...stackMateriales.slice(0, index), ...stackMateriales.slice(index+1)];
         if(stackMateriales.length == 0 ) this.updateControlValue('movimientosMateriales', null);
         else this.updateControlValue('movimientosMateriales', stackMateriales);
-    }
-
-    disableSubmit() {
-        return !this.formControl.valid;
     }
     
     submit() {

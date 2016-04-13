@@ -60,7 +60,7 @@ export class MovimientoDetallesComponent extends FormController {
     @Input() plantaciones : PlantacionModel[];
     @Input() bodegas : BodegaModel[];
     @Input() set motivoMovimiento( tipo : SimpleKey ) { if(tipo !== null) this.renderSelection(tipo) }
-
+    @Input() set reset( trigger ) { this.buildForm() }
     @Output() _detalle = new EventEmitter();
 
     proveedorDetalle : number;
@@ -82,7 +82,6 @@ export class MovimientoDetallesComponent extends FormController {
 
     ngOnInit() {
         this.buildForm();
-        this.formControl.valueChanges.debounceTime(400).subscribe(() => this.enviarDetalle())
     }
 
     enviarDetalle() {
@@ -100,6 +99,8 @@ export class MovimientoDetallesComponent extends FormController {
             plantacion : [null],
             bodega : [null]
         });
+
+        this.formControl.valueChanges.subscribe(() => this.enviarDetalle())
 
         /** Resets the display **/
         this.render = {
@@ -127,15 +128,25 @@ export class MovimientoDetallesComponent extends FormController {
                 this.addControl("proveedor", [null, Validators.required]);
                 this.addControl("factura", [null, Validators.required]);
                 break;
-            case 2 || 5:
+            case 2:
                 this.render.bodega = true;
                 this.addControl("bodega", [null, Validators.required]);
                 break;
-            case 3 || 4:
+            case 3:
                 this.render.productor = true;
                 this.render.plantacion = true;
                 this.addControl("productor", [null, Validators.required]);
                 this.addControl("plantacion", [null, Validators.required]);
+                break;
+            case 4:
+                this.render.productor = true;
+                this.render.plantacion = true;
+                this.addControl("productor", [null, Validators.required]);
+                this.addControl("plantacion", [null, Validators.required]);
+                break;
+            case 5:
+                this.render.bodega = true;
+                this.addControl("bodega", [null, Validators.required]);
                 break;
             case 6 :
                 this.render.proveedor = true;

@@ -30,7 +30,12 @@ export class FormController {
     protected updateControlValue(control, value) : void {
         this.getControl(control).updateValue(value, {emitEvent: true});
     }
-    
+
+    protected updateControlTouched(control) : void {
+        this.getControl(control).markAsTouched();
+    }
+
+
     protected objectToFormControl(event, collection, control) : void {
         const id = parseInt((typeof event == "object") ? event.target.value : event);
         var value;
@@ -60,6 +65,10 @@ export class FormController {
         return this.waiting;
     }
 
+    protected disableSubmit() : boolean {
+        return !this.formControl.valid;
+    }
+    
     protected allResourcesLoaded() : boolean {
         let flag = true;
         for(let i = 0; i < this.resources.length; i++ ) {

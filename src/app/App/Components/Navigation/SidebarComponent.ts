@@ -58,4 +58,8 @@ export class SidebarComponent {
         });
 
     }
+
+    toggleSection(e) {
+        
+    }
 }
