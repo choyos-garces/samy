@@ -6,12 +6,16 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
     directives: [ROUTER_DIRECTIVES],
     template :
 `<div id="sidebar">
+    <div id="ui-mask"></div>
     <ul id="nav-section">
         <li *ngFor="#nav of navegacion">
-            <a [routerLink]="[nav.route]" class="router-section-trigger">{{ nav.label }}</a>
+            <a  class="router-trigger" (click)="toggleSection($event)">
+                <i class="fa fa-folder-open-o fa-fw"> </i> {{ nav.label }}
+            </a>
             <ul>
                 <li *ngFor="#child of nav.children">
-                    <a [routerLink]="[nav.route + child.route]">{{ child.label }}</a>    
+                    <a [routerLink]="[nav.route + child.route]">
+                    <i class="fa fa-folder-o fa-fw"> </i> {{ child.label }}</a>    
                 </li>
             </ul>
         </li>
@@ -35,8 +39,8 @@ export class SidebarComponent {
         let inventario = {
             label : "Inventario", route : "/Inventario",
             children : [
-                { label : "Productores", route : "/InventarioExistente" },
-                { label : "Materiales", route : "/MovimientosInventario" }
+                { label : "Existente", route : "/InventarioExistente" },
+                { label : "Movimientos", route : "/MovimientosInventario" }
             ]
         };
 
@@ -44,12 +48,13 @@ export class SidebarComponent {
     }
 
     ngOnInit() {
+        document.querySelector('.nav-trigger').addEventListener('click', () => document.querySelector('#sidebar').classList.toggle('open'));
         document.querySelector('body').addEventListener('click', (event) => {
             var clicked = <HTMLDivElement>event.target;
-            console.log(typeof event.target);
-            if( !clicked.classList.contains("router-section-trigger") || !clicked.classList.contains("nav-trigger"));
-            document.querySelector('#sidebar').classList.remove('open');
-            console.log('clicked main');
+            var isTrigger = clicked.parentElement.classList.contains('nav-trigger') || clicked.classList.contains('nav-trigger');
+
+            if(!clicked.classList.contains('router-trigger') && !isTrigger)
+                document.querySelector("#sidebar").classList.remove("open")
         });
 
     }

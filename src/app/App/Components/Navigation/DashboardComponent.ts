@@ -3,9 +3,7 @@ import {Component} from "angular2/core";
     selector : 'dashboard',
     template :
 `<div id="dashboard">
-    <div class="container">
-        <a  class="nav-trigger">TEST</a>
-    </div>
+    <a class="nav-trigger"><i class="fa fa-bars fa-fw"></i></a>
 </div>`
 })
 export class DashboardComponent {}

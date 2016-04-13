@@ -21,17 +21,20 @@ import {MaterialModel} from "../../../Administracion/Models/MaterialModel";
 import {SimpleKey} from "../../../App/Models/SimpleKey";
 import {MovimientoMaterialModel} from "../../Models/MovimientoMaterialModel";
 import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel";
+import {MovimientoDetallesComponent} from "./MovimientoDetalles/MovimientoDetallesComponent";
+import {EmpresaModel} from "../../../Administracion/Models/EmpresaModel";
+import {PlantacionModel} from "../../../Administracion/Models/PlantacionModel";
 
 @Component({
     selector : 'ingresar-movimiento',
     pipes : [FilterPropertyPipe],
-    directives : [FormFeedbackComponent, FormLabelComponent, MovimientoMaterialComponent, MovimientoListaMaterialesComponent],
-    template : `
-<div class="container-fluid">
+    directives : [FormFeedbackComponent, FormLabelComponent, MovimientoMaterialComponent, MovimientoListaMaterialesComponent, MovimientoDetallesComponent],
+    template :
+`<div class="container-fluid">
     <h4>Movimientos de Inventario</h4>
     <form class="form-horizontal">
         <fieldset [disabled]="isFormDisabled()">
-            <div class="form-group" [ngClass]="toggleValidationFeedback('tipoMovimiento') ? 'has-error' : ''">
+            <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('tipoMovimiento')}">
                 <form-label [opciones]="{ id : 'tipoMovimiento', nombre : 'Acci&oacute;n'}"></form-label>
                 <div class="col-sm-7 col-md-5">
                     <select class="form-control" id="tipoMovimiento" [(ngFormControl)]="formControl.controls['tipoMovimiento']">
@@ -41,10 +44,10 @@ import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel"
                 </div>
                 <form-feedback [message]="'Seleccionar una opci&oacute;n por favor.'"></form-feedback>
             </div>
-            <div class="form-group" [ngClass]="toggleValidationFeedback('bodega') ? 'has-error' : ''">
+            <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('bodega')}">
                 <form-label [opciones]="{ id : 'bodega', nombre : 'Bodega'}"></form-label>
                 <div class="col-sm-7 col-md-5">
-                    <select class="form-control" id="bodega" [ngModel]="b"(change)="objectToFormControl($event, 'bodegas', 'bodega')" >
+                    <select class="form-control" id="bodega" [ngModel]="b" (change)="objectToFormControl($event, 'bodegas', 'bodega')" >
                         <option *ngFor="#bodega of bodegas" [value]="bodega.id">{{ bodega.nombre }}</option>
                     </select>
                 </div>
@@ -54,7 +57,7 @@ import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel"
             <movimiento-material [tiposMateriales]="tiposMateriales" [materiales]="materialesElegibles()" (_movimientoMaterial)="agregarMaterial($event)"></movimiento-material>
             <movimiento-lista-materiales [materiales]="getControlValue('movimientosMateriales')" (_movimientoMaterial)="removerMaterial($event)"></movimiento-lista-materiales>
             
-            <div class="form-group" [ngClass]="toggleValidationFeedback('motivoMovimiento') ? 'has-error' : ''">
+            <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('motivoMovimiento')}">
                 <form-label [opciones]="{ id : 'motivo', nombre : 'Motivo'}"></form-label>
                 <div class="col-sm-7 col-md-5">
                     <select class="form-control" id="motivo" [ngModel]="m" (change)="objectToFormControl($event, 'motivosMovimiento', 'motivoMovimiento')" >
@@ -64,6 +67,15 @@ import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel"
                 <form-feedback [message]="'Seleccionar una opci&oacute;n por favor.'"></form-feedback>
             </div>
             
+            <movimiento-detalles [plantaciones]="plantaciones" [bodegas]="bodegas" [productores]="productores" [proveedores]="proveedores" [motivoMovimiento]="getControlValue('motivoMovimiento')"></movimiento-detalles>
+            
+            <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('notas')}">
+                <form-label [opciones]="{ id : 'notas', nombre : 'Obervaciones'}"></form-label>
+                <div class="col-sm-7 col-md-5">
+                    <textarea class="form-control" id="notas" [(ngFormControl)]="formControl.controls['notas']"></textarea>
+                </div>
+                <form-feedback [message]="'Seleccionar una opci&oacute;n por favor.'"></form-feedback>
+            </div>
             <div class="form-group">
                 <div class="col-sm-7 col-md-5 col-sm-push-3">
                     <button class="btn btn-primary" [disabled]="disableSubmit()" (click)="submit()">Generar Ingreso</button>
@@ -79,6 +91,10 @@ export class IngresarMovimientoInventario extends FormController {
     tiposMateriales : SimpleKey[];
     motivosMovimiento : SimpleKey[];
 
+    proveedores : EmpresaModel[];
+    productores : EmpresaModel[];
+    plantaciones : PlantacionModel[];
+    
     constructor(public _router : Router,
                 public _formBuilder : FormBuilder,
                 public _administracionService : AdministracionService,
@@ -91,13 +107,18 @@ export class IngresarMovimientoInventario extends FormController {
             tipoMovimiento : [null, Validators.required],
             bodega : [null, Validators.required],
             motivoMovimiento : [null, Validators.required],
-            movimientosMateriales: [null, Validators.required]
+            movimientosMateriales: [null, Validators.required],
+            notas: [null, Validators.required]
         });
 
         this.subscribeResource("bodegas", this._administracionService.getBodegas());
         this.subscribeResource("materiales", this._administracionService.getMateriales());
         this.subscribeResource("tiposMateriales", this._opcionesService.getTiposMaterial());
         this.subscribeResource("motivosMovimiento", this._opcionesService.getMotivosMovimientoInventario());
+
+        this.subscribeResource("productores", this._administracionService.getEmpresas(0));
+        this.subscribeResource("proveedores", this._administracionService.getEmpresas(1));
+        this.subscribeResource("plantaciones", this._administracionService.getPlantaciones());
     }
 
     materialesElegibles() : MaterialModel[] {

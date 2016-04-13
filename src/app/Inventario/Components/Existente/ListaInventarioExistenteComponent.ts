@@ -1,4 +1,4 @@
-import {Component} from "angular2/core";
+import  {Component} from "angular2/core";
 import {DatetimePipe} from "../../../Pipes/DatetimePipe";
 import {InventarioService} from "../../Services/InventarioService";
 import {InventarioMaterialModel} from "../../Models/InventarioMaterialModel";
@@ -6,11 +6,11 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 import {NotifyService} from "../../../Notify/Services/NotifyService";
 import {BusquedaInventarioExistente} from "./BusquedaInventarioExistente";
 import {FilterByQueryPipe} from "../../../Pipes/FilterByQueryPipe";
-import {FormController} from "../../../App/FormController";
 import {OpcionesService} from "../../../App/Services/OpcionesService";
 import {AdministracionService} from "../../../Administracion/Services/AdministracionService";
 import {BodegaModel} from "../../../Administracion/Models/BodegaModel";
 import {SimpleKey} from "../../../App/Models/SimpleKey";
+import {Controller} from "../../../App/Controller";
 
 @Component({
     selector : 'lista-existente',
@@ -47,7 +47,7 @@ import {SimpleKey} from "../../../App/Models/SimpleKey";
     </div>
 </div>`
 })
-export class ListaInventarioExistenteComponent extends FormController {
+export class ListaInventarioExistenteComponent extends Controller {
     inventarios : InventarioMaterialModel[];
     tiposMaterial : SimpleKey[];
     bodegas : BodegaModel[];

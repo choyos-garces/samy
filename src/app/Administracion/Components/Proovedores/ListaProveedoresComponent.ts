@@ -2,6 +2,8 @@ import {Component} from "angular2/core"
 import {ROUTER_DIRECTIVES} from "angular2/router";
 import {EmpresaModel} from "../../Models/EmpresaModel";
 import {AdministracionService} from "../../Services/AdministracionService";
+import {Controller} from "../../../App/Controller";
+import {NotifyService} from "../../../Notify/Services/NotifyService";
 
 @Component({
     selector: 'lista-proveedores',
@@ -12,9 +14,8 @@ import {AdministracionService} from "../../Services/AdministracionService";
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th class="text-center">Id</th>
                     <th>Raz&oacute;n Social</th>
-                    <th>Identificaci&oacute;n</th>
                     <th>Tel&eacute;fono</th>
                     <th>Correo</th>
                     <th></th>
@@ -22,24 +23,25 @@ import {AdministracionService} from "../../Services/AdministracionService";
             </thead>
             <tbody>
                 <tr class="router" *ngFor="#proveedor of proveedores" [routerLink]="['VerProveedor', { id : proveedor.id}]">
-                    <td>{{ proveedor.id }}</td>
+                    <td class="text-center">{{ proveedor.id }}</td>
                     <td>{{ proveedor.razonSocial }}</td>
-                    <td>{{ proveedor.identificacion }}</td>
                     <td>{{ proveedor.telefono }}</td>
                     <td>{{ proveedor.correo }}</td>
-                    <td><i class="fa fa-pencil"></i></td>
+                    <td><i class="fa fa-ellipsis-v"></i></td>
                 </tr>
             </tbody>
         </table>
     </div>
     </div>`
 })
-export class ListaProveedoresComponent {
-    proveedores : EmpresaModel[] = [];
+export class ListaProveedoresComponent extends Controller{
+    proveedores : EmpresaModel[];
 
-    constructor(public _administracionService : AdministracionService) {}
+    constructor(public _administracionService : AdministracionService,
+                _notifySerivce : NotifyService) { super(_notifySerivce) }
 
     ngOnInit() {
-        this._administracionService.getEmpresas(1).subscribe(empresas => this.proveedores = empresas);
+        this._notifyService.loader(true);
+        this.subscribeResource("proveedores", this._administracionService.getEmpresas(1));
     }
 }

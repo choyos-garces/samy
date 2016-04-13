@@ -1,5 +1,6 @@
 import {Control, ControlGroup} from "angular2/common";
 import {NotifyService} from "../Notify/Services/NotifyService";
+
 export class FormController {
 
     public _notifyService : NotifyService;
@@ -10,19 +11,26 @@ export class FormController {
     constructor(_notifyService : NotifyService) {
         this._notifyService = _notifyService;
     }
-    protected toggleForm() : void {
-        this.waiting = !this.waiting;
+
+    protected getControl(control) : Control {
+        return <Control>this.formControl.controls[control];
     }
 
-    protected isFormDisabled() : boolean {
-        return this.waiting;
+    protected addControl(name, arg : any[]) : void {
+        let control : Control;
+        if(arg.length == 2) control = new Control(arg[0], arg[1]);
+        if(arg.length == 1 ) control = new Control(arg[0]);
+        this.formControl.addControl(name, control);
+    }
+
+    protected getControlValue(control) : any {
+        return this.getControl(control).value;
+    }
+
+    protected updateControlValue(control, value) : void {
+        this.getControl(control).updateValue(value, {emitEvent: true});
     }
     
-    protected toggleValidationFeedback(control) : boolean {
-        control = <Control>this.formControl.controls[control];
-        return !control.valid && control.touched
-    }
-
     protected objectToFormControl(event, collection, control) : void {
         const id = parseInt((typeof event == "object") ? event.target.value : event);
         var value;
@@ -36,17 +44,21 @@ export class FormController {
         }
 
         this.updateControlValue(control,value);
+        this.getControl(control).markAsTouched();
     }
 
-    protected updateControlValue(control, value) : void {
-        (<Control>this.formControl.controls[control]).updateValue(value, {});
-    }
-    
-    protected getControlValue(control) : any {
-        return (<Control>this.formControl.controls[control]).value;
+    protected toggleValidationFeedback(control) : boolean {
+        control = this.getControl(control);
+        return !control.valid && control.touched;
     }
 
+    protected toggleForm() : void {
+        this.waiting = !this.waiting;
+    }
 
+    protected isFormDisabled() : boolean {
+        return this.waiting;
+    }
 
     protected allResourcesLoaded() : boolean {
         let flag = true;

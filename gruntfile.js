@@ -102,7 +102,7 @@ module.exports = function(grunt) {
                 },
                 options: {
                     watchTask: true,
-                    proxy: 'http://192.168.9.7/samy'
+                    proxy: 'http://192.168.1.36/samy'
                 }
             }
         },
