@@ -49,7 +49,7 @@ export class FormController {
         }
 
         this.updateControlValue(control,value);
-        this.getControl(control).markAsTouched();
+        this.updateControlTouched(control);
     }
 
     protected toggleValidationFeedback(control) : boolean {

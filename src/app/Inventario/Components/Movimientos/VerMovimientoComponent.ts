@@ -71,7 +71,6 @@ export class VerMovimientoComponent {
         this._inventarioService.getMovimiento(id).subscribe(
             movimeintoInventario => {
                 this.movimientoInventario = movimeintoInventario;
-                console.log(this.movimientoInventario)
                 this._notifyService.loader(false);
             },
             error => {

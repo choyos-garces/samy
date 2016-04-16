@@ -4,6 +4,7 @@ import {SimpleKey} from "../../App/Models/SimpleKey";
 import {BodegaModel} from "../../Administracion/Models/BodegaModel";
 import {EmpresaModel} from "../../Administracion/Models/EmpresaModel";
 import {PlantacionModel} from "../../Administracion/Models/PlantacionModel";
+interface detalles  { proveedor?:EmpresaModel, bodega?:BodegaModel, plantacion?:PlantacionModel, factura?:string, notas?:string}
 
 export class MovimientoInventarioModel {
     private _id : number;
@@ -12,15 +13,18 @@ export class MovimientoInventarioModel {
     private _motivoMovimiento : SimpleKey;
     private _fecha : Date;
     private _movimientosMateriales : Array<MovimientoMaterialModel>;
-    private _detalles : { proveedor?:EmpresaModel, bodega?:BodegaModel, plantacion?:PlantacionModel, factura?:string, notas?:string};
+    private _detalles : detalles;
+    private _notas : string;
 
-    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : number, motivoMovimiento : SimpleKey, fecha? : Date) {
+    constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : number, motivoMovimiento : SimpleKey, notas : string, detalles : detalles, fecha? : Date) {
         this._id = id;
         this._bodega = bodega;
         this._tipoMovimiento = tipoMoviemiento;
         this._motivoMovimiento = motivoMovimiento;
         this._fecha = fecha;
         this._movimientosMateriales = [];
+        this._notas = notas;
+        this._detalles = detalles;
     }
     
     set id(value:number) {
@@ -54,7 +58,14 @@ export class MovimientoInventarioModel {
     get fecha(): Date {
         return this._fecha;
     }
+    
+    get notas():string {
+        return this._notas;
+    }
 
+    set notas(value:string) {
+        this._notas = value;
+    }
 
     get detalles():{proveedor?:EmpresaModel; bodega?:BodegaModel; plantacion?:PlantacionModel; factura?:string; notas?:string} {
         return this._detalles;
@@ -72,6 +83,7 @@ export class MovimientoInventarioModel {
             motivoMovimiento : this.motivoMovimiento,
             fecha : this.fecha,
             movimientosMateriales : this.movimientosMateriales,
+            notas : this.notas,
             detalles : this.detalles
         }
     }

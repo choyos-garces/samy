@@ -86,6 +86,8 @@ export class MovimientoDetallesComponent extends FormController {
 
     enviarDetalle() {
         let value = (this.formControl.valid) ? this.formControl.value : null;
+        console.log(this.formControl.value);
+        console.log(value);
         this._detalle.emit(value)
     }
 
