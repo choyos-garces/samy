@@ -4,10 +4,11 @@ import {InventarioService} from "../../Services/InventarioService";
 import {MovimientoInventarioModel} from "../../Models/MovimientoInventarioModel";
 import {RouteParams, Router, ROUTER_DIRECTIVES} from "angular2/router";
 import {DatetimePipe} from "../../../Pipes/DatetimePipe";
+import {TextPipe} from "../../../Pipes/TextPipe";
 
 @Component({
     selector : 'ver-movimiento',
-    pipes : [DatetimePipe],
+    pipes : [DatetimePipe, TextPipe],
     directives : [ROUTER_DIRECTIVES],
     template : `
 <div class="container-fluid">
@@ -16,19 +17,56 @@ import {DatetimePipe} from "../../../Pipes/DatetimePipe";
       <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <dl class="col-xs-6 col-sm-12 col-md-6">
-                        <dt>Fecha</dt><dd>{{ movimientoInventario?.fecha | datetime }}</dd>
-                    </dl>
-                    <dl class="col-xs-6 col-sm-12 col-md-6">
-                        <dt>Bodega</dt><dd><a [routerLink]="['/Administracion/Bodegas/VerBodega', {id : movimientoInventario?.bodega?.id }]">{{ movimientoInventario?.bodega?.nombre }}</a></dd>
-                    </dl>
-                    <dl class="col-xs-6 col-sm-12 col-md-6">
-                        <dt>Materiales</dt><dd>{{ movimientoInventario?.movimientosMateriales?.length }}</dd>
-                    </dl>
-
-                    <dl class="col-xs-6 col-sm-12 col-md-6">
-                        <dt>Motivo</dt><dd>{{ movimientoInventario?.motivoMovimiento?.nombre }}</dd>
-                    </dl>                   
+                    <div class="row">
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Tipo</dt><dd>{{ (movimientoInventario?.tipoMovimiento == 1) ? 'Ingreso' : 'Egreso' }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Motivo</dt><dd>{{ movimientoInventario?.motivoMovimiento?.nombre }}</dd>
+                        </dl>                   
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Fecha</dt><dd>{{ movimientoInventario?.fecha | datetime }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Bodega</dt><dd><a [routerLink]="['/Administracion/Bodegas/VerBodega', {id : movimientoInventario?.bodega?.id }]">{{ movimientoInventario?.bodega?.nombre }}</a></dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Materiales</dt><dd>{{ movimientoInventario?.movimientosMateriales?.length }}</dd>
+                        </dl>
+                        <dl class="col-xs-6 col-sm-12 col-md-6">
+                            <dt>Usuario</dt><dd>Admin</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div *ngIf="movimientoInventario?.tipoMovimiento == 1">
+                            <dl class="col-xs-6 col-sm-12 col-md-6">
+                                <dt>Proveedor</dt><dd>{{ movimientoInventario?.detalle?.proveedor?.razonSocial }}</dd>
+                            </dl>
+                            <dl class="col-xs-6 col-sm-12 col-md-6">
+                                <dt>Factura</dt><dd>{{ movimientoInventario?.detalle?.factura }}</dd>
+                            </dl>
+                        </div>
+                        <div *ngIf="movimientoInventario?.tipoMovimiento == 2">
+                            <dl class="col-xs-6 col-sm-12 col-md-6">
+                                <dt>Proveedor</dt><dd>{{ movimientoInventario?.detalle?.bodega?.nombre }}</dd>
+                            </dl>
+                            <dl class="col-xs-6 col-sm-12 col-md-6">
+                                <dt>Factura</dt><dd>{{ movimientoInventario?.detalle?.confirmacion }}</dd>
+                            </dl>
+                        </div>
+                        <dl class="col-xs-12">
+                            <dt>Obsevaciones</dt>
+                            <dd>
+                                <pre class="text-block">{{ movimientoInventario?.notas}}</pre>
+                            </dd>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>
