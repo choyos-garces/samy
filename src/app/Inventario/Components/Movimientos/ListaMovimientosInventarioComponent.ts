@@ -16,7 +16,7 @@ import {NotifyService} from "../../../Notify/Services/NotifyService";
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th class="text-center">Origen</th>
+                    <th class="text-center hidden-xs">Tipo</th>
                     <th>Motivo</th>
                     <th class="text-center">Bodega</th>
                     <th class="text-center">Materiales</th>
@@ -25,8 +25,8 @@ import {NotifyService} from "../../../Notify/Services/NotifyService";
             </thead>
             <tbody>
                 <tr *ngFor="#movimiento of movimientos" [routerLink]="['/Inventario/MovimientosInventario/VerMovimientoInventario', { id : movimiento.id }]" class="router">
-                    <td>{{ movimiento.fecha | datetime}}</td>
-                    <td class="text-center">{{ (movimiento.tipoMovimiento == 1) ? "Ingreso" : "Egreso" }}</td>
+                    <td>{{ movimiento.fecha | datetime : 'short'}}</td>
+                    <td class="text-center hidden-xs">{{ (movimiento.tipoMovimiento == 1) ? "Ingreso" : "Egreso" }}</td>
                     <td>{{ movimiento.motivoMovimiento.nombre }}</td>
                     <td class="text-center"><a [routerLink]="['/Administracion/Bodegas/VerBodega', { id : movimiento.bodega.id }]">{{ movimiento.bodega.nombre }}</a></td>
                     <td class="text-center">{{ movimiento.movimientosMateriales.length }}</td>

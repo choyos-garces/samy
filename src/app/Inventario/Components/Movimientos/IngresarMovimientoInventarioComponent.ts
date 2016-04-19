@@ -117,7 +117,7 @@ export class IngresarMovimientoInventario extends FormController {
             bodega : [null, Validators.required],
             motivoMovimiento : [null, Validators.required],
             movimientosMateriales: [null, Validators.required],
-            detalles: [null, Validators.required],
+            detalle: [null, Validators.required],
             notas: [null, Validators.required]
         });
 
@@ -137,7 +137,7 @@ export class IngresarMovimientoInventario extends FormController {
     }
 
     agregarDetalle(detalle) {
-        this.updateControlValue("detalles", detalle);
+        this.updateControlValue("detalle", detalle);
     }
 
     materialesElegibles() : MaterialModel[] {
@@ -180,12 +180,11 @@ export class IngresarMovimientoInventario extends FormController {
         if(this.formControl.valid) {
             let datos = this.formControl.value;
 
-            let movimiento = new MovimientoInventarioModel(null, datos.bodega, datos.tipoMovimiento, datos.motivoMovimiento, datos.notas, datos.detalles);
+            let movimiento = new MovimientoInventarioModel(null, datos.bodega, datos.tipoMovimiento, datos.motivoMovimiento, datos.notas, datos.detalle);
             movimiento.movimientosMateriales = datos.movimientosMateriales;
 
             this.toggleForm();
             this._notifyService.loader(true);
-            console.log(movimiento);
             this._inventarioService.postMovimiento(movimiento)
                 .subscribe(
                     movimiento => {

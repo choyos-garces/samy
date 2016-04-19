@@ -6,8 +6,9 @@ export class apiService {
     component : string;
     
     constructor(public _http : Http) {
-        this.baseURL = "http://192.168.1.29/api/public"; //Development
-        //this.baseURL = "http://192.168.1.170/api/public"; //Prod
+        //this.baseURL = "http://localhost/api/public/app_dev.php"; //Development
+        this.baseURL = "http://192.168.1.36/api/public";
+        //this.baseURL = "http://192.168.1.170/ napi/public"; //Prod
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
         this.headerOptions = new RequestOptions({ headers: headers });

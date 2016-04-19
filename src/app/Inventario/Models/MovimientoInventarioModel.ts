@@ -4,7 +4,13 @@ import {SimpleKey} from "../../App/Models/SimpleKey";
 import {BodegaModel} from "../../Administracion/Models/BodegaModel";
 import {EmpresaModel} from "../../Administracion/Models/EmpresaModel";
 import {PlantacionModel} from "../../Administracion/Models/PlantacionModel";
-interface detalles  { proveedor?:EmpresaModel, bodega?:BodegaModel, plantacion?:PlantacionModel, factura?:string, notas?:string}
+interface detalles  {
+    proveedor?:EmpresaModel,
+    bodega?:BodegaModel,
+    plantacion?:PlantacionModel,
+    factura?:string,
+    confirmacion? : string
+}
 
 export class MovimientoInventarioModel {
     private _id : number;
@@ -13,7 +19,7 @@ export class MovimientoInventarioModel {
     private _motivoMovimiento : SimpleKey;
     private _fecha : Date;
     private _movimientosMateriales : Array<MovimientoMaterialModel>;
-    private _detalles : detalles;
+    private _detalle : detalles;
     private _notas : string;
 
     constructor(id : number = null, bodega : BodegaModel, tipoMoviemiento : number, motivoMovimiento : SimpleKey, notas : string, detalles : detalles, fecha? : Date) {
@@ -24,7 +30,7 @@ export class MovimientoInventarioModel {
         this._fecha = fecha;
         this._movimientosMateriales = [];
         this._notas = notas;
-        this._detalles = detalles;
+        this._detalle = detalles;
     }
     
     set id(value:number) {
@@ -67,12 +73,12 @@ export class MovimientoInventarioModel {
         this._notas = value;
     }
 
-    get detalles():{proveedor?:EmpresaModel; bodega?:BodegaModel; plantacion?:PlantacionModel; factura?:string; notas?:string} {
-        return this._detalles;
+    get detalle():{proveedor?:EmpresaModel; bodega?:BodegaModel; plantacion?:PlantacionModel; factura?:string; notas?:string} {
+        return this._detalle;
     }
 
-    set detalles(value:{proveedor?:EmpresaModel; bodega?:BodegaModel; plantacion?:PlantacionModel; factura?:string; notas?:string}) {
-        this._detalles = value;
+    set detalle(value:{proveedor?:EmpresaModel; bodega?:BodegaModel; plantacion?:PlantacionModel; factura?:string; notas?:string}) {
+        this._detalle = value;
     }
 
     toJSON() {
@@ -84,7 +90,7 @@ export class MovimientoInventarioModel {
             fecha : this.fecha,
             movimientosMateriales : this.movimientosMateriales,
             notas : this.notas,
-            detalles : this.detalles
+            detalle : this.detalle
         }
     }
 }

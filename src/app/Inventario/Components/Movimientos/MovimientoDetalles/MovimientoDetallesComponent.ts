@@ -37,6 +37,12 @@ import {SimpleKey} from "../../../../App/Models/SimpleKey";
         </select>
     </div>
 </div>
+<div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('confirmacion')}" [hidden]="!render.confirmacion">
+    <form-label [opciones]="{ id : 'confirmacion-detalle', nombre : 'Confirmacion'}"></form-label>
+    <div class="col-sm-7 col-md-5">
+        <input type="tel" class="form-control" id="confirmacion-detalle" [ngFormControl]="formControl.controls['confirmacion']" />
+    </div>
+</div>
 <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('productor')}" [hidden]="!render.productor">
     <form-label [opciones]="{ id : 'productor-detalle', nombre : 'Productor'}"></form-label>
     <div class="col-sm-7 col-md-5">
@@ -73,6 +79,7 @@ export class MovimientoDetallesComponent extends FormController {
         proveedor : boolean,
         factura : boolean,
         bodega : boolean,
+        confirmacion : boolean,
         productor : boolean,
         plantacion : boolean
     };
@@ -86,8 +93,6 @@ export class MovimientoDetallesComponent extends FormController {
 
     enviarDetalle() {
         let value = (this.formControl.valid) ? this.formControl.value : null;
-        console.log(this.formControl.value);
-        console.log(value);
         this._detalle.emit(value)
     }
 
@@ -99,7 +104,8 @@ export class MovimientoDetallesComponent extends FormController {
             factura : [null],
             productor : [null],
             plantacion : [null],
-            bodega : [null]
+            bodega : [null],
+            confirmacion : [null]
         });
 
         this.formControl.valueChanges.subscribe(() => this.enviarDetalle())
@@ -109,13 +115,13 @@ export class MovimientoDetallesComponent extends FormController {
             proveedor : false,
             factura : false,
             bodega : false,
+            confirmacion : false,
             productor : false,
             plantacion : false
         };
 
         /** Resets the select inputs **/
         this.proveedorDetalle = null;
-        this.facturaDetalle = null;
         this.bodegaDetalle = null;
         this.productorDetalle = null;
         this.plantacionDetalle = null;
@@ -132,7 +138,10 @@ export class MovimientoDetallesComponent extends FormController {
                 break;
             case 2:
                 this.render.bodega = true;
+                this.render.confirmacion = true;
                 this.addControl("bodega", [null, Validators.required]);
+                this.addControl("confirmacion", [null, Validators.required]);
+
                 break;
             case 3:
                 this.render.productor = true;

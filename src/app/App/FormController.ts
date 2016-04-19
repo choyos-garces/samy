@@ -34,8 +34,7 @@ export class FormController {
     protected updateControlTouched(control) : void {
         this.getControl(control).markAsTouched();
     }
-
-
+    
     protected objectToFormControl(event, collection, control) : void {
         const id = parseInt((typeof event == "object") ? event.target.value : event);
         var value;
@@ -58,7 +57,7 @@ export class FormController {
     }
 
     protected toggleForm() : void {
-        this.waiting = !this.waiting;
+        this.waiting = (this.waiting) ? false : true;
     }
 
     protected isFormDisabled() : boolean {
