@@ -53,10 +53,6 @@ import {PlantacionModel} from "../../../Administracion/Models/PlantacionModel";
                 </div>
                 <form-feedback [message]="'Seleccionar una opci&oacute;n por favor.'"></form-feedback>
             </div>
-            
-            <movimiento-material [tiposMateriales]="tiposMateriales" [materiales]="materialesElegibles()" (_movimientoMaterial)="agregarMaterial($event)"></movimiento-material>
-            <movimiento-lista-materiales [materiales]="getControlValue('movimientosMateriales')" (_movimientoMaterial)="removerMaterial($event)"></movimiento-lista-materiales>
-            
             <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('motivoMovimiento')}">
                 <form-label [opciones]="{ id : 'motivo', nombre : 'Motivo'}"></form-label>
                 <div class="col-sm-7 col-md-5">
@@ -73,8 +69,10 @@ import {PlantacionModel} from "../../../Administracion/Models/PlantacionModel";
             [proveedores]="proveedores" 
             [motivoMovimiento]="getControlValue('motivoMovimiento')"
             [reset]="getControlValue('tipoMovimiento')"
-            (_detalle)="agregarDetalle($event)"
-            ></movimiento-detalles>
+            (_detalle)="agregarDetalle($event)"></movimiento-detalles>
+            
+            <movimiento-material [tiposMateriales]="tiposMateriales" [materiales]="materialesElegibles()" (_movimientoMaterial)="agregarMaterial($event)"></movimiento-material>
+            <movimiento-lista-materiales [materiales]="getControlValue('movimientosMateriales')" (_movimientoMaterial)="removerMaterial($event)"></movimiento-lista-materiales>
             
             <div class="form-group" [ngClass]="{'has-error' : toggleValidationFeedback('notas')}">
                 <form-label [opciones]="{ id : 'notas', nombre : 'Obervaciones'}"></form-label>

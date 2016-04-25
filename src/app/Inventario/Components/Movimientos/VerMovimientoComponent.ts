@@ -62,6 +62,14 @@ import {MovimientoMaterialModel} from "../../Models/MovimientoMaterialModel";
                                 <dt>#Confirmaci&oacute;n</dt><dd>{{movimientoInventario?.detalle?.confirmacion}}</dd>
                             </dl>
                         </div>
+                        <div *ngIf="movimientoInventario?.motivoMovimiento?.id == 6">
+                            <dl class="col-xs-6 col-sm-12 col-md-6">
+                                <dt>Proveedor</dt><dd>{{movimientoInventario?.detalle?.proveedor?.razonSocial}}</dd>
+                            </dl>
+                            <dl class="col-xs-6 col-sm-12 col-md-6">
+                                <dt>Factura</dt><dd>{{movimientoInventario?.detalle?.factura}}</dd>
+                            </dl>
+                        </div>
                         <dl class="col-xs-12">
                             <dt>Obsevaciones</dt>
                             <dd>

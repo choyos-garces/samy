@@ -70,7 +70,6 @@ export class MovimientoDetallesComponent extends FormController {
     @Output() _detalle = new EventEmitter();
 
     proveedorDetalle : number;
-    facturaDetalle : number;
     bodegaDetalle : number;
     productorDetalle : number;
     plantacionDetalle : number;
@@ -161,7 +160,9 @@ export class MovimientoDetallesComponent extends FormController {
                 break;
             case 6 :
                 this.render.proveedor = true;
+                this.render.factura = true;
                 this.addControl("proveedor", [null, Validators.required]);
+                this.addControl("factura", [null, Validators.required]);
                 break;
         }
     }
