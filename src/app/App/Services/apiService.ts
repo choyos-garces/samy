@@ -7,7 +7,7 @@ export class apiService {
     
     constructor(public _http : Http) {
         //this.baseURL = "http://localhost/api/public/app_dev.php"; //Development
-        this.baseURL = "http://192.168.9.7/api/public";
+        this.baseURL = "http://192.168.1.43/api/public";
         //this.baseURL = "http://192.168.1.170/api/public"; //Prod
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
